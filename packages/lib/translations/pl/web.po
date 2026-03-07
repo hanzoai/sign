@@ -1819,6 +1819,7 @@ msgstr "Wystąpił nieoczekiwany błąd."
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
@@ -8779,6 +8780,10 @@ msgstr "Zaloguj się"
 msgid "Sign in to your account"
 msgstr "Zaloguj się na swoje konto"
 
+#: apps/remix/app/components/forms/signin.tsx
+msgid "Sign in with Hanzo"
+msgstr ""
+
 #: apps/remix/app/components/general/app-nav-mobile.tsx
 #: apps/remix/app/components/general/menu-switcher.tsx
 #: apps/remix/app/components/general/org-menu-switcher.tsx
@@ -10330,7 +10335,9 @@ msgstr "Zostanie wysłana do właściciela po zakończeniu dokumentu."
 
 #: packages/ui/components/document/document-email-checkboxes.tsx
 msgid "This will be sent to the document owner when a recipient's signing window has expired."
-msgstr "Zostanie wysłana do właściciela dokumentu, gdy minie czas na podpisanie przez odbiorcę\n"
+msgstr ""
+"Zostanie wysłana do właściciela dokumentu, gdy minie czas na podpisanie przez odbiorcę\n"
+""
 
 #: apps/remix/app/components/tables/organisation-email-domains-table.tsx
 msgid "This will check and sync the status of all email domains for this organisation"
@@ -11604,6 +11611,7 @@ msgstr "Wystąpił nieznany błąd podczas próby zresetowania hasła. Spróbuj 
 msgid "We encountered an unknown error while attempting to revoke access. Please try again or contact support."
 msgstr "Wystąpił nieznany błąd podczas próby unieważnienia dostępu. Spróbuj ponownie lub skontaktuj się z pomocą techniczną."
 
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
@@ -12979,4 +12987,3 @@ msgstr "Twój kod weryfikacyjny:"
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "your-domain.com another-domain.com"
 msgstr "your-domain.com another-domain.com"
-
