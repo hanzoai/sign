@@ -1819,6 +1819,7 @@ msgstr "예기치 않은 오류가 발생했습니다."
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
@@ -8779,6 +8780,10 @@ msgstr "로그인"
 msgid "Sign in to your account"
 msgstr "계정에 로그인"
 
+#: apps/remix/app/components/forms/signin.tsx
+msgid "Sign in with Hanzo"
+msgstr ""
+
 #: apps/remix/app/components/general/app-nav-mobile.tsx
 #: apps/remix/app/components/general/menu-switcher.tsx
 #: apps/remix/app/components/general/org-menu-switcher.tsx
@@ -11607,6 +11612,7 @@ msgstr "접근 권한을 철회하는 중 알 수 없는 오류가 발생했습�
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/routes/_unauthenticated+/o.$orgUrl.signin.tsx
 msgid "We encountered an unknown error while attempting to sign you In. Please try again later."
 msgstr "로그인 중 알 수 없는 오류가 발생했습니다. 나중에 다시 시도해 주세요."
@@ -12979,4 +12985,3 @@ msgstr "인증 코드:"
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx
 msgid "your-domain.com another-domain.com"
 msgstr "your-domain.com another-domain.com"
-

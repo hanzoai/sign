@@ -1814,6 +1814,7 @@ msgstr "An unexpected error occurred."
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
 #: apps/remix/app/components/forms/signup.tsx
@@ -8774,6 +8775,10 @@ msgstr "Sign In"
 msgid "Sign in to your account"
 msgstr "Sign in to your account"
 
+#: apps/remix/app/components/forms/signin.tsx
+msgid "Sign in with Hanzo"
+msgstr "Sign in with Hanzo"
+
 #: apps/remix/app/components/general/app-nav-mobile.tsx
 #: apps/remix/app/components/general/menu-switcher.tsx
 #: apps/remix/app/components/general/org-menu-switcher.tsx
@@ -11599,6 +11604,7 @@ msgstr "We encountered an unknown error while attempting to reset your password.
 msgid "We encountered an unknown error while attempting to revoke access. Please try again or contact support."
 msgstr "We encountered an unknown error while attempting to revoke access. Please try again or contact support."
 
+#: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
 #: apps/remix/app/components/forms/signin.tsx
