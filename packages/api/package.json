@@ -22,8 +22,8 @@
     "@ts-rest/serverless": "^3.52.1",
     "@types/swagger-ui-react": "^5.18.0",
     "luxon": "^3.7.2",
-    "superjson": "^2.2.5",
+    "superjson": "^2.2.6",
     "ts-pattern": "^5.9.0",
-    "zod": "^3.25.76"
+    "zod": "^4.5.2"
   }
 }

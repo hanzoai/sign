@@ -13,20 +13,20 @@
   "dependencies": {
     "@hanzo/esign-lib": "*",
     "@hanzo/esign-prisma": "*",
-    "@zap-proto/zap": "^1.4.2",
-    "@zap-proto/web": "^0.2.0",
-    "@simplewebauthn/server": "^13.2.2",
-    "@tanstack/react-query": "5.90.10",
+    "@zap-proto/zap": "^1.6.0",
+    "@zap-proto/web": "^1.0.0",
+    "@simplewebauthn/server": "^13.3.3",
+    "@tanstack/react-query": "^5.102.8",
     "@ts-rest/core": "^3.52.1",
     "formidable": "^3.5.4",
     "luxon": "^3.7.2",
-    "superjson": "^2.2.5",
+    "superjson": "^2.2.6",
     "ts-pattern": "^5.9.0",
-    "zod": "^3.25.76",
-    "zod-form-data": "^2.0.8",
-    "zod-openapi": "^4.2.4"
+    "zod": "^4.5.2",
+    "zod-form-data": "^3.0.3",
+    "zod-openapi": "5.4.2"
   },
   "devDependencies": {
-    "@types/formidable": "^3.4.6"
+    "@types/formidable": "^3.5.1"
   }
 }
