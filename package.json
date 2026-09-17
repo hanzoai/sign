@@ -92,7 +92,7 @@
     "cron-parser": "^5.10.0",
     "luxon": "^3.7.2",
     "patch-package": "^8.0.1",
-    "@hanzo/insights-node": "6.0.0",
+    "@hanzo/insights-node": "5.26.2",
     "react": "19.2.8",
     "typescript": "7.0.2",
     "zod": "^4.5.2",
@@ -100,12 +100,12 @@
   },
   "overrides": {
     "lodash": "4.17.23",
-    "pdfjs-dist": "5.4.296",
-    "typescript": "5.9.3",
+    "pdfjs-dist": "$pdfjs-dist",
+    "typescript": "$typescript",
     "zod": "$zod",
     "fumadocs-mdx": {
       "zod": "^4.3.5"
     },
-    "ws": "^8.18.0"
+    "ws": "$ws"
   }
 }

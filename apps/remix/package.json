@@ -56,7 +56,7 @@
     "nanoid": "^6.0.1",
     "papaparse": "^5.7.0",
     "@hanzo/insights": "1.358.1",
-    "@hanzo/insights-node": "6.0.0",
+    "@hanzo/insights-node": "5.26.2",
     "react": "19.2.8",
     "react-call": "^2.0.2",
     "react-dom": "19.2.8",
