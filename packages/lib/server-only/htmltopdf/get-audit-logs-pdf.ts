@@ -15,7 +15,6 @@ import { encryptSecondaryData } from '../crypto/encrypt';
 
 export type GetAuditLogsPdfOptions = {
   documentId: number;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   language?: SupportedLanguageCodes | (string & {});
 };
 

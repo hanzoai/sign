@@ -39,7 +39,6 @@ const allMessages = async () => {
 
 type AllI18nInstances = { [K in SupportedLanguages]: I18n };
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 export const allI18nInstances = remember('i18n.allI18nInstances', async () => {
   const loadedMessages = await allMessages();
 
@@ -56,7 +55,6 @@ export const allI18nInstances = remember('i18n.allI18nInstances', async () => {
   }, {}) as AllI18nInstances;
 });
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const getI18nInstance = async (lang?: SupportedLanguages | (string & {})) => {
   const instances = await allI18nInstances;
 

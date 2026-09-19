@@ -15,7 +15,6 @@ import { encryptSecondaryData } from '../crypto/encrypt';
 
 export type GetCertificatePdfOptions = {
   documentId: number;
-  // eslint-disable-next-line @typescript-eslint/ban-types
   language?: SupportedLanguageCodes | (string & {});
 };
 

@@ -25,5 +25,4 @@ export const AuthenticationErrorCode = {
 } as const;
 
 export type AuthenticationErrorCode =
-  // eslint-disable-next-line @typescript-eslint/ban-types
   (typeof AuthenticationErrorCode)[keyof typeof AuthenticationErrorCode] | (string & {});
