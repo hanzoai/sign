@@ -57,6 +57,7 @@ const load = async (wellKnownUrl: string): Promise<OpenIdConfiguration> => {
 
     throw new Error(
       `Failed to fetch OIDC configuration: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err },
     );
   }
 };

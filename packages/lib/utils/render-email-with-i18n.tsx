@@ -11,7 +11,6 @@ import {
 export const renderEmailWithI18N = async (
   component: React.ReactElement,
   options?: RenderOptions & {
-    // eslint-disable-next-line @typescript-eslint/ban-types
     lang?: SupportedLanguageCodes | (string & {});
   },
 ) => {
@@ -27,6 +26,6 @@ export const renderEmailWithI18N = async (
     return renderWithI18N(component, { i18n, ...otherOptions });
   } catch (err) {
     console.error(err);
-    throw new Error('Failed to render email');
+    throw new Error('Failed to render email', { cause: err });
   }
 };

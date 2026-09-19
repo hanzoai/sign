@@ -32,6 +32,6 @@ export const triggerWebhook = async ({ event, data, userId, teamId }: TriggerWeb
     );
   } catch (err) {
     console.error(err);
-    throw new Error(`Failed to trigger webhook`);
+    throw new Error(`Failed to trigger webhook`, { cause: err });
   }
 };
