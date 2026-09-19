@@ -1,6 +1,6 @@
 import { sValidator } from '@hono/standard-validator';
 import type { Prisma } from '@prisma/client';
-import contentDisposition from 'content-disposition';
+import { create as contentDisposition } from 'content-disposition';
 import { Hono } from 'hono';
 
 import { getOptionalSession } from '@hanzo/esign-auth/server/lib/utils/get-session';

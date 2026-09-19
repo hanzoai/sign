@@ -1,5 +1,5 @@
 import { type DocumentDataType, DocumentStatus } from '@prisma/client';
-import contentDisposition from 'content-disposition';
+import { create as contentDisposition } from 'content-disposition';
 import { type Context } from 'hono';
 
 import { sha256 } from '@hanzo/esign-lib/universal/crypto';
