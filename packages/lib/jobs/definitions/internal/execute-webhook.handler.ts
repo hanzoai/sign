@@ -1,4 +1,5 @@
-import { Prisma, WebhookCallStatus } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
+import { WebhookCallStatus } from '@prisma/client';
 
 import { prisma } from '@hanzo/esign-prisma';
 
@@ -40,7 +41,7 @@ export const run = async ({
 
   const body = await response.text();
 
-  let responseBody: Prisma.InputJsonValue | Prisma.JsonNullValueInput = Prisma.JsonNull;
+  let responseBody: Prisma.InputJsonValue | Prisma.JsonNullValueInput;
 
   try {
     responseBody = JSON.parse(body);

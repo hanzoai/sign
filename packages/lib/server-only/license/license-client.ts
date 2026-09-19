@@ -20,7 +20,6 @@ const LICENSE_SERVER_URL =
   env('INTERNAL_OVERRIDE_LICENSE_SERVER_URL') || 'https://license.esign.hanzo.ai';
 
 declare global {
-  // eslint-disable-next-line no-var
   var __hanzo_sign_license_client__: LicenseClient | undefined;
 }
 
@@ -97,7 +96,7 @@ export class LicenseClient {
       this.cachedLicense = cachedLicense;
     }
 
-    let response: TLicenseResponse | null = null;
+    let response: TLicenseResponse | null;
 
     try {
       response = await this.pingLicenseServer();

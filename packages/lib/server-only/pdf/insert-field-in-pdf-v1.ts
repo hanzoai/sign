@@ -411,7 +411,7 @@ export const insertFieldInPDFV1 = async (pdf: PDFDocument, field: FieldWithSigna
       const textAlignmentOptions = getTextAlignmentOptions(textAlign, fieldX, isMultiline, padding);
 
       // Invert the Y axis since PDFs use a bottom-left coordinate system
-      let textFieldBoxY = pageHeight - fieldY - fieldHeight;
+      const textFieldBoxY = pageHeight - fieldY - fieldHeight;
       const textFieldBoxX = textAlignmentOptions.xPos;
 
       const textField = pdf.getForm().createTextField(`text.${field.secondaryId}`);
@@ -438,9 +438,6 @@ export const insertFieldInPDFV1 = async (pdf: PDFDocument, field: FieldWithSigna
         textField.enableMultiline();
         textField.disableCombing();
         textField.disableScrolling();
-
-        // Adjust the textFieldBox so it extends to the bottom of the page so text can wrap.
-        textFieldBoxY = pageHeight - fieldY - fieldHeight;
 
         // Calculate how much PX from the current field to bottom of the page.
         const fieldYOffset = pageHeight - (fieldY + fieldHeight) - pagePadding;
@@ -648,7 +645,6 @@ function breakLongString(text: string, maxWidth: number, font: PDFFont, fontSize
         // First, save current line if it's not empty
         if (currentLine.length > 0) {
           lines.push(currentLine);
-          currentLine = '';
         }
 
         // Check if word fits on a line by itself

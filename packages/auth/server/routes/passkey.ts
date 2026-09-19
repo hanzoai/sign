@@ -44,7 +44,7 @@ export const passkeyRoute = new Hono<HonoAuthContext>()
       throw new AppError(AppErrorCode.INVALID_REQUEST);
     }
 
-    let requestBodyCrediential: TAuthenticationResponseJSONSchema | null = null;
+    let requestBodyCrediential: TAuthenticationResponseJSONSchema;
 
     try {
       const parsedBodyCredential = JSON.parse(credential);

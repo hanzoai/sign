@@ -745,7 +745,7 @@ export async function renderCertificate({
   const columnWidths: ColumnWidths = [columnOneWidth, columnTwoWidth, columnThreeWidth];
 
   // Helper to render a Konva stage to a PNG buffer
-  let stage: Konva.Stage | null = new Konva.Stage({ width: pageWidth, height: pageHeight });
+  const stage = new Konva.Stage({ width: pageWidth, height: pageHeight });
 
   const maxTableHeight = pageHeight - pageTopMargin - pageBottomMargin;
 
@@ -837,7 +837,6 @@ export async function renderCertificate({
   }
 
   stage.destroy();
-  stage = null;
 
   return pages;
 }

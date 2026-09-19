@@ -8,7 +8,8 @@
 // the two file-backed routes (calls.find / calls.resend) have their bodies
 // ported verbatim. Route keys mirror the tRPC nested router shape (see
 // webhook-router.zap).
-import { Prisma, WebhookCallStatus } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
+import { WebhookCallStatus } from '@prisma/client';
 
 import { TEAM_MEMBER_ROLE_PERMISSIONS_MAP } from '@hanzo/esign-lib/constants/teams';
 import { AppError, AppErrorCode } from '@hanzo/esign-lib/errors/app-error';
@@ -98,7 +99,7 @@ export const webhookRoutes: ZapRouteMap = {
 
     const body = await response.text();
 
-    let responseBody: Prisma.InputJsonValue | Prisma.JsonNullValueInput = Prisma.JsonNull;
+    let responseBody: Prisma.InputJsonValue | Prisma.JsonNullValueInput;
 
     try {
       responseBody = JSON.parse(body);

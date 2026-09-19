@@ -35,7 +35,7 @@ export const setAvatarImage = async ({
   bytes,
   requestMetadata,
 }: SetAvatarImageOptions) => {
-  let oldAvatarImageId: string | null = null;
+  let oldAvatarImageId: string | null;
 
   if (target.type === 'team') {
     const team = await prisma.team.findFirst({

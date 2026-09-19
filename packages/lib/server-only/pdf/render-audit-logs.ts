@@ -588,7 +588,7 @@ export async function renderAuditLogs({
   const contentWidth = Math.min(pageWidth - minimumMargin * 2, contentMaxWidth);
   const margin = (pageWidth - contentWidth) / 2;
 
-  let stage: Konva.Stage | null = new Konva.Stage({ width: pageWidth, height: pageHeight });
+  const stage = new Konva.Stage({ width: pageWidth, height: pageHeight });
 
   const overviewCard = renderOverviewCard({
     envelope,
@@ -674,7 +674,6 @@ export async function renderAuditLogs({
   }
 
   stage.destroy();
-  stage = null;
 
   return pages;
 }

@@ -11,7 +11,7 @@ export const run = async ({ io }: { payload: TCleanupRateLimitsJobDefinition; io
   const cutoff = DateTime.now().minus({ hours: 24 }).toJSDate();
 
   let totalDeleted = 0;
-  let deleted = 0;
+  let deleted: number;
 
   do {
     // Prisma doesn't support DELETE with LIMIT, so use raw SQL for batching

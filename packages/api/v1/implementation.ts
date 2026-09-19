@@ -900,7 +900,7 @@ export const ApiContractV1Implementation = tsr.router(ApiContractV1, {
 
       const templateId = Number(params.templateId);
 
-      let envelope: Awaited<ReturnType<typeof createDocumentFromTemplate>> | null = null;
+      let envelope: Awaited<ReturnType<typeof createDocumentFromTemplate>>;
 
       try {
         envelope = await createDocumentFromTemplate({
