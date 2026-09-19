@@ -1,3 +1,5 @@
+import type { ComponentProps } from 'react';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -5,6 +7,12 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import PlausibleProvider from 'next-plausible';
 
 import './global.css';
+
+// next-plausible 4 takes a script URL instead of a domain. This is the script 3
+// rendered for `domain`: Plausible's shared script, told the site by data-domain.
+const plausibleScript: ComponentProps<'script'> & { 'data-domain': string } = {
+  'data-domain': 'esign.hanzo.ai',
+};
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,7 +40,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <PlausibleProvider domain="esign.hanzo.ai">
+        <PlausibleProvider src="https://plausible.io/js/script.js" scriptProps={plausibleScript}>
           <RootProvider>{children}</RootProvider>
         </PlausibleProvider>
       </body>
