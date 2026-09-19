@@ -86,10 +86,7 @@ export type TDateFieldMeta = z.infer<typeof ZDateFieldMeta>;
 export const ZTextFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('text'),
   text: z.string().optional(),
-  characterLimit: z.coerce
-    .number({ invalid_type_error: 'Value must be a number' })
-    .min(0)
-    .optional(),
+  characterLimit: z.coerce.number({ error: 'Value must be a number' }).min(0).optional(),
   textAlign: ZFieldTextAlignSchema.optional(),
   lineHeight: ZFieldMetaLineHeight.nullish(),
   letterSpacing: ZFieldMetaLetterSpacing.nullish(),

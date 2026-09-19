@@ -83,11 +83,11 @@ export const ZRecipientDiffTypeSchema = z.enum([
   'ACTION_AUTH',
 ]);
 
-export const DOCUMENT_AUDIT_LOG_TYPE = ZDocumentAuditLogTypeSchema.Enum;
-export const DOCUMENT_EMAIL_TYPE = ZDocumentAuditLogEmailTypeSchema.Enum;
-export const DOCUMENT_META_DIFF_TYPE = ZDocumentMetaDiffTypeSchema.Enum;
-export const FIELD_DIFF_TYPE = ZFieldDiffTypeSchema.Enum;
-export const RECIPIENT_DIFF_TYPE = ZRecipientDiffTypeSchema.Enum;
+export const DOCUMENT_AUDIT_LOG_TYPE = ZDocumentAuditLogTypeSchema.enum;
+export const DOCUMENT_EMAIL_TYPE = ZDocumentAuditLogEmailTypeSchema.enum;
+export const DOCUMENT_META_DIFF_TYPE = ZDocumentMetaDiffTypeSchema.enum;
+export const FIELD_DIFF_TYPE = ZFieldDiffTypeSchema.enum;
+export const RECIPIENT_DIFF_TYPE = ZRecipientDiffTypeSchema.enum;
 
 export const ZFieldDiffDimensionSchema = z.object({
   type: z.literal(FIELD_DIFF_TYPE.DIMENSION),

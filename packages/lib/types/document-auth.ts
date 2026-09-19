@@ -13,7 +13,7 @@ export const ZDocumentAuthTypesSchema = z.enum([
   'EXPLICIT_NONE',
 ]);
 
-export const DocumentAuth = ZDocumentAuthTypesSchema.Enum;
+export const DocumentAuth = ZDocumentAuthTypesSchema.enum;
 
 const ZDocumentAuthAccountSchema = z.object({
   type: z.literal(DocumentAuth.ACCOUNT),
@@ -121,10 +121,10 @@ export const ZRecipientActionAuthTypesSchema = z
   ])
   .describe('The type of authentication required for the recipient to sign the document.');
 
-export const DocumentAccessAuth = ZDocumentAccessAuthTypesSchema.Enum;
-export const DocumentActionAuth = ZDocumentActionAuthTypesSchema.Enum;
-export const RecipientAccessAuth = ZRecipientAccessAuthTypesSchema.Enum;
-export const RecipientActionAuth = ZRecipientActionAuthTypesSchema.Enum;
+export const DocumentAccessAuth = ZDocumentAccessAuthTypesSchema.enum;
+export const DocumentActionAuth = ZDocumentActionAuthTypesSchema.enum;
+export const RecipientAccessAuth = ZRecipientAccessAuthTypesSchema.enum;
+export const RecipientActionAuth = ZRecipientActionAuthTypesSchema.enum;
 
 /**
  * Authentication options attached to the document.

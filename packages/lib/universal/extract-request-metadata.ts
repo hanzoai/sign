@@ -2,7 +2,9 @@ import { z } from 'zod';
 
 import { getIpAddress } from './get-ip-address';
 
-const ZIpSchema = z.string().ip();
+// Either family. Zod 4 moved the address formats off `z.string()` and gave each
+// its own schema, so "an IP" is said as the union it always was.
+const ZIpSchema = z.union([z.ipv4(), z.ipv6()]);
 
 export const ZRequestMetadataSchema = z.object({
   ipAddress: ZIpSchema.optional(),
