@@ -20,17 +20,15 @@
     "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio"
   },
-  "prisma": {
-    "seed": "tsx ./seed-database.ts"
-  },
   "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "kysely": "^0.29.5",
     "nanoid": "^6.0.1",
     "prisma": "^7.10.0",
     "prisma-extension-kysely": "^4.0.0",
-    "prisma-kysely": "^3.2.1",
     "prisma-json-types-generator": "^5.1.1",
+    "prisma-kysely": "^3.2.1",
     "ts-pattern": "^5.9.0",
     "zod": "^4.5.2",
     "zod-prisma-types": "^3.3.11"
@@ -41,6 +39,6 @@
     "dotenv-cli": "^11.0.0",
     "pg": "^8.23.0",
     "tsx": "^4.23.12",
-    "typescript": "7.0.2"
+    "typescript": "6.0.3"
   }
 }

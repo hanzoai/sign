@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
+    "types:check": "fumadocs-mdx && next typegen && node ../../node_modules/tsgo/bin/tsc --noEmit",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
@@ -30,6 +30,6 @@
     "@types/react-dom": "19.2.5",
     "postcss": "^8.5.26",
     "tailwindcss": "^4.3.3",
-    "typescript": "7.0.2"
+    "typescript": "6.0.3"
   }
 }
