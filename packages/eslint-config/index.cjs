@@ -9,12 +9,35 @@ const transaction = require('./transaction.cjs');
 
 const source = ['**/*.ts', '**/*.tsx'];
 
+// eslint-config-next 16 enables react-hooks 7's recommended set, which adds the
+// React Compiler's checks to the two rules of hooks the set held before. This
+// code was written before the compiler and not to its model, so its checks
+// report as warnings: every run still lists them, and none blocks a commit.
+const reactCompilerRules = [
+  'react-hooks/static-components',
+  'react-hooks/use-memo',
+  'react-hooks/preserve-manual-memoization',
+  'react-hooks/immutability',
+  'react-hooks/globals',
+  'react-hooks/refs',
+  'react-hooks/set-state-in-effect',
+  'react-hooks/error-boundaries',
+  'react-hooks/purity',
+  'react-hooks/set-state-in-render',
+  'react-hooks/config',
+  'react-hooks/gating',
+];
+
 // The shared lint config, as ESLint 10 reads one: an array, in order, later
 // entries winning. Everything the eslintrc form said is here — it changed
 // spelling, not meaning.
 module.exports = [
   ...transaction,
   ...next,
+  {
+    name: 'esign/react-compiler',
+    rules: Object.fromEntries(reactCompilerRules.map((rule) => [rule, 'warn'])),
+  },
   ...(turbo.default ?? turbo),
   js.configs.recommended,
   ...tseslint.configs.recommended,
