@@ -14,13 +14,17 @@ import { afterEach, describe, test } from 'node:test';
 
 import { uploadTransport } from '../universal/upload/transport';
 
+// The environment as the process hands it over: any string. ProcessEnv declares
+// only the two transports, which is what the cases below are not.
+const env: Record<string, string | undefined> = process.env;
+
 const set = (value: string | undefined) => {
   if (value === undefined) {
-    delete process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT;
+    delete env.NEXT_PUBLIC_UPLOAD_TRANSPORT;
     return;
   }
 
-  process.env.NEXT_PUBLIC_UPLOAD_TRANSPORT = value;
+  env.NEXT_PUBLIC_UPLOAD_TRANSPORT = value;
 };
 
 afterEach(() => set(undefined));
