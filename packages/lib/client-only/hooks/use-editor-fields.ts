@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import type { Field, Recipient } from '@prisma/client';
 import { FieldType } from '@prisma/client';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -30,11 +29,12 @@ export const ZLocalFieldSchema = z.object({
 
 export type TLocalField = z.infer<typeof ZLocalFieldSchema>;
 
-const ZEditorFieldsFormSchema = z.object({
-  fields: z.array(ZLocalFieldSchema),
-});
-
-export type TEditorFieldsFormSchema = z.infer<typeof ZEditorFieldsFormSchema>;
+// The form only stores the editor's fields. Nothing submits it or asks whether it is valid,
+// so it has no resolver, and every write goes through the functions below, which take
+// parsed fields.
+type TEditorFieldsForm = {
+  fields: TLocalField[];
+};
 
 type EditorFieldsProps = {
   envelope: TEditorEnvelope;
@@ -75,30 +75,27 @@ export const useEditorFields = ({
   const [selectedRecipientId, setSelectedRecipientId] = useState<number | null>(null);
 
   const generateDefaultValues = (fields?: Field[]) => {
-    const formFields = (fields || envelope.fields).map(
-      (field): TLocalField => ({
-        id: field.id,
-        formId: nanoid(),
-        envelopeItemId: field.envelopeItemId,
-        page: field.page,
-        type: field.type,
-        positionX: Number(field.positionX),
-        positionY: Number(field.positionY),
-        width: Number(field.width),
-        height: Number(field.height),
-        recipientId: field.recipientId,
-        fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : undefined,
-      }),
-    );
+    const formFields = (fields || envelope.fields).map((field): TLocalField => ({
+      id: field.id,
+      formId: nanoid(),
+      envelopeItemId: field.envelopeItemId,
+      page: field.page,
+      type: field.type,
+      positionX: Number(field.positionX),
+      positionY: Number(field.positionY),
+      width: Number(field.width),
+      height: Number(field.height),
+      recipientId: field.recipientId,
+      fieldMeta: field.fieldMeta ? ZFieldMetaSchema.parse(field.fieldMeta) : undefined,
+    }));
 
     return {
       fields: formFields,
     };
   };
 
-  const form = useForm<TEditorFieldsFormSchema>({
+  const form = useForm<TEditorFieldsForm>({
     defaultValues: generateDefaultValues(),
-    resolver: zodResolver(ZEditorFieldsFormSchema),
   });
 
   const {
