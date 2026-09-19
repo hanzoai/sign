@@ -48,7 +48,7 @@ export const SigningCard3D = ({
 
   const [trackMouse, setTrackMouse] = useState(false);
 
-  const timeoutRef = useRef<number | undefined>();
+  const timeoutRef = useRef<number | undefined>(undefined);
 
   const cardX = useMotionValue(0);
   const cardY = useMotionValue(0);
@@ -132,7 +132,7 @@ export const SigningCard3D = ({
       style={{ perspective: 800 }}
     >
       <motion.div
-        className="w-full rounded-lg bg-background [--sheen-color:180_180_180] dark:[--sheen-color:200_200_200]"
+        className="bg-background w-full rounded-lg [--sheen-color:180_180_180] dark:[--sheen-color:200_200_200]"
         ref={cardRef}
         style={{
           perspective: '800',
@@ -169,7 +169,7 @@ const SigningCardContent = ({ className, name, signature }: SigningCardContentPr
       gradient
     >
       <CardContent
-        className="p-6 text-center font-signature"
+        className="font-signature p-6 text-center"
         style={{
           container: 'main',
         }}
@@ -184,7 +184,7 @@ const SigningCardContent = ({ className, name, signature }: SigningCardContentPr
           ))
           .with({ typedSignature: P.string }, (signature) => (
             <span
-              className="break-all font-semibold text-muted-foreground/60 duration-300 group-hover:text-primary/80"
+              className="text-muted-foreground/60 group-hover:text-primary/80 font-semibold break-all duration-300"
               style={{
                 fontSize: `max(min(4rem, ${(100 / signature.typedSignature.length / 2).toFixed(
                   4,
@@ -196,7 +196,7 @@ const SigningCardContent = ({ className, name, signature }: SigningCardContentPr
           ))
           .otherwise(() => (
             <span
-              className="break-all font-semibold text-muted-foreground/60 duration-300 group-hover:text-primary/80"
+              className="text-muted-foreground/60 group-hover:text-primary/80 font-semibold break-all duration-300"
               style={{
                 fontSize: `max(min(4rem, ${(100 / name.length / 2).toFixed(4)}cqw), 1.875rem)`,
               }}

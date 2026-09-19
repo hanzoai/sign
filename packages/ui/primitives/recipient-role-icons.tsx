@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import type { RecipientRole } from '@prisma/client';
 import { BadgeCheck, Copy, Eye, PencilLine, User } from 'lucide-react';
 
