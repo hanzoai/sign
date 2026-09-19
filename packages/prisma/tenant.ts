@@ -31,21 +31,16 @@
  *
  * Single source of truth: `DATABASE_URL`. Fails closed when unset — there is no
  * implicit fallback path that could silently point production at the wrong
- * file. `?connection_limit=1` keeps one writer; SQLite serialises writes and a
- * larger pool only produces `SQLITE_BUSY`.
+ * file. It is returned as given: the driver adapter opens exactly one
+ * connection, so there is one writer without asking for one. (The query engine
+ * this replaced pooled connections, and needed `?connection_limit=1` appended
+ * to get the same thing; the adapter would read that suffix as part of the
+ * file's NAME.)
  */
 export const databaseUrl = (): string => {
   const url = process.env.DATABASE_URL;
-
   if (!url) {
     throw new Error('DATABASE_URL is not set — cannot resolve the SQLite database.');
   }
-
-  // A bare `file:` SQLite URL takes Prisma connection params as query string.
-  // Append the single-writer limit unless the caller already specified one.
-  if (url.startsWith('file:') && !url.includes('connection_limit')) {
-    return `${url}${url.includes('?') ? '&' : '?'}connection_limit=1`;
-  }
-
   return url;
 };

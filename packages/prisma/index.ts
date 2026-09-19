@@ -1,4 +1,5 @@
 /// <reference types="@hanzo/esign-prisma/types/types.d.ts" />
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { Prisma, PrismaClient } from '@prisma/client';
 import type { Role, WebhookTriggerEvents } from '@prisma/client';
 import { Kysely, SqliteAdapter, SqliteIntrospector, SqliteQueryCompiler } from 'kysely';
@@ -54,16 +55,16 @@ const listFieldExtension = Prisma.defineExtension({
   },
   query: {
     user: {
-      $allOperations: ({ args, query }) => (encodeListFields('User', args), query(args)),
+      $allOperations: async ({ args, query }) => (encodeListFields('User', args), query(args)),
     },
     webhook: {
-      $allOperations: ({ args, query }) => (encodeListFields('Webhook', args), query(args)),
+      $allOperations: async ({ args, query }) => (encodeListFields('Webhook', args), query(args)),
     },
     passkey: {
-      $allOperations: ({ args, query }) => (encodeListFields('Passkey', args), query(args)),
+      $allOperations: async ({ args, query }) => (encodeListFields('Passkey', args), query(args)),
     },
     organisationAuthenticationPortal: {
-      $allOperations: ({ args, query }) => (
+      $allOperations: async ({ args, query }) => (
         encodeListFields('OrganisationAuthenticationPortal', args),
         query(args)
       ),
@@ -71,8 +72,20 @@ const listFieldExtension = Prisma.defineExtension({
   },
 });
 
+// The driver. Prisma 7 has no query engine of its own: the client is handed an
+// adapter and the adapter holds the connection — ONE connection here, which is
+// the single writer SQLite wants, by construction rather than by a pool limit.
+//
+// `unixepoch-ms` IS NOT A PREFERENCE. The engine this replaces wrote every
+// `DateTime` as an epoch-millisecond INTEGER, so that is what the rows in a
+// deployed sign.db hold and what ./sqlite-sql.ts divides by 1000 to read. The
+// adapter's default is ISO-8601 TEXT: left alone it would start writing strings
+// into columns full of integers, every comparison across the two would order by
+// type instead of by time, and nothing would fail — it would just answer wrong.
 const buildClient = () =>
-  new PrismaClient({ datasourceUrl: databaseUrl() }).$extends(listFieldExtension);
+  new PrismaClient({
+    adapter: new PrismaBetterSqlite3({ url: databaseUrl() }, { timestampFormat: 'unixepoch-ms' }),
+  }).$extends(listFieldExtension);
 
 /** The extended client type, carrying the list-field array result types. */
 export type ExtendedPrismaClient = ReturnType<typeof buildClient>;

@@ -27,7 +27,6 @@ datasource db {
   // (global User/Session, 8 of 47 tables org-rooted) makes file-per-tenant
   // unimplementable without re-architecting global identity.
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 // Todo: (RR7) Remove after RR7 migration.
