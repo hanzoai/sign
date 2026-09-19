@@ -28,7 +28,7 @@ import type { TDefaultRecipients } from '@hanzo/esign-lib/types/default-recipien
 import { ZDefaultRecipientsSchema } from '@hanzo/esign-lib/types/default-recipients';
 import {
   type TDocumentMetaDateFormat,
-  ZDocumentMetaTimezoneSchema,
+  ZDocumentMetaDateFormatSchema,
 } from '@hanzo/esign-lib/types/document-meta';
 import { isPersonalLayout } from '@hanzo/esign-lib/utils/organisations';
 import { recipientAbbreviation } from '@hanzo/esign-lib/utils/recipient-formatter';
@@ -126,7 +126,7 @@ export const DocumentPreferencesForm = ({
     documentVisibility: z.nativeEnum(DocumentVisibility).nullable(),
     documentLanguage: z.enum(SUPPORTED_LANGUAGE_CODES).nullable(),
     documentTimezone: z.string().nullable(),
-    documentDateFormat: ZDocumentMetaTimezoneSchema.nullable(),
+    documentDateFormat: ZDocumentMetaDateFormatSchema.nullable(),
     includeSenderDetails: z.boolean().nullable(),
     includeSigningCertificate: z.boolean().nullable(),
     includeAuditLog: z.boolean().nullable(),
