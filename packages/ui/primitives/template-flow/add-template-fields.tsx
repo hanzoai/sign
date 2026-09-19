@@ -63,6 +63,7 @@ import { FieldAdvancedSettings } from '../document-flow/field-item-advanced-sett
 import { Form } from '../form/form';
 import { useStep } from '../stepper';
 import {
+  type TAddTemplateFieldsFormInput,
   type TAddTemplateFieldsFormSchema,
   ZAddTemplateFieldsFormSchema,
 } from './add-template-fields.types';
@@ -78,7 +79,7 @@ export type AddTemplateFieldsFormProps = {
   recipients: Recipient[];
   fields: Field[];
   onSubmit: (_data: TAddTemplateFieldsFormSchema) => void;
-  onAutoSave: (_data: TAddTemplateFieldsFormSchema) => Promise<void>;
+  onAutoSave: (_data: TAddTemplateFieldsFormInput) => Promise<void>;
   teamId: number;
 };
 
@@ -99,13 +100,13 @@ export const AddTemplateFieldsFormPartial = ({
   const [currentField, setCurrentField] = useState<FieldFormType>();
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
   const [lastActiveField, setLastActiveField] = useState<
-    TAddTemplateFieldsFormSchema['fields'][0] | null
+    TAddTemplateFieldsFormInput['fields'][0] | null
   >(null);
   const [fieldClipboard, setFieldClipboard] = useState<
-    TAddTemplateFieldsFormSchema['fields'][0] | null
+    TAddTemplateFieldsFormInput['fields'][0] | null
   >(null);
 
-  const form = useForm<TAddTemplateFieldsFormSchema>({
+  const form = useForm({
     defaultValues: {
       fields: fields.map((field) => ({
         nativeId: field.id,
@@ -170,7 +171,7 @@ export const AddTemplateFieldsFormPartial = ({
         event?.preventDefault();
 
         if (duplicate) {
-          const newField: TAddTemplateFieldsFormSchema['fields'][0] = {
+          const newField: TAddTemplateFieldsFormInput['fields'][0] = {
             ...structuredClone(lastActiveField),
             nativeId: undefined,
             formId: nanoid(12),
@@ -199,7 +200,7 @@ export const AddTemplateFieldsFormPartial = ({
               continue;
             }
 
-            const newField: TAddTemplateFieldsFormSchema['fields'][0] = {
+            const newField: TAddTemplateFieldsFormInput['fields'][0] = {
               ...structuredClone(lastActiveField),
               nativeId: undefined,
               formId: nanoid(12),
@@ -283,19 +284,19 @@ export const AddTemplateFieldsFormPartial = ({
 
   const emptyCheckboxFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.CHECKBOX),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
   const emptyRadioFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.RADIO),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
   const emptySelectFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.DROPDOWN),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
@@ -583,10 +584,10 @@ export const AddTemplateFieldsFormPartial = ({
               {selectedField && (
                 <div
                   className={cn(
-                    'dark:text-muted-background pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white text-muted-foreground ring-2 transition duration-200 [container-type:size]',
+                    'dark:text-muted-background text-muted-foreground [container-type:size] pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white ring-2 transition duration-200',
                     selectedSignerStyles?.base,
                     {
-                      '-rotate-6 scale-90 opacity-50 dark:bg-black/20': !isFieldWithinBounds,
+                      'scale-90 -rotate-6 opacity-50 dark:bg-black/20': !isFieldWithinBounds,
                       'dark:text-black/60': isFieldWithinBounds,
                     },
                   )}
@@ -652,7 +653,7 @@ export const AddTemplateFieldsFormPartial = ({
                     variant="outline"
                     role="combobox"
                     className={cn(
-                      'mb-12 mt-2 justify-between bg-background font-normal text-muted-foreground hover:text-foreground',
+                      'bg-background text-muted-foreground hover:text-foreground mt-2 mb-12 justify-between font-normal',
                       selectedSignerStyles?.comboxBoxTrigger,
                     )}
                   >
@@ -683,7 +684,7 @@ export const AddTemplateFieldsFormPartial = ({
                     <CommandInput />
 
                     <CommandEmpty>
-                      <span className="inline-block px-4 text-muted-foreground">
+                      <span className="text-muted-foreground inline-block px-4">
                         <Trans>No recipient matching this description was found.</Trans>
                       </span>
                     </CommandEmpty>
@@ -691,14 +692,14 @@ export const AddTemplateFieldsFormPartial = ({
                     {/* Note: This is duplicated in `add-fields.tsx` */}
                     {recipientsByRoleToDisplay.map(([role, roleRecipients], roleIndex) => (
                       <CommandGroup key={roleIndex}>
-                        <div className="mb-1 ml-2 mt-2 text-xs font-medium text-muted-foreground">
+                        <div className="text-muted-foreground mt-2 mb-1 ml-2 text-xs font-medium">
                           {_(RECIPIENT_ROLES_DESCRIPTION[role].roleNamePlural)}
                         </div>
 
                         {roleRecipients.length === 0 && (
                           <div
                             key={`${role}-empty`}
-                            className="px-4 pb-4 pt-2.5 text-center text-xs text-muted-foreground/80"
+                            className="text-muted-foreground/80 px-4 pt-2.5 pb-4 text-center text-xs"
                           >
                             <Trans>No recipients with this role</Trans>
                           </div>
@@ -722,7 +723,7 @@ export const AddTemplateFieldsFormPartial = ({
                             }}
                           >
                             <span
-                              className={cn('truncate text-foreground/70', {
+                              className={cn('text-foreground/70 truncate', {
                                 'text-foreground/80': recipient === selectedSigner,
                               })}
                             >
@@ -770,7 +771,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="flex flex-col items-center justify-center px-6 py-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 font-signature text-lg font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'font-signature text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-lg font-normal',
                             )}
                           >
                             <Trans>Signature</Trans>
@@ -795,7 +796,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="flex flex-col items-center justify-center px-6 py-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Contact className="h-4 w-4" />
@@ -821,7 +822,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Mail className="h-4 w-4" />
@@ -847,7 +848,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <User className="h-4 w-4" />
@@ -873,7 +874,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <CalendarDays className="h-4 w-4" />
@@ -899,7 +900,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Type className="h-4 w-4" />
@@ -925,7 +926,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Hash className="h-4 w-4" />
@@ -951,7 +952,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Disc className="h-4 w-4" />
@@ -977,7 +978,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <CheckSquare className="h-4 w-4" />
@@ -1003,7 +1004,7 @@ export const AddTemplateFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <ChevronDown className="h-4 w-4" />

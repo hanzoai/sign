@@ -24,3 +24,6 @@ export const ZAddSignersFormSchema = z.object({
 });
 
 export type TAddSignersFormSchema = z.infer<typeof ZAddSignersFormSchema>;
+
+// What the form holds, before the schema fills in its defaults.
+export type TAddSignersFormInput = z.input<typeof ZAddSignersFormSchema>;

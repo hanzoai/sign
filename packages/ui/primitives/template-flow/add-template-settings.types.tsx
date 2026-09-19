@@ -50,7 +50,7 @@ export const ZAddTemplateSettingsFormSchema = z.object({
       .default('en'),
     emailId: z.string().nullable(),
     emailReplyTo: z.preprocess(
-      (val) => (val === '' ? undefined : val),
+      (val: string | undefined) => (val === '' ? undefined : val),
       z.string().email().optional(),
     ),
     emailSettings: ZDocumentEmailSettingsSchema,

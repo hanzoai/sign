@@ -16,7 +16,10 @@ import { match } from 'ts-pattern';
 
 import { useAutoSave } from '@hanzo/esign-lib/client-only/hooks/use-autosave';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
-import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@hanzo/esign-lib/constants/date-formats';
+import {
+  DATE_FORMATS,
+  DEFAULT_DOCUMENT_DATE_FORMAT,
+} from '@hanzo/esign-lib/constants/date-formats';
 import { DOCUMENT_SIGNATURE_TYPES } from '@hanzo/esign-lib/constants/document';
 import { SUPPORTED_LANGUAGES } from '@hanzo/esign-lib/constants/i18n';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@hanzo/esign-lib/constants/time-zones';
@@ -101,7 +104,7 @@ export const AddSettingsFormPartial = ({
     documentAuth: document.authOptions,
   });
 
-  const form = useForm<TAddSettingsFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZAddSettingsFormSchema),
     defaultValues: {
       title: document.title,
@@ -481,7 +484,10 @@ export const AddSettingsFormPartial = ({
                               options={TIME_ZONES}
                               {...field}
                               onChange={(value) => {
-                                value && field.onChange(value);
+                                if (value) {
+                                  field.onChange(value);
+                                }
+
                                 void handleAutoSave();
                               }}
                               value={field.value}

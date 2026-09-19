@@ -17,15 +17,15 @@ import type {
   TDistributeDocumentResponse,
 } from '@hanzo/esign-trpc/server/document-router/distribute-document.types';
 import type { TGetDocumentResponse } from '@hanzo/esign-trpc/server/document-router/get-document.types';
-import {
+import type {
   ZUpdateDocumentRequestSchema,
   ZUpdateDocumentResponseSchema,
 } from '@hanzo/esign-trpc/server/document-router/update-document.types';
-import {
+import type {
   ZSetDocumentFieldsRequestSchema,
   ZSetDocumentFieldsResponseSchema,
 } from '@hanzo/esign-trpc/server/field-router/schema';
-import {
+import type {
   ZSetDocumentRecipientsRequestSchema,
   ZSetDocumentRecipientsResponseSchema,
 } from '@hanzo/esign-trpc/server/recipient-router/schema';
@@ -33,13 +33,22 @@ import { useZapMutation, useZapQuery, useZapUtils } from '@hanzo/esign-trpc/zap/
 import { cn } from '@hanzo/esign-ui/lib/utils';
 import { Card, CardContent } from '@hanzo/esign-ui/primitives/card';
 import { AddFieldsFormPartial } from '@hanzo/esign-ui/primitives/document-flow/add-fields';
-import type { TAddFieldsFormSchema } from '@hanzo/esign-ui/primitives/document-flow/add-fields.types';
+import type {
+  TAddFieldsFormInput,
+  TAddFieldsFormSchema,
+} from '@hanzo/esign-ui/primitives/document-flow/add-fields.types';
 import { AddSettingsFormPartial } from '@hanzo/esign-ui/primitives/document-flow/add-settings';
 import type { TAddSettingsFormSchema } from '@hanzo/esign-ui/primitives/document-flow/add-settings.types';
 import { AddSignersFormPartial } from '@hanzo/esign-ui/primitives/document-flow/add-signers';
-import type { TAddSignersFormSchema } from '@hanzo/esign-ui/primitives/document-flow/add-signers.types';
+import type {
+  TAddSignersFormInput,
+  TAddSignersFormSchema,
+} from '@hanzo/esign-ui/primitives/document-flow/add-signers.types';
 import { AddSubjectFormPartial } from '@hanzo/esign-ui/primitives/document-flow/add-subject';
-import type { TAddSubjectFormSchema } from '@hanzo/esign-ui/primitives/document-flow/add-subject.types';
+import type {
+  TAddSubjectFormInput,
+  TAddSubjectFormSchema,
+} from '@hanzo/esign-ui/primitives/document-flow/add-subject.types';
 import { DocumentFlowFormContainer } from '@hanzo/esign-ui/primitives/document-flow/document-flow-root';
 import type { DocumentFlowStep } from '@hanzo/esign-ui/primitives/document-flow/types';
 import { Stepper } from '@hanzo/esign-ui/primitives/stepper';
@@ -94,79 +103,67 @@ export const DocumentEditForm = ({
 
   const { mutateAsync: updateDocument } = useZapMutation<
     z.infer<typeof ZUpdateDocumentResponseSchema>,
-    z.infer<typeof ZUpdateDocumentRequestSchema>
-  >(
-    'document.update',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.setData<TGetDocumentResponse>(
-          'document.get',
-          {
-            documentId: initialDocument.id,
-          },
-          (oldData) => ({ ...(oldData || initialDocument), ...newData }),
-        );
-      },
+    z.input<typeof ZUpdateDocumentRequestSchema>
+  >('document.update', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.setData<TGetDocumentResponse>(
+        'document.get',
+        {
+          documentId: initialDocument.id,
+        },
+        (oldData) => ({ ...(oldData || initialDocument), ...newData }),
+      );
     },
-  );
+  });
 
   const { mutateAsync: addFields } = useZapMutation<
     z.infer<typeof ZSetDocumentFieldsResponseSchema>,
-    z.infer<typeof ZSetDocumentFieldsRequestSchema>
-  >(
-    'field.setFieldsForDocument',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: ({ fields: newFields }) => {
-        utils.setData<TGetDocumentResponse>(
-          'document.get',
-          {
-            documentId: initialDocument.id,
-          },
-          (oldData) => ({ ...(oldData || initialDocument), fields: newFields }),
-        );
-      },
+    z.input<typeof ZSetDocumentFieldsRequestSchema>
+  >('field.setFieldsForDocument', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: ({ fields: newFields }) => {
+      utils.setData<TGetDocumentResponse>(
+        'document.get',
+        {
+          documentId: initialDocument.id,
+        },
+        (oldData) => ({ ...(oldData || initialDocument), fields: newFields }),
+      );
     },
-  );
+  });
 
   const { mutateAsync: setRecipients } = useZapMutation<
     z.infer<typeof ZSetDocumentRecipientsResponseSchema>,
     z.infer<typeof ZSetDocumentRecipientsRequestSchema>
-  >(
-    'recipient.setDocumentRecipients',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: ({ recipients: newRecipients }) => {
-        utils.setData<TGetDocumentResponse>(
-          'document.get',
-          {
-            documentId: initialDocument.id,
-          },
-          (oldData) => ({ ...(oldData || initialDocument), recipients: newRecipients }),
-        );
-      },
+  >('recipient.setDocumentRecipients', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: ({ recipients: newRecipients }) => {
+      utils.setData<TGetDocumentResponse>(
+        'document.get',
+        {
+          documentId: initialDocument.id,
+        },
+        (oldData) => ({ ...(oldData || initialDocument), recipients: newRecipients }),
+      );
     },
-  );
+  });
 
   const { mutateAsync: sendDocument } = useZapMutation<
     TDistributeDocumentResponse,
     TDistributeDocumentRequest
-  >(
-    'document.distribute',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.setData<TGetDocumentResponse>(
-          'document.get',
-          {
-            documentId: initialDocument.id,
-          },
-          (oldData) => ({ ...(oldData || initialDocument), ...newData }),
-        );
-      },
+  >('document.distribute', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.setData<TGetDocumentResponse>(
+        'document.get',
+        {
+          documentId: initialDocument.id,
+        },
+        (oldData) => ({ ...(oldData || initialDocument), ...newData }),
+      );
     },
-  );
+  });
 
   const documentFlow: Record<EditDocumentStep, DocumentFlowStep> = {
     settings: {
@@ -265,7 +262,7 @@ export const DocumentEditForm = ({
     }
   };
 
-  const saveSignersData = async (data: TAddSignersFormSchema) => {
+  const saveSignersData = async (data: TAddSignersFormInput) => {
     return Promise.all([
       updateDocument({
         documentId: document.id,
@@ -287,7 +284,7 @@ export const DocumentEditForm = ({
     ]);
   };
 
-  const onAddSignersFormAutoSave = async (data: TAddSignersFormSchema) => {
+  const onAddSignersFormAutoSave = async (data: TAddSignersFormInput) => {
     try {
       // For autosave, we need to return the recipients response for form state sync
       const [, recipientsResponse] = await Promise.all([
@@ -340,7 +337,7 @@ export const DocumentEditForm = ({
     }
   };
 
-  const saveFieldsData = async (data: TAddFieldsFormSchema) => {
+  const saveFieldsData = async (data: TAddFieldsFormInput) => {
     return addFields({
       documentId: document.id,
       fields: data.fields.map((field) => ({
@@ -375,7 +372,7 @@ export const DocumentEditForm = ({
     }
   };
 
-  const onAddFieldsFormAutoSave = async (data: TAddFieldsFormSchema) => {
+  const onAddFieldsFormAutoSave = async (data: TAddFieldsFormInput) => {
     try {
       await saveFieldsData(data);
       // Don't clear localStorage on auto-save, only on explicit submit
@@ -390,7 +387,7 @@ export const DocumentEditForm = ({
     }
   };
 
-  const saveSubjectData = async (data: TAddSubjectFormSchema) => {
+  const saveSubjectData = async (data: TAddSubjectFormInput) => {
     const { subject, message, distributionMethod, emailId, emailReplyTo, emailSettings } =
       data.meta;
 
@@ -456,7 +453,7 @@ export const DocumentEditForm = ({
     }
   };
 
-  const onAddSubjectFormAutoSave = async (data: TAddSubjectFormSchema) => {
+  const onAddSubjectFormAutoSave = async (data: TAddSubjectFormInput) => {
     try {
       // Save form data without sending the document
       await saveSubjectData(data);
@@ -478,8 +475,6 @@ export const DocumentEditForm = ({
    */
   useEffect(() => {
     void refetchDocument();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
   return (

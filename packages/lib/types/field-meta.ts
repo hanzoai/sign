@@ -227,6 +227,9 @@ export const ZFieldMetaSchema = z
 
 export type TFieldMetaSchema = z.infer<typeof ZFieldMetaSchema>;
 
+// Field meta before parsing, as a form holds it until its resolver runs.
+export type TFieldMetaInput = z.input<typeof ZFieldMetaSchema>;
+
 export const ZFieldAndMetaSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal(FieldType.SIGNATURE),

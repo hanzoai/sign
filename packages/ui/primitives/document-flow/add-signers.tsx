@@ -13,11 +13,11 @@ import { GripVerticalIcon, HelpCircle, Plus, Trash } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { prop, sortBy } from 'remeda';
 
-import { useLimits } from '@hanzo/esign-lib/server-only/limits/provider/client';
 import { useAutoSave } from '@hanzo/esign-lib/client-only/hooks/use-autosave';
 import { useDebouncedValue } from '@hanzo/esign-lib/client-only/hooks/use-debounced-value';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
 import { useSession } from '@hanzo/esign-lib/client-only/providers/session';
+import { useLimits } from '@hanzo/esign-lib/server-only/limits/provider/client';
 import { ZRecipientAuthOptionsSchema } from '@hanzo/esign-lib/types/document-auth';
 import { nanoid } from '@hanzo/esign-lib/universal/id';
 import { canRecipientBeModified as utilCanRecipientBeModified } from '@hanzo/esign-lib/utils/recipients';
@@ -42,7 +42,7 @@ import { Input } from '../input';
 import { useStep } from '../stepper';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip';
 import { useToast } from '../use-toast';
-import type { TAddSignersFormSchema } from './add-signers.types';
+import type { TAddSignersFormInput, TAddSignersFormSchema } from './add-signers.types';
 import { ZAddSignersFormSchema } from './add-signers.types';
 import {
   DocumentFlowFormContainerActions,
@@ -65,7 +65,7 @@ export type AddSignersFormProps = {
   signingOrder?: DocumentSigningOrder | null;
   allowDictateNextSigner?: boolean;
   onSubmit: (_data: TAddSignersFormSchema) => void;
-  onAutoSave: (_data: TAddSignersFormSchema) => Promise<AutoSaveResponse>;
+  onAutoSave: (_data: TAddSignersFormInput) => Promise<AutoSaveResponse>;
   isDocumentPdfLoaded: boolean;
 };
 
@@ -119,7 +119,7 @@ export const AddSignersFormPartial = ({
     },
   ];
 
-  const form = useForm<TAddSignersFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZAddSignersFormSchema),
     defaultValues: {
       signers:
@@ -156,7 +156,7 @@ export const AddSignersFormPartial = ({
 
     const formHasActionAuth = form
       .getValues('signers')
-      .find((signer) => signer.actionAuth.length > 0);
+      .find((signer) => (signer.actionAuth ?? []).length > 0);
 
     return recipientHasAuthOptions !== undefined || formHasActionAuth !== undefined;
   }, [recipients, form]);
@@ -535,7 +535,7 @@ export const AddSignersFormPartial = ({
               control={form.control}
               name="signingOrder"
               render={({ field }) => (
-                <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+                <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
                   <FormControl>
                     <Checkbox
                       {...field}
@@ -575,7 +575,7 @@ export const AddSignersFormPartial = ({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="ml-1 cursor-help text-muted-foreground">
+                        <span className="text-muted-foreground ml-1 cursor-help">
                           <HelpCircle className="h-3.5 w-3.5" />
                         </span>
                       </TooltipTrigger>
@@ -594,7 +594,7 @@ export const AddSignersFormPartial = ({
               control={form.control}
               name="allowDictateNextSigner"
               render={({ field: { value, ...field } }) => (
-                <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+                <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
                   <FormControl>
                     <Checkbox
                       {...field}
@@ -618,7 +618,7 @@ export const AddSignersFormPartial = ({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="ml-1 cursor-help text-muted-foreground">
+                        <span className="text-muted-foreground ml-1 cursor-help">
                           <HelpCircle className="h-3.5 w-3.5" />
                         </span>
                       </TooltipTrigger>
@@ -669,7 +669,7 @@ export const AddSignersFormPartial = ({
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             className={cn('py-1', {
-                              'pointer-events-none rounded-md bg-widget-foreground pt-2':
+                              'bg-widget-foreground pointer-events-none rounded-md pt-2':
                                 snapshot.isDragging,
                             })}
                           >
@@ -688,7 +688,7 @@ export const AddSignersFormPartial = ({
                                   render={({ field }) => (
                                     <FormItem
                                       className={cn(
-                                        'col-span-2 mt-auto flex items-center gap-x-1 space-y-0',
+                                        'col-span-2 mt-auto flex items-center space-y-0 gap-x-1',
                                         {
                                           'mb-6':
                                             form.formState.errors.signers?.[index] &&
@@ -942,18 +942,18 @@ export const AddSignersFormPartial = ({
                 disabled={isSubmitting || signers.length >= remaining.recipients}
                 onClick={() => onAddSigner()}
               >
-                <Plus className="-ml-1 mr-2 h-5 w-5" />
+                <Plus className="mr-2 -ml-1 h-5 w-5" />
                 <Trans>Add Signer</Trans>
               </Button>
 
               <Button
                 type="button"
                 variant="secondary"
-                className="bg-black/5 hover:bg-black/10 dark:bg-muted dark:hover:bg-muted/80"
+                className="dark:bg-muted dark:hover:bg-muted/80 bg-black/5 hover:bg-black/10"
                 disabled={isSubmitting || isUserAlreadyARecipient}
                 onClick={() => onAddSelfSigner()}
               >
-                <Plus className="-ml-1 mr-2 h-5 w-5" />
+                <Plus className="mr-2 -ml-1 h-5 w-5" />
                 <Trans>Add myself</Trans>
               </Button>
             </div>
@@ -968,7 +968,7 @@ export const AddSignersFormPartial = ({
                 />
 
                 <label
-                  className="ml-2 text-sm text-muted-foreground"
+                  className="text-muted-foreground ml-2 text-sm"
                   htmlFor="showAdvancedRecipientSettings"
                 >
                   <Trans>Show advanced settings</Trans>

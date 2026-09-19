@@ -8,7 +8,7 @@ import {
   DEFAULT_DOCUMENT_DATE_FORMAT,
   convertToLocalSystemFormat,
 } from '@hanzo/esign-lib/constants/date-formats';
-import type { TFieldMetaSchema } from '@hanzo/esign-lib/types/field-meta';
+import type { TFieldMetaInput } from '@hanzo/esign-lib/types/field-meta';
 import { fromCheckboxValue } from '@hanzo/esign-lib/universal/field-checkbox';
 
 import { cn } from '../../lib/utils';
@@ -25,7 +25,7 @@ type FieldIconProps = {
     inserted?: boolean;
     customText?: string;
     type: FieldType;
-    fieldMeta?: TFieldMetaSchema | null;
+    fieldMeta?: TFieldMetaInput | null;
     signature?: Signature | null;
   };
   documentMeta?: Pick<DocumentMeta, 'dateFormat'>;
@@ -62,7 +62,7 @@ export const FieldContent = ({ field, documentMeta }: FieldIconProps) => {
         >
           <div className="flex items-center">
             <Checkbox className="h-3 w-3" disabled />
-            <Label className="ml-1.5 text-xs font-normal text-foreground opacity-50">
+            <Label className="text-foreground ml-1.5 text-xs font-normal opacity-50">
               <Trans>Checkbox option</Trans>
             </Label>
           </div>
@@ -90,7 +90,7 @@ export const FieldContent = ({ field, documentMeta }: FieldIconProps) => {
             {item.value && (
               <Label
                 htmlFor={`checkbox-${index}`}
-                className="ml-1.5 text-xs font-normal text-foreground"
+                className="text-foreground ml-1.5 text-xs font-normal"
               >
                 {item.value}
               </Label>
@@ -122,7 +122,7 @@ export const FieldContent = ({ field, documentMeta }: FieldIconProps) => {
               {item.value && (
                 <Label
                   htmlFor={`option-${index}`}
-                  className="ml-1.5 text-xs font-normal text-foreground"
+                  className="text-foreground ml-1.5 text-xs font-normal"
                 >
                   {item.value}
                 </Label>
@@ -140,7 +140,7 @@ export const FieldContent = ({ field, documentMeta }: FieldIconProps) => {
     !field.inserted
   ) {
     return (
-      <div className="flex flex-row items-center py-0.5 text-[clamp(0.07rem,25cqw,0.825rem)] text-sm text-field-card-foreground">
+      <div className="text-field-card-foreground flex flex-row items-center py-0.5 text-sm text-[clamp(0.07rem,25cqw,0.825rem)]">
         <p>
           <Trans>Select</Trans>
         </p>
@@ -196,7 +196,7 @@ export const FieldContent = ({ field, documentMeta }: FieldIconProps) => {
     <div className="flex h-full w-full items-center overflow-hidden">
       <p
         className={cn(
-          'w-full whitespace-pre-wrap text-left text-[clamp(0.07rem,25cqw,0.825rem)] text-foreground duration-200',
+          'text-foreground w-full text-left text-[clamp(0.07rem,25cqw,0.825rem)] whitespace-pre-wrap duration-200',
           {
             '!text-center': textAlign === 'center' || !textToDisplay,
             '!text-right': textAlign === 'right',

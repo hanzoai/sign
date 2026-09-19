@@ -45,7 +45,10 @@ import type { DocumentFlowStep } from '../document-flow/types';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form/form';
 import { useStep } from '../stepper';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip';
-import type { TAddTemplatePlacholderRecipientsFormSchema } from './add-template-placeholder-recipients.types';
+import type {
+  TAddTemplatePlacholderRecipientsFormInput,
+  TAddTemplatePlacholderRecipientsFormSchema,
+} from './add-template-placeholder-recipients.types';
 import { ZAddTemplatePlacholderRecipientsFormSchema } from './add-template-placeholder-recipients.types';
 
 type AutoSaveResponse = {
@@ -60,7 +63,7 @@ export type AddTemplatePlaceholderRecipientsFormProps = {
   allowDictateNextSigner?: boolean;
   templateDirectLink?: TemplateDirectLink | null;
   onSubmit: (_data: TAddTemplatePlacholderRecipientsFormSchema) => void;
-  onAutoSave: (_data: TAddTemplatePlacholderRecipientsFormSchema) => Promise<AutoSaveResponse>;
+  onAutoSave: (_data: TAddTemplatePlacholderRecipientsFormInput) => Promise<AutoSaveResponse>;
   isDocumentPdfLoaded: boolean;
 };
 
@@ -121,7 +124,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
     return mappedRecipients;
   };
 
-  const form = useForm<TAddTemplatePlacholderRecipientsFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZAddTemplatePlacholderRecipientsFormSchema),
     defaultValues: {
       signers: generateDefaultFormSigners(),
@@ -212,7 +215,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
 
     const formHasActionAuth = form
       .getValues('signers')
-      .find((signer) => signer.actionAuth.length > 0);
+      .find((signer) => (signer.actionAuth ?? []).length > 0);
 
     return recipientHasAuthOptions !== undefined || formHasActionAuth !== undefined;
   }, [recipients, form]);
@@ -280,7 +283,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
   };
 
   const isSignerDirectRecipient = (
-    signer: TAddTemplatePlacholderRecipientsFormSchema['signers'][number],
+    signer: TAddTemplatePlacholderRecipientsFormInput['signers'][number],
   ): boolean => {
     return (
       templateDirectLink !== null &&
@@ -462,7 +465,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
               control={form.control}
               name="signingOrder"
               render={({ field }) => (
-                <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+                <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
                   <FormControl>
                     <Checkbox
                       {...field}
@@ -509,7 +512,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
               control={form.control}
               name="allowDictateNextSigner"
               render={({ field: { value, ...field } }) => (
-                <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+                <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
                   <FormControl>
                     <Checkbox
                       {...field}
@@ -533,7 +536,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="ml-1 cursor-help text-muted-foreground">
+                        <span className="text-muted-foreground ml-1 cursor-help">
                           <HelpCircle className="h-3.5 w-3.5" />
                         </span>
                       </TooltipTrigger>
@@ -586,7 +589,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             className={cn('py-1', {
-                              'pointer-events-none rounded-md bg-widget-foreground pt-2':
+                              'bg-widget-foreground pointer-events-none rounded-md pt-2':
                                 snapshot.isDragging,
                             })}
                           >
@@ -603,7 +606,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                   control={form.control}
                                   name={`signers.${index}.signingOrder`}
                                   render={({ field }) => (
-                                    <FormItem className="col-span-2 mt-auto flex items-center gap-x-1 space-y-0">
+                                    <FormItem className="col-span-2 mt-auto flex items-center space-y-0 gap-x-1">
                                       <GripVerticalIcon className="h-5 w-5 flex-shrink-0 opacity-40" />
                                       <FormControl>
                                         <Input
@@ -768,11 +771,11 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                                     <TooltipTrigger className="col-span-1 mt-auto inline-flex h-10 w-10 items-center justify-center text-slate-500 hover:opacity-80">
                                       <Link2Icon className="h-4 w-4" />
                                     </TooltipTrigger>
-                                    <TooltipContent className="z-9999 max-w-md p-4 text-foreground">
-                                      <h3 className="text-lg font-semibold text-foreground">
+                                    <TooltipContent className="text-foreground z-9999 max-w-md p-4">
+                                      <h3 className="text-foreground text-lg font-semibold">
                                         <Trans>Direct link receiver</Trans>
                                       </h3>
-                                      <p className="mt-1 text-muted-foreground">
+                                      <p className="text-muted-foreground mt-1">
                                         <Trans>
                                           This field cannot be modified or deleted. When you share
                                           this template's direct link or add it to your public
@@ -823,13 +826,13 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                 disabled={isSubmitting}
                 onClick={() => onAddPlaceholderRecipient()}
               >
-                <Plus className="-ml-1 mr-2 h-5 w-5" />
+                <Plus className="mr-2 -ml-1 h-5 w-5" />
                 <Trans>Add Placeholder Recipient</Trans>
               </Button>
 
               <Button
                 type="button"
-                className="bg-black/5 hover:bg-black/10 dark:bg-muted dark:hover:bg-muted/80"
+                className="dark:bg-muted dark:hover:bg-muted/80 bg-black/5 hover:bg-black/10"
                 variant="secondary"
                 disabled={
                   isSubmitting ||
@@ -837,7 +840,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                 }
                 onClick={() => onAddPlaceholderSelfRecipient()}
               >
-                <Plus className="-ml-1 mr-2 h-5 w-5" />
+                <Plus className="mr-2 -ml-1 h-5 w-5" />
                 <Trans>Add Myself</Trans>
               </Button>
             </div>
@@ -852,7 +855,7 @@ export const AddTemplatePlaceholderRecipientsFormPartial = ({
                 />
 
                 <label
-                  className="ml-2 text-sm text-muted-foreground"
+                  className="text-muted-foreground ml-2 text-sm"
                   htmlFor="showAdvancedRecipientSettings"
                 >
                   <Trans>Show advanced settings</Trans>

@@ -41,6 +41,9 @@ export const ZDocumentFlowFormSchema = z.object({
 
 export type TDocumentFlowFormSchema = z.infer<typeof ZDocumentFlowFormSchema>;
 
+// What the form holds, before the schema has parsed it.
+export type TDocumentFlowFormInput = z.input<typeof ZDocumentFlowFormSchema>;
+
 export const FRIENDLY_FIELD_TYPE: Record<FieldType, MessageDescriptor> = {
   [FieldType.SIGNATURE]: msg`Signature`,
   [FieldType.FREE_SIGNATURE]: msg`Free Signature`,

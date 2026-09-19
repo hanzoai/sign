@@ -12,15 +12,15 @@ import { useSearchParams } from 'react-router';
 import { useElementBounds } from '@hanzo/esign-lib/client-only/hooks/use-element-bounds';
 import { useIsPageInDom } from '@hanzo/esign-lib/client-only/hooks/use-is-page-in-dom';
 import { PDF_VIEWER_PAGE_SELECTOR } from '@hanzo/esign-lib/constants/pdf-viewer';
-import type { TFieldMetaSchema } from '@hanzo/esign-lib/types/field-meta';
+import type { TFieldMetaInput } from '@hanzo/esign-lib/types/field-meta';
 import { ZCheckboxFieldMeta, ZRadioFieldMeta } from '@hanzo/esign-lib/types/field-meta';
 
 import { useRecipientColors } from '../../lib/recipient-colors';
 import { cn } from '../../lib/utils';
 import { FieldContent } from './field-content';
-import type { TDocumentFlowFormSchema } from './types';
+import type { TDocumentFlowFormInput } from './types';
 
-type Field = TDocumentFlowFormSchema['fields'][0];
+type Field = TDocumentFlowFormInput['fields'][0];
 
 export type FieldItemProps = {
   field: Field;
@@ -189,7 +189,7 @@ const FieldItemInner = ({
 
   const hasFieldMetaValues = (
     fieldType: string,
-    fieldMeta: TFieldMetaSchema,
+    fieldMeta: TFieldMetaInput,
     parser: typeof ZCheckboxFieldMeta | typeof ZRadioFieldMeta,
   ) => {
     if (field.type !== fieldType || !fieldMeta) {
@@ -210,7 +210,7 @@ const FieldItemInner = ({
     [field.fieldMeta],
   );
 
-  const hasCheckedValues = (fieldMeta: TFieldMetaSchema, type: FieldType) => {
+  const hasCheckedValues = (fieldMeta: TFieldMetaInput, type: FieldType) => {
     if (!fieldMeta || (type !== FieldType.RADIO && type !== FieldType.CHECKBOX)) {
       return false;
     }
@@ -279,10 +279,10 @@ const FieldItemInner = ({
         field.fieldMeta?.label && (
           <div
             className={cn(
-              'absolute -top-16 left-0 right-0 rounded-md p-2 text-center text-xs text-gray-700',
+              'absolute -top-16 right-0 left-0 rounded-md p-2 text-center text-xs text-gray-700',
               {
-                'border border-primary bg-foreground/5': !fieldHasCheckedValues,
-                'border border-primary bg-sign-200': fieldHasCheckedValues,
+                'border-primary bg-foreground/5 border': !fieldHasCheckedValues,
+                'border-primary bg-sign-200 border': fieldHasCheckedValues,
               },
             )}
           >
@@ -317,7 +317,7 @@ const FieldItemInner = ({
         <FieldContent field={field} />
 
         {/* On hover, display recipient initials on side of field.  */}
-        <div className="absolute -right-5 top-0 z-20 hidden h-full w-5 items-center justify-center group-hover:flex">
+        <div className="absolute top-0 -right-5 z-20 hidden h-full w-5 items-center justify-center group-hover:flex">
           <div
             className={cn(
               'flex h-5 w-5 flex-col items-center justify-center rounded-r-md text-[0.5rem] font-bold text-white opacity-0 transition duration-200 group-hover/field-item:opacity-100',
@@ -333,35 +333,35 @@ const FieldItemInner = ({
         </div>
 
         {isDevMode && (
-          <div className="absolute -top-20 left-1/2 z-50 -translate-x-1/2 rounded-md border border-border bg-background/95 px-2 py-1 shadow-sm backdrop-blur-sm">
+          <div className="border-border bg-background/95 absolute -top-20 left-1/2 z-50 -translate-x-1/2 rounded-md border px-2 py-1 shadow-sm backdrop-blur-sm">
             <div className="flex flex-col gap-0.5 text-[9px]">
               <span>
                 <span className="text-muted-foreground">
                   <Trans>Pos X:</Trans>
                 </span>
                 &nbsp;
-                <span className="font-mono text-foreground">{field.pageX.toFixed(2)}</span>
+                <span className="text-foreground font-mono">{field.pageX.toFixed(2)}</span>
               </span>
               <span>
                 <span className="text-muted-foreground">
                   <Trans>Pos Y:</Trans>
                 </span>
                 &nbsp;
-                <span className="font-mono text-foreground">{field.pageY.toFixed(2)}</span>
+                <span className="text-foreground font-mono">{field.pageY.toFixed(2)}</span>
               </span>
               <span>
                 <span className="text-muted-foreground">
                   <Trans>Width:</Trans>
                 </span>
                 &nbsp;
-                <span className="font-mono text-foreground">{field.pageWidth.toFixed(2)}</span>
+                <span className="text-foreground font-mono">{field.pageWidth.toFixed(2)}</span>
               </span>
               <span>
                 <span className="text-muted-foreground">
                   <Trans>Height:</Trans>
                 </span>
                 &nbsp;
-                <span className="font-mono text-foreground">{field.pageHeight.toFixed(2)}</span>
+                <span className="text-foreground font-mono">{field.pageHeight.toFixed(2)}</span>
               </span>
             </div>
           </div>

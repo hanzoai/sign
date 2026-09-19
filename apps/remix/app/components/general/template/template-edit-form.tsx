@@ -11,12 +11,12 @@ import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@hanzo/esign-lib/constants/
 import { ZDocumentAccessAuthTypesSchema } from '@hanzo/esign-lib/types/document-auth';
 import type { TTemplate } from '@hanzo/esign-lib/types/template';
 import { getDocumentDataUrlForPdfViewer } from '@hanzo/esign-lib/utils/envelope-download';
-import { ZSetFieldsForTemplateRequestSchema } from '@hanzo/esign-trpc/server/field-router/schema';
-import {
+import type { ZSetFieldsForTemplateRequestSchema } from '@hanzo/esign-trpc/server/field-router/schema';
+import type {
   ZSetTemplateRecipientsRequestSchema,
   ZSetTemplateRecipientsResponseSchema,
 } from '@hanzo/esign-trpc/server/recipient-router/schema';
-import { ZUpdateTemplateRequestSchema } from '@hanzo/esign-trpc/server/template-router/schema';
+import type { ZUpdateTemplateRequestSchema } from '@hanzo/esign-trpc/server/template-router/schema';
 import { useZapMutation, useZapQuery, useZapUtils } from '@hanzo/esign-trpc/zap/react';
 import { cn } from '@hanzo/esign-ui/lib/utils';
 import { Card, CardContent } from '@hanzo/esign-ui/primitives/card';
@@ -24,9 +24,15 @@ import { DocumentFlowFormContainer } from '@hanzo/esign-ui/primitives/document-f
 import type { DocumentFlowStep } from '@hanzo/esign-ui/primitives/document-flow/types';
 import { Stepper } from '@hanzo/esign-ui/primitives/stepper';
 import { AddTemplateFieldsFormPartial } from '@hanzo/esign-ui/primitives/template-flow/add-template-fields';
-import type { TAddTemplateFieldsFormSchema } from '@hanzo/esign-ui/primitives/template-flow/add-template-fields.types';
+import type {
+  TAddTemplateFieldsFormInput,
+  TAddTemplateFieldsFormSchema,
+} from '@hanzo/esign-ui/primitives/template-flow/add-template-fields.types';
 import { AddTemplatePlaceholderRecipientsFormPartial } from '@hanzo/esign-ui/primitives/template-flow/add-template-placeholder-recipients';
-import type { TAddTemplatePlacholderRecipientsFormSchema } from '@hanzo/esign-ui/primitives/template-flow/add-template-placeholder-recipients.types';
+import type {
+  TAddTemplatePlacholderRecipientsFormInput,
+  TAddTemplatePlacholderRecipientsFormSchema,
+} from '@hanzo/esign-ui/primitives/template-flow/add-template-placeholder-recipients.types';
 import { AddTemplateSettingsFormPartial } from '@hanzo/esign-ui/primitives/template-flow/add-template-settings';
 import type { TAddTemplateSettingsFormSchema } from '@hanzo/esign-ui/primitives/template-flow/add-template-settings.types';
 import { useToast } from '@hanzo/esign-ui/primitives/use-toast';
@@ -98,56 +104,53 @@ export const TemplateEditForm = ({
 
   const currentDocumentFlow = documentFlow[step];
 
-  const { mutateAsync: updateTemplateSettings } = useZapMutation<Partial<TTemplate>, z.infer<typeof ZUpdateTemplateRequestSchema>>(
-    'template.updateTemplate',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.setData<TTemplate>(
-          'template.getTemplateById',
-          {
-            templateId: initialTemplate.id,
-          },
-          (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-        );
-      },
+  const { mutateAsync: updateTemplateSettings } = useZapMutation<
+    Partial<TTemplate>,
+    z.infer<typeof ZUpdateTemplateRequestSchema>
+  >('template.updateTemplate', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.setData<TTemplate>(
+        'template.getTemplateById',
+        {
+          templateId: initialTemplate.id,
+        },
+        (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
+      );
     },
-  );
+  });
 
-  const { mutateAsync: addTemplateFields } = useZapMutation<Partial<TTemplate>, z.infer<typeof ZSetFieldsForTemplateRequestSchema>>(
-    'field.setFieldsForTemplate',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.setData<TTemplate>(
-          'template.getTemplateById',
-          {
-            templateId: initialTemplate.id,
-          },
-          (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-        );
-      },
+  const { mutateAsync: addTemplateFields } = useZapMutation<
+    Partial<TTemplate>,
+    z.input<typeof ZSetFieldsForTemplateRequestSchema>
+  >('field.setFieldsForTemplate', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.setData<TTemplate>(
+        'template.getTemplateById',
+        {
+          templateId: initialTemplate.id,
+        },
+        (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
+      );
     },
-  );
+  });
 
   const { mutateAsync: setRecipients } = useZapMutation<
     z.infer<typeof ZSetTemplateRecipientsResponseSchema>,
-    z.infer<typeof ZSetTemplateRecipientsRequestSchema>
-  >(
-    'recipient.setTemplateRecipients',
-    {
-      ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
-      onSuccess: (newData) => {
-        utils.setData<TTemplate>(
-          'template.getTemplateById',
-          {
-            templateId: initialTemplate.id,
-          },
-          (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
-        );
-      },
+    z.input<typeof ZSetTemplateRecipientsRequestSchema>
+  >('recipient.setTemplateRecipients', {
+    ...DO_NOT_INVALIDATE_QUERY_ON_MUTATION,
+    onSuccess: (newData) => {
+      utils.setData<TTemplate>(
+        'template.getTemplateById',
+        {
+          templateId: initialTemplate.id,
+        },
+        (oldData) => ({ ...(oldData || initialTemplate), ...newData }),
+      );
     },
-  );
+  });
 
   const saveSettingsData = async (data: TAddTemplateSettingsFormSchema) => {
     const { signatureTypes } = data.meta;
@@ -206,7 +209,7 @@ export const TemplateEditForm = ({
     }
   };
 
-  const saveTemplatePlaceholderData = async (data: TAddTemplatePlacholderRecipientsFormSchema) => {
+  const saveTemplatePlaceholderData = async (data: TAddTemplatePlacholderRecipientsFormInput) => {
     const [, recipients] = await Promise.all([
       updateTemplateSettings({
         templateId: template.id,
@@ -245,7 +248,7 @@ export const TemplateEditForm = ({
   };
 
   const onAddTemplatePlaceholderFormAutoSave = async (
-    data: TAddTemplatePlacholderRecipientsFormSchema,
+    data: TAddTemplatePlacholderRecipientsFormInput,
   ) => {
     try {
       return await saveTemplatePlaceholderData(data);
@@ -262,7 +265,7 @@ export const TemplateEditForm = ({
     }
   };
 
-  const saveFieldsData = async (data: TAddTemplateFieldsFormSchema) => {
+  const saveFieldsData = async (data: TAddTemplateFieldsFormInput) => {
     return addTemplateFields({
       templateId: template.id,
       fields: data.fields.map((field) => ({
@@ -273,7 +276,7 @@ export const TemplateEditForm = ({
     });
   };
 
-  const onAddFieldsFormAutoSave = async (data: TAddTemplateFieldsFormSchema) => {
+  const onAddFieldsFormAutoSave = async (data: TAddTemplateFieldsFormInput) => {
     try {
       await saveFieldsData(data);
     } catch (err) {
@@ -326,8 +329,6 @@ export const TemplateEditForm = ({
    */
   useEffect(() => {
     void refetchTemplate();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
   return (

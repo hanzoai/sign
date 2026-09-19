@@ -26,6 +26,7 @@ import { useDocumentElement } from '@hanzo/esign-lib/client-only/hooks/use-docum
 import { PDF_VIEWER_PAGE_SELECTOR, getPdfPagesCount } from '@hanzo/esign-lib/constants/pdf-viewer';
 import {
   type TFieldMetaSchema as FieldMeta,
+  type TFieldMetaInput,
   ZFieldMetaSchema,
 } from '@hanzo/esign-lib/types/field-meta';
 import { nanoid } from '@hanzo/esign-lib/universal/id';
@@ -47,7 +48,11 @@ import { Form } from '../form/form';
 import { RecipientSelector } from '../recipient-selector';
 import { useStep } from '../stepper';
 import { useToast } from '../use-toast';
-import { type TAddFieldsFormSchema, ZAddFieldsFormSchema } from './add-fields.types';
+import {
+  type TAddFieldsFormInput,
+  type TAddFieldsFormSchema,
+  ZAddFieldsFormSchema,
+} from './add-fields.types';
 import {
   DocumentFlowFormContainerActions,
   DocumentFlowFormContainerContent,
@@ -77,7 +82,7 @@ export type FieldFormType = {
   pageHeight: number;
   signerEmail: string;
   recipientId: number;
-  fieldMeta?: FieldMeta;
+  fieldMeta?: TFieldMetaInput;
 };
 
 export type AddFieldsFormProps = {
@@ -86,7 +91,7 @@ export type AddFieldsFormProps = {
   recipients: Recipient[];
   fields: Field[];
   onSubmit: (_data: TAddFieldsFormSchema) => void;
-  onAutoSave: (_data: TAddFieldsFormSchema) => Promise<void>;
+  onAutoSave: (_data: TAddFieldsFormInput) => Promise<void>;
   canGoBack?: boolean;
   isDocumentPdfLoaded: boolean;
   teamId: number;
@@ -116,7 +121,7 @@ export const AddFieldsFormPartial = ({
   const [currentField, setCurrentField] = useState<FieldFormType>();
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
 
-  const form = useForm<TAddFieldsFormSchema>({
+  const form = useForm({
     defaultValues: {
       fields: fields.map((field) => ({
         nativeId: field.id,
@@ -173,10 +178,10 @@ export const AddFieldsFormPartial = ({
 
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
   const [selectedSigner, setSelectedSigner] = useState<Recipient | null>(null);
-  const [lastActiveField, setLastActiveField] = useState<TAddFieldsFormSchema['fields'][0] | null>(
+  const [lastActiveField, setLastActiveField] = useState<TAddFieldsFormInput['fields'][0] | null>(
     null,
   );
-  const [fieldClipboard, setFieldClipboard] = useState<TAddFieldsFormSchema['fields'][0] | null>(
+  const [fieldClipboard, setFieldClipboard] = useState<TAddFieldsFormInput['fields'][0] | null>(
     null,
   );
   const selectedSignerIndex = recipients.findIndex((r) => r.id === selectedSigner?.id);
@@ -199,19 +204,19 @@ export const AddFieldsFormPartial = ({
 
   const emptyCheckboxFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.CHECKBOX),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
   const emptyRadioFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.RADIO),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
   const emptySelectFields = useMemo(
     () => filterFieldsWithEmptyValues(localFields, FieldType.DROPDOWN),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [localFields],
   );
 
@@ -415,7 +420,7 @@ export const AddFieldsFormPartial = ({
         event?.preventDefault();
 
         if (duplicate) {
-          const newField: TAddFieldsFormSchema['fields'][0] = {
+          const newField: TAddFieldsFormInput['fields'][0] = {
             ...structuredClone(lastActiveField),
             nativeId: undefined,
             formId: nanoid(12),
@@ -442,7 +447,7 @@ export const AddFieldsFormPartial = ({
               continue;
             }
 
-            const newField: TAddFieldsFormSchema['fields'][0] = {
+            const newField: TAddFieldsFormInput['fields'][0] = {
               ...structuredClone(lastActiveField),
               nativeId: undefined,
               formId: nanoid(12),
@@ -625,10 +630,10 @@ export const AddFieldsFormPartial = ({
               {selectedField && (
                 <div
                   className={cn(
-                    'dark:text-muted-background pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white text-muted-foreground ring-2 transition duration-200 [container-type:size]',
+                    'dark:text-muted-background text-muted-foreground [container-type:size] pointer-events-none fixed z-50 flex cursor-pointer flex-col items-center justify-center rounded-[2px] bg-white ring-2 transition duration-200',
                     selectedSignerStyles?.base,
                     {
-                      '-rotate-6 scale-90 opacity-50 dark:bg-black/20': !isFieldWithinBounds,
+                      'scale-90 -rotate-6 opacity-50 dark:bg-black/20': !isFieldWithinBounds,
                       'dark:text-black/60': isFieldWithinBounds,
                     },
                   )}
@@ -705,7 +710,7 @@ export const AddFieldsFormPartial = ({
                   selectedRecipient={selectedSigner}
                   onSelectedRecipientChange={setSelectedSigner}
                   recipients={recipients}
-                  className="mb-12 mt-2"
+                  className="mt-2 mb-12"
                 />
               )}
 
@@ -727,7 +732,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="flex flex-col items-center justify-center px-6 py-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 font-signature text-lg font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'font-signature text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-lg font-normal',
                             )}
                           >
                             <Trans>Signature</Trans>
@@ -751,7 +756,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="flex flex-col items-center justify-center px-6 py-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Contact className="h-4 w-4" />
@@ -776,7 +781,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="flex flex-col items-center justify-center px-6 py-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Mail className="h-4 w-4" />
@@ -801,7 +806,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <User className="h-4 w-4" />
@@ -826,7 +831,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <CalendarDays className="h-4 w-4" />
@@ -851,7 +856,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Type className="h-4 w-4" />
@@ -876,7 +881,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Hash className="h-4 w-4" />
@@ -901,7 +906,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <Disc className="h-4 w-4" />
@@ -926,7 +931,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <CheckSquare className="h-4 w-4" />
@@ -951,7 +956,7 @@ export const AddFieldsFormPartial = ({
                         <CardContent className="p-4">
                           <p
                             className={cn(
-                              'flex items-center justify-center gap-x-1.5 text-sm font-normal text-muted-foreground group-data-[selected]:text-foreground',
+                              'text-muted-foreground group-data-[selected]:text-foreground flex items-center justify-center gap-x-1.5 text-sm font-normal',
                             )}
                           >
                             <ChevronDown className="h-4 w-4" />

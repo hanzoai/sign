@@ -7,7 +7,7 @@ export const ZAddSubjectFormSchema = z.object({
   meta: z.object({
     emailId: z.string().nullable(),
     emailReplyTo: z.preprocess(
-      (val) => (val === '' ? undefined : val),
+      (val: string | undefined) => (val === '' ? undefined : val),
       z.string().email().optional(),
     ),
     // emailReplyName: z.string().optional(),
@@ -22,3 +22,6 @@ export const ZAddSubjectFormSchema = z.object({
 });
 
 export type TAddSubjectFormSchema = z.infer<typeof ZAddSubjectFormSchema>;
+
+// What the form holds, before the schema fills in its defaults.
+export type TAddSubjectFormInput = z.input<typeof ZAddSubjectFormSchema>;

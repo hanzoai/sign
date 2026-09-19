@@ -65,6 +65,9 @@ export const ZDocumentEmailSettingsSchema = z
 
 export type TDocumentEmailSettings = z.infer<typeof ZDocumentEmailSettingsSchema>;
 
+// The settings as a form holds them, before the schema fills in its defaults.
+export type TDocumentEmailSettingsInput = z.input<typeof ZDocumentEmailSettingsSchema>;
+
 export const extractDerivedDocumentEmailSettings = (
   documentMeta?: DocumentMeta | null,
 ): TDocumentEmailSettings => {

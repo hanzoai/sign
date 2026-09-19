@@ -22,3 +22,6 @@ export const ZAddFieldsFormSchema = z.object({
 });
 
 export type TAddFieldsFormSchema = z.infer<typeof ZAddFieldsFormSchema>;
+
+// What the form holds, before the schema has parsed it.
+export type TAddFieldsFormInput = z.input<typeof ZAddFieldsFormSchema>;

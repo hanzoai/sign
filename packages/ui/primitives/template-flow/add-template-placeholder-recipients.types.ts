@@ -35,3 +35,8 @@ export const ZAddTemplatePlacholderRecipientsFormSchema = z
 export type TAddTemplatePlacholderRecipientsFormSchema = z.infer<
   typeof ZAddTemplatePlacholderRecipientsFormSchema
 >;
+
+// What the form holds, before the schema fills in its defaults.
+export type TAddTemplatePlacholderRecipientsFormInput = z.input<
+  typeof ZAddTemplatePlacholderRecipientsFormSchema
+>;
