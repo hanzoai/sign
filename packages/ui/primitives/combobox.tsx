@@ -13,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './popover';
 type ComboboxProps = {
   className?: string;
   options: string[];
-  value: string | null;
+  value?: string | null;
   onChange: (_value: string | null) => void;
   triggerPlaceholder?: string;
   placeholder?: string;

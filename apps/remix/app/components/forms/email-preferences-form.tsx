@@ -10,8 +10,8 @@ import {
   DEFAULT_DOCUMENT_EMAIL_SETTINGS,
   ZDocumentEmailSettingsSchema,
 } from '@hanzo/esign-lib/types/document-email';
-import { useZapQuery } from '@hanzo/esign-trpc/zap/react';
 import type { TFindOrganisationEmailsResponse } from '@hanzo/esign-trpc/server/organisation-router/find-organisation-emails.types';
+import { useZapQuery } from '@hanzo/esign-trpc/zap/react';
 import { DocumentEmailCheckboxes } from '@hanzo/esign-ui/components/document/document-email-checkboxes';
 import { Button } from '@hanzo/esign-ui/primitives/button';
 import {
@@ -59,7 +59,7 @@ export const EmailPreferencesForm = ({
 }: EmailPreferencesFormProps) => {
   const organisation = useCurrentOrganisation();
 
-  const form = useForm<TEmailPreferencesFormSchema>({
+  const form = useForm({
     defaultValues: {
       emailId: settings.emailId,
       emailReplyTo: settings.emailReplyTo,

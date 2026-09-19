@@ -136,7 +136,7 @@ export const ZAddSettingsFormSchema = z.object({
       .default('en'),
     emailId: z.string().nullable(),
     emailReplyTo: z.preprocess(
-      (val) => (val === '' ? undefined : val),
+      (val: string | undefined) => (val === '' ? undefined : val),
       z.string().email().optional(),
     ),
     emailSettings: ZDocumentEmailSettingsSchema,
@@ -224,7 +224,7 @@ export const EnvelopeEditorSettingsDialog = ({
     };
   };
 
-  const form = useForm<TAddSettingsFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZAddSettingsFormSchema),
     defaultValues: createDefaultValues(),
   });
@@ -363,7 +363,7 @@ export const EnvelopeEditorSettingsDialog = ({
 
       <DialogContent className="flex w-full !max-w-5xl flex-row gap-0 p-0">
         {/* Sidebar. */}
-        <div className="flex w-80 flex-col border-r bg-accent/20">
+        <div className="bg-accent/20 flex w-80 flex-col border-r">
           <DialogHeader className="p-6 pb-4" data-testid="envelope-editor-settings-dialog-header">
             <DialogTitle>
               <Trans>Document Settings</Trans>
@@ -423,7 +423,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                     <InfoIcon className="mx-2 h-4 w-4" />
                                   </TooltipTrigger>
 
-                                  <TooltipContent className="max-w-md space-y-2 p-4 text-foreground">
+                                  <TooltipContent className="text-foreground max-w-md space-y-2 p-4">
                                     <Trans>
                                       Controls the language for the document, including the language
                                       to be used for email notifications, and the final certificate
@@ -479,7 +479,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                   )}
                                   selectedValues={field.value}
                                   onChange={field.onChange}
-                                  className="w-full bg-background"
+                                  className="bg-background w-full"
                                   emptySelectionPlaceholder="Select signature types"
                                 />
                               </FormControl>
@@ -564,7 +564,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                   <InfoIcon className="mx-2 h-4 w-4" />
                                 </TooltipTrigger>
 
-                                <TooltipContent className="max-w-xs text-muted-foreground">
+                                <TooltipContent className="text-muted-foreground max-w-xs">
                                   <Trans>
                                     Add an external ID to the document. This can be used to identify
                                     the document in external systems.
@@ -594,7 +594,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                   <InfoIcon className="mx-2 h-4 w-4" />
                                 </TooltipTrigger>
 
-                                <TooltipContent className="max-w-xs text-muted-foreground">
+                                <TooltipContent className="text-muted-foreground max-w-xs">
                                   <Trans>
                                     Add a URL to redirect the user to once the document is signed
                                   </Trans>
@@ -624,7 +624,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                     <InfoIcon className="mx-2 h-4 w-4" />
                                   </TooltipTrigger>
 
-                                  <TooltipContent className="max-w-md space-y-2 p-4 text-foreground">
+                                  <TooltipContent className="text-foreground max-w-md space-y-2 p-4">
                                     <h2>
                                       <strong>
                                         <Trans>Document Distribution Method</Trans>
@@ -697,7 +697,7 @@ export const EnvelopeEditorSettingsDialog = ({
                                     <InfoIcon className="mx-2 h-4 w-4" />
                                   </TooltipTrigger>
 
-                                  <TooltipContent className="max-w-xs text-muted-foreground">
+                                  <TooltipContent className="text-muted-foreground max-w-xs">
                                     <Trans>
                                       How long recipients have to complete this document after it is
                                       sent. Uses the team default when set to inherit.
@@ -825,14 +825,14 @@ export const EnvelopeEditorSettingsDialog = ({
                                   <TooltipTrigger>
                                     <InfoIcon className="mx-2 h-4 w-4" />
                                   </TooltipTrigger>
-                                  <TooltipContent className="p-4 text-muted-foreground">
+                                  <TooltipContent className="text-muted-foreground p-4">
                                     <DocumentSendEmailMessageHelper />
                                   </TooltipContent>
                                 </Tooltip>
                               </FormLabel>
 
                               <FormControl>
-                                <Textarea className="h-16 resize-none bg-background" {...field} />
+                                <Textarea className="bg-background h-16 resize-none" {...field} />
                               </FormControl>
 
                               <FormMessage />

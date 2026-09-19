@@ -10,7 +10,10 @@ import { z } from 'zod';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
 import { useSession } from '@hanzo/esign-lib/client-only/providers/session';
 import { DATE_FORMATS } from '@hanzo/esign-lib/constants/date-formats';
-import { DOCUMENT_SIGNATURE_TYPES, DocumentSignatureType } from '@hanzo/esign-lib/constants/document';
+import {
+  DOCUMENT_SIGNATURE_TYPES,
+  DocumentSignatureType,
+} from '@hanzo/esign-lib/constants/document';
 import {
   type TEnvelopeExpirationPeriod,
   ZEnvelopeExpirationPeriod,
@@ -136,7 +139,7 @@ export const DocumentPreferencesForm = ({
     envelopeExpirationPeriod: ZEnvelopeExpirationPeriod.nullable(),
   });
 
-  const form = useForm<TDocumentPreferencesFormSchema>({
+  const form = useForm({
     defaultValues: {
       documentVisibility: settings.documentVisibility,
       documentLanguage: isValidLanguageCode(settings.documentLanguage)
@@ -347,7 +350,7 @@ export const DocumentPreferencesForm = ({
                     }))}
                     selectedValues={field.value}
                     onChange={field.onChange}
-                    className="w-full bg-background"
+                    className="bg-background w-full"
                     enableSearch={false}
                     emptySelectionPlaceholder={
                       canInherit ? t`Inherit from organisation` : t`Select signature types`
@@ -413,7 +416,7 @@ export const DocumentPreferencesForm = ({
                   </FormControl>
 
                   <div className="pt-2">
-                    <div className="text-xs font-medium text-muted-foreground">
+                    <div className="text-muted-foreground text-xs font-medium">
                       <Trans>Preview</Trans>
                     </div>
 
@@ -599,7 +602,7 @@ export const DocumentPreferencesForm = ({
                               }
                               secondaryText={
                                 recipient.name ? (
-                                  <span className="text-xs text-muted-foreground">
+                                  <span className="text-muted-foreground text-xs">
                                     {recipient.email}
                                   </span>
                                 ) : undefined

@@ -54,7 +54,7 @@ export default function AdminBannerPage({ loaderData }: Route.ComponentProps) {
   const { _ } = useLingui();
   const { revalidate } = useRevalidator();
 
-  const form = useForm<TBannerFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZBannerFormSchema),
     defaultValues: {
       id: SITE_SETTINGS_BANNER_ID,

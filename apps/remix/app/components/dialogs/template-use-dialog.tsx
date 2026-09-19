@@ -149,7 +149,7 @@ export function TemplateUseDialog({
     };
   };
 
-  const form = useForm<TAddRecipientsForNewDocumentSchema>({
+  const form = useForm({
     resolver: zodResolver(ZAddRecipientsForNewDocumentSchema),
     defaultValues: generateDefaultFormValues(),
   });
@@ -252,7 +252,7 @@ export function TemplateUseDialog({
       <DialogTrigger asChild>
         {trigger || (
           <Button variant="outline" className="bg-background">
-            <Plus className="-ml-1 mr-2 h-4 w-4" />
+            <Plus className="mr-2 -ml-1 h-4 w-4" />
             <Trans>Use Template</Trans>
           </Button>
         )}
@@ -365,7 +365,7 @@ export function TemplateUseDialog({
 
                             {documentDistributionMethod === DocumentDistributionMethod.EMAIL && (
                               <label
-                                className="ml-2 flex items-center text-sm text-muted-foreground"
+                                className="text-muted-foreground ml-2 flex items-center text-sm"
                                 htmlFor="distributeDocument"
                               >
                                 <Trans>Send document</Trans>
@@ -374,7 +374,7 @@ export function TemplateUseDialog({
                                     <InfoIcon className="mx-1 h-4 w-4" />
                                   </TooltipTrigger>
 
-                                  <TooltipContent className="z-[99999] max-w-md space-y-2 p-4 text-muted-foreground">
+                                  <TooltipContent className="text-muted-foreground z-[99999] max-w-md space-y-2 p-4">
                                     <p>
                                       <Trans>
                                         The document will be immediately sent to recipients if this
@@ -394,7 +394,7 @@ export function TemplateUseDialog({
 
                             {documentDistributionMethod === DocumentDistributionMethod.NONE && (
                               <label
-                                className="ml-2 flex items-center text-sm text-muted-foreground"
+                                className="text-muted-foreground ml-2 flex items-center text-sm"
                                 htmlFor="distributeDocument"
                               >
                                 <Trans>Create as pending</Trans>
@@ -402,7 +402,7 @@ export function TemplateUseDialog({
                                   <TooltipTrigger type="button">
                                     <InfoIcon className="mx-1 h-4 w-4" />
                                   </TooltipTrigger>
-                                  <TooltipContent className="z-[99999] max-w-md space-y-2 p-4 text-muted-foreground">
+                                  <TooltipContent className="text-muted-foreground z-[99999] max-w-md space-y-2 p-4">
                                     <p>
                                       <Trans>
                                         Create the document as pending and ready to sign.
@@ -448,7 +448,7 @@ export function TemplateUseDialog({
                           }}
                         />
                         <label
-                          className="ml-2 flex items-center text-sm text-muted-foreground"
+                          className="text-muted-foreground ml-2 flex items-center text-sm"
                           htmlFor="useCustomDocument"
                         >
                           <Trans>Upload custom document</Trans>
@@ -456,7 +456,7 @@ export function TemplateUseDialog({
                             <TooltipTrigger type="button">
                               <InfoIcon className="mx-1 h-4 w-4" />
                             </TooltipTrigger>
-                            <TooltipContent className="z-[99999] max-w-md space-y-2 p-4 text-muted-foreground">
+                            <TooltipContent className="text-muted-foreground z-[99999] max-w-md space-y-2 p-4">
                               <p>
                                 <Trans>
                                   Upload a custom document to use instead of the template's default
@@ -486,19 +486,19 @@ export function TemplateUseDialog({
                               <FormControl>
                                 <div
                                   key={item.id}
-                                  className="flex items-center gap-4 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-accent/10"
+                                  className="border-border bg-card hover:bg-accent/10 flex items-center gap-4 rounded-lg border p-4 transition-colors"
                                 >
                                   <div className="flex-shrink-0">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                                      <FileTextIcon className="h-5 w-5 text-primary" />
+                                    <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                                      <FileTextIcon className="text-primary h-5 w-5" />
                                     </div>
                                   </div>
 
                                   <div className="min-w-0 flex-1">
-                                    <h4 className="truncate text-sm font-medium text-foreground">
+                                    <h4 className="text-foreground truncate text-sm font-medium">
                                       {item.title}
                                     </h4>
-                                    <p className="mt-0.5 text-xs text-muted-foreground">
+                                    <p className="text-muted-foreground mt-0.5 text-xs">
                                       {field.value ? (
                                         <div>
                                           <Trans>

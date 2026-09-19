@@ -65,7 +65,7 @@ export const ZEnvelopeDistributeFormSchema = z.object({
   meta: z.object({
     emailId: z.string().nullable(),
     emailReplyTo: z.preprocess(
-      (val) => (val === '' ? undefined : val),
+      (val: string | undefined) => (val === '' ? undefined : val),
       z.string().email().optional(),
     ),
     subject: z.string(),
@@ -99,7 +99,7 @@ export const EnvelopeDistributeDialog = ({
     'envelope.distribute',
   );
 
-  const form = useForm<TEnvelopeDistributeFormSchema>({
+  const form = useForm({
     defaultValues: {
       meta: {
         emailId: envelope.documentMeta?.emailId ?? null,
@@ -401,7 +401,7 @@ export const EnvelopeDistributeDialog = ({
                                       <TooltipTrigger type="button">
                                         <InfoIcon className="mx-2 h-4 w-4" />
                                       </TooltipTrigger>
-                                      <TooltipContent className="p-4 text-muted-foreground">
+                                      <TooltipContent className="text-muted-foreground p-4">
                                         <DocumentSendEmailMessageHelper />
                                       </TooltipContent>
                                     </Tooltip>
@@ -409,7 +409,7 @@ export const EnvelopeDistributeDialog = ({
 
                                   <FormControl>
                                     <Textarea
-                                      className="mt-2 h-16 resize-none bg-background"
+                                      className="bg-background mt-2 h-16 resize-none"
                                       {...field}
                                       maxLength={5000}
                                     />
@@ -429,7 +429,7 @@ export const EnvelopeDistributeDialog = ({
                         exit={{ opacity: 0, transition: { duration: 0.15 } }}
                         className="min-h-60 rounded-lg border"
                       >
-                        <div className="py-24 text-center text-sm text-muted-foreground">
+                        <div className="text-muted-foreground py-24 text-center text-sm">
                           <p>
                             <Trans>We won't send anything to notify recipients.</Trans>
                           </p>
@@ -477,7 +477,7 @@ export const EnvelopeDistributeDialog = ({
                   <AlertDescription>
                     <Trans>The following signers are missing signature fields:</Trans>
 
-                    <ul className="ml-2 mt-1 list-inside list-disc">
+                    <ul className="mt-1 ml-2 list-inside list-disc">
                       {recipientsMissingSignatureFields.map((recipient) => (
                         <li key={recipient.id}>
                           {recipient.email || recipient.name || t`Recipient ${recipient.index + 1}`}
@@ -490,7 +490,7 @@ export const EnvelopeDistributeDialog = ({
                   <AlertDescription>
                     <Trans>The following recipients require an email address:</Trans>
 
-                    <ul className="ml-2 mt-1 list-inside list-disc">
+                    <ul className="mt-1 ml-2 list-inside list-disc">
                       {recipientsMissingRequiredEmail.map((recipient) => (
                         <li key={recipient.id}>
                           {recipient.email || recipient.name || t`Recipient ${recipient.index + 1}`}

@@ -27,13 +27,16 @@ import { Input } from '@hanzo/esign-ui/primitives/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@hanzo/esign-ui/primitives/tooltip';
 
 import { useConfigureDocument } from './configure-document-context';
-import type { TConfigureEmbedFormSchema } from './configure-document-view.types';
+import type {
+  TConfigureEmbedFormInput,
+  TConfigureEmbedFormSchema,
+} from './configure-document-view.types';
 
 // Define a type for signer items
 type SignerItem = TConfigureEmbedFormSchema['signers'][number];
 
 export interface ConfigureDocumentRecipientsProps {
-  control: Control<TConfigureEmbedFormSchema>;
+  control: Control<TConfigureEmbedFormInput, unknown, TConfigureEmbedFormSchema>;
   isSubmitting: boolean;
 }
 
@@ -57,7 +60,11 @@ export const ConfigureDocumentRecipients = ({
     name: 'signers',
   });
 
-  const { getValues, watch, setValue } = useFormContext<TConfigureEmbedFormSchema>();
+  const { getValues, watch, setValue } = useFormContext<
+    TConfigureEmbedFormInput,
+    unknown,
+    TConfigureEmbedFormSchema
+  >();
 
   const signingOrder = watch('meta.signingOrder');
 
@@ -158,7 +165,7 @@ export const ConfigureDocumentRecipients = ({
         control={control}
         name="meta.signingOrder"
         render={({ field }) => (
-          <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+          <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
             <FormControl>
               <Checkbox
                 {...field}
@@ -186,7 +193,7 @@ export const ConfigureDocumentRecipients = ({
         control={control}
         name="meta.allowDictateNextSigner"
         render={({ field: { value, ...field } }) => (
-          <FormItem className="mb-6 flex flex-row items-center space-x-2 space-y-0">
+          <FormItem className="mb-6 flex flex-row items-center space-y-0 space-x-2">
             <FormControl>
               <Checkbox
                 {...field}
@@ -276,7 +283,7 @@ export const ConfigureDocumentRecipients = ({
                                     type="number"
                                     max={signers.length}
                                     min={1}
-                                    className="w-full text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                    className="w-full [appearance:textfield] text-center [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                     {...field}
                                     disabled={isSubmitting || snapshot.isDragging}
                                     onChange={(e) => {
@@ -403,7 +410,7 @@ export const ConfigureDocumentRecipients = ({
           disabled={isSubmitting}
           onClick={onAddSigner}
         >
-          <Plus className="-ml-1 mr-2 h-5 w-5" />
+          <Plus className="mr-2 -ml-1 h-5 w-5" />
           <Trans>Add Signer</Trans>
         </Button>
       </div>

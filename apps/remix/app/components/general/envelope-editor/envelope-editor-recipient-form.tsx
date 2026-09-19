@@ -16,13 +16,13 @@ import { useFieldArray, useWatch } from 'react-hook-form';
 import { useRevalidator, useSearchParams } from 'react-router';
 import { isDeepEqual } from 'remeda';
 
-import { useLimits } from '@hanzo/esign-lib/server-only/limits/provider/client';
 import { useDebouncedValue } from '@hanzo/esign-lib/client-only/hooks/use-debounced-value';
 import { ZEditorRecipientsFormSchema } from '@hanzo/esign-lib/client-only/hooks/use-editor-recipients';
 import { useCurrentEnvelopeEditor } from '@hanzo/esign-lib/client-only/providers/envelope-editor-provider';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
 import { useOptionalSession } from '@hanzo/esign-lib/client-only/providers/session';
 import type { TDetectedRecipientSchema } from '@hanzo/esign-lib/server-only/ai/envelope/detect-recipients/schema';
+import { useLimits } from '@hanzo/esign-lib/server-only/limits/provider/client';
 import { ZRecipientAuthOptionsSchema } from '@hanzo/esign-lib/types/document-auth';
 import { nanoid } from '@hanzo/esign-lib/universal/id';
 import { canRecipientBeModified as utilCanRecipientBeModified } from '@hanzo/esign-lib/utils/recipients';
@@ -162,7 +162,7 @@ export const EnvelopeEditorRecipientForm = () => {
 
     const formHasActionAuth = form
       .getValues('signers')
-      .find((signer) => signer.actionAuth.length > 0);
+      .find((signer) => (signer.actionAuth ?? []).length > 0);
 
     return recipientHasAuthOptions !== undefined || formHasActionAuth !== undefined;
   }, [recipients, form]);
@@ -658,7 +658,7 @@ export const EnvelopeEditorRecipientForm = () => {
             disabled={isSubmitting || signers.length >= remaining.recipients}
             onClick={() => onAddSigner()}
           >
-            <PlusIcon className="-ml-1 mr-1 h-5 w-5" />
+            <PlusIcon className="mr-1 -ml-1 h-5 w-5" />
             <Trans>Add Signer</Trans>
           </Button>
         </div>
@@ -667,7 +667,7 @@ export const EnvelopeEditorRecipientForm = () => {
       <CardContent>
         <Form {...form}>
           <div
-            className={cn('-mt-2 mb-2 space-y-4 rounded-md bg-accent/50 p-4', {
+            className={cn('bg-accent/50 -mt-2 mb-2 space-y-4 rounded-md p-4', {
               hidden:
                 !editorConfig.recipients?.allowConfigureSigningOrder &&
                 !organisation.organisationClaim.flags.cfr21,
@@ -695,7 +695,7 @@ export const EnvelopeEditorRecipientForm = () => {
                 control={form.control}
                 name="signingOrder"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                  <FormItem className="flex flex-row items-center space-y-0 space-x-2">
                     <FormControl>
                       <Checkbox
                         {...field}
@@ -735,7 +735,7 @@ export const EnvelopeEditorRecipientForm = () => {
 
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className="ml-1 cursor-help text-muted-foreground">
+                          <span className="text-muted-foreground ml-1 cursor-help">
                             <HelpCircleIcon className="h-3.5 w-3.5" />
                           </span>
                         </TooltipTrigger>
@@ -756,7 +756,7 @@ export const EnvelopeEditorRecipientForm = () => {
                 control={form.control}
                 name="allowDictateNextSigner"
                 render={({ field: { value, ...field } }) => (
-                  <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                  <FormItem className="flex flex-row items-center space-y-0 space-x-2">
                     <FormControl>
                       <Checkbox
                         {...field}
@@ -779,7 +779,7 @@ export const EnvelopeEditorRecipientForm = () => {
 
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className="ml-1 cursor-help text-muted-foreground">
+                          <span className="text-muted-foreground ml-1 cursor-help">
                             <HelpCircleIcon className="h-3.5 w-3.5" />
                           </span>
                         </TooltipTrigger>
@@ -838,7 +838,7 @@ export const EnvelopeEditorRecipientForm = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             className={cn('py-1', {
-                              'pointer-events-none rounded-md bg-widget-foreground pt-2':
+                              'bg-widget-foreground pointer-events-none rounded-md pt-2':
                                 snapshot.isDragging,
                             })}
                           >
@@ -860,7 +860,7 @@ export const EnvelopeEditorRecipientForm = () => {
                                     render={({ field }) => (
                                       <FormItem
                                         className={cn(
-                                          'mt-auto flex items-center gap-x-1 space-y-0',
+                                          'mt-auto flex items-center space-y-0 gap-x-1',
                                           {
                                             'mb-6':
                                               form.formState.errors.signers?.[index] &&

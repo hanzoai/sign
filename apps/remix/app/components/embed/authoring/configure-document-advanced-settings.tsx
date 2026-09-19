@@ -35,10 +35,13 @@ import { Textarea } from '@hanzo/esign-ui/primitives/textarea';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@hanzo/esign-ui/primitives/tooltip';
 
 import { useConfigureDocument } from './configure-document-context';
-import type { TConfigureEmbedFormSchema } from './configure-document-view.types';
+import type {
+  TConfigureEmbedFormInput,
+  TConfigureEmbedFormSchema,
+} from './configure-document-view.types';
 
 interface ConfigureDocumentAdvancedSettingsProps {
-  control: Control<TConfigureEmbedFormSchema>;
+  control: Control<TConfigureEmbedFormInput, unknown, TConfigureEmbedFormSchema>;
   isSubmitting: boolean;
 }
 
@@ -48,7 +51,7 @@ export const ConfigureDocumentAdvancedSettings = ({
 }: ConfigureDocumentAdvancedSettingsProps) => {
   const { _ } = useLingui();
 
-  const form = useFormContext<TConfigureEmbedFormSchema>();
+  const form = useFormContext<TConfigureEmbedFormInput, unknown, TConfigureEmbedFormSchema>();
   const { features } = useConfigureDocument();
 
   const { watch, setValue } = form;
@@ -98,7 +101,7 @@ export const ConfigureDocumentAdvancedSettings = ({
                           label: _(option.label),
                           value: option.value,
                         }))}
-                        selectedValues={field.value}
+                        selectedValues={field.value ?? []}
                         onChange={field.onChange}
                         className="bg-background w-full"
                         emptySelectionPlaceholder={t`Select signature types`}

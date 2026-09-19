@@ -44,7 +44,7 @@ export const ConfigureDocumentView = ({
 }: ConfigureDocumentViewProps) => {
   const { isTemplate } = useConfigureDocument();
 
-  const form = useForm<TConfigureEmbedFormSchema>({
+  const form = useForm({
     resolver: zodResolver(
       type === 'template' ? ZConfigureTemplateEmbedFormSchema : ZConfigureEmbedFormSchema,
     ),

@@ -34,6 +34,9 @@ export const ZEditorRecipientsFormSchema = z.object({
 
 export type TEditorRecipientsFormSchema = z.infer<typeof ZEditorRecipientsFormSchema>;
 
+// What the form holds while it is edited, before the schema fills in its defaults.
+export type TEditorRecipientsFormInput = z.input<typeof ZEditorRecipientsFormSchema>;
+
 type EditorRecipientsProps = {
   envelope: TEditorEnvelope;
 };
@@ -44,7 +47,7 @@ type ResetFormOptions = {
 };
 
 type UseEditorRecipientsResponse = {
-  form: UseFormReturn<TEditorRecipientsFormSchema>;
+  form: UseFormReturn<TEditorRecipientsFormInput, unknown, TEditorRecipientsFormSchema>;
   resetForm: (options?: ResetFormOptions) => void;
 };
 
@@ -88,7 +91,7 @@ export const useEditorRecipients = ({
     };
   };
 
-  const form = useForm<TEditorRecipientsFormSchema>({
+  const form = useForm({
     defaultValues: generateDefaultValues(),
     resolver: zodResolver(ZEditorRecipientsFormSchema),
     mode: 'onChange', // Used for autosave purposes, maybe can try onBlur instead?

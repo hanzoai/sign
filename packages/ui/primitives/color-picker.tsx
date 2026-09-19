@@ -8,7 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 export type ColorPickerProps = {
   disabled?: boolean;
-  value: string;
+  value?: string;
   defaultValue?: string;
   onChange: (color: string) => void;
 } & HTMLAttributes<HTMLDivElement>;

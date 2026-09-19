@@ -11,6 +11,9 @@ import { DocumentDistributionMethod } from '@hanzo/esign-prisma/generated/types'
 // Define the schema for configuration
 export type TConfigureEmbedFormSchema = z.infer<typeof ZConfigureEmbedFormSchema>;
 
+// What the form holds, before the schema fills in its defaults.
+export type TConfigureEmbedFormInput = z.input<typeof ZConfigureEmbedFormSchema>;
+
 export const ZConfigureEmbedFormSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
   signers: z

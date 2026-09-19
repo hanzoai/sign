@@ -20,7 +20,10 @@ import {
 import { useToast } from '@hanzo/esign-ui/primitives/use-toast';
 
 import { useConfigureDocument } from './configure-document-context';
-import type { TConfigureEmbedFormSchema } from './configure-document-view.types';
+import type {
+  TConfigureEmbedFormInput,
+  TConfigureEmbedFormSchema,
+} from './configure-document-view.types';
 
 export interface ConfigureDocumentUploadProps {
   isSubmitting?: boolean;
@@ -31,7 +34,7 @@ export const ConfigureDocumentUpload = ({ isSubmitting = false }: ConfigureDocum
   const { toast } = useToast();
   const { isPersisted } = useConfigureDocument();
 
-  const form = useFormContext<TConfigureEmbedFormSchema>();
+  const form = useFormContext<TConfigureEmbedFormInput, unknown, TConfigureEmbedFormSchema>();
 
   const [isLoading, setIsLoading] = useState(false);
 
