@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import type { TooltipProps } from 'recharts';
+import type { TooltipContentProps } from 'recharts';
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
@@ -12,7 +12,12 @@ export type MonthlyActiveUsersChartProps = {
   data: GetMonthlyActiveUsersResult;
 };
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
+// Rendered as <CustomTooltip />, which recharts clones with the tooltip's props.
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: Partial<TooltipContentProps<ValueType, NameType>>) => {
   if (active && payload && payload.length) {
     return (
       <div className="z-100 w-60 space-y-1 rounded-md border border-solid bg-white p-2 px-3">
@@ -61,7 +66,6 @@ export const MonthlyActiveUsersChart = ({
               fill="hsl(var(--primary))"
               radius={[4, 4, 0, 0]}
               maxBarSize={60}
-              label={cummulative ? 'Cumulative MAU' : 'Monthly Active Users'}
             />
           </BarChart>
         </ResponsiveContainer>

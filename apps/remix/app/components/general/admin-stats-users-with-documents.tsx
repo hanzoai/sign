@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import type { TooltipProps } from 'recharts';
+import type { TooltipContentProps } from 'recharts';
 import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
 import type { GetUserWithDocumentMonthlyGrowth } from '@hanzo/esign-lib/server-only/admin/get-users-stats';
@@ -13,12 +13,13 @@ export type AdminStatsUsersWithDocumentsChartProps = {
   tooltip?: string;
 };
 
+// Rendered as <CustomTooltip />, which recharts clones with the tooltip's props.
 const CustomTooltip = ({
   active,
   payload,
   label,
   tooltip,
-}: TooltipProps<ValueType, NameType> & { tooltip?: string }) => {
+}: Partial<TooltipContentProps<ValueType, NameType>> & { tooltip?: string }) => {
   if (active && payload && payload.length) {
     return (
       <div className="z-100 w-60 space-y-1 rounded-md border border-solid bg-white p-2 px-3">
@@ -78,13 +79,7 @@ export const AdminStatsUsersWithDocumentsChart = ({
               cursor={{ fill: 'hsl(var(--primary) / 10%)' }}
             />
 
-            <Bar
-              dataKey="count"
-              fill="hsl(var(--primary))"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={60}
-              label={tooltip}
-            />
+            <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} maxBarSize={60} />
           </BarChart>
         </ResponsiveContainer>
       </div>

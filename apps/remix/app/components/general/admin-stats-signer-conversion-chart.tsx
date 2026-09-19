@@ -52,7 +52,6 @@ export const AdminStatsSignerConversionChart = ({
               fill="hsl(var(--primary))"
               radius={[4, 4, 0, 0]}
               maxBarSize={60}
-              label="Recipients"
             />
           </BarChart>
         </ResponsiveContainer>
