@@ -8,6 +8,17 @@ import { env } from '../../utils/env';
 import type { JobDefinition, JobRunIO, SimpleTriggerJobOptions } from './_internal/job';
 import { BaseJobProvider } from './base';
 
+/**
+ * A job trigger as the Inngest event that starts the job: the payload travels
+ * as the event's data and the timestamp as its `ts`.
+ */
+export const toInngestEvent = ({ id, name, payload, timestamp }: SimpleTriggerJobOptions) => ({
+  id,
+  name,
+  data: payload,
+  ts: timestamp,
+});
+
 export class InngestJobProvider extends BaseJobProvider {
   private static _instance: InngestJobProvider;
 
@@ -36,7 +47,7 @@ export class InngestJobProvider extends BaseJobProvider {
   }
 
   public defineJob<N extends string, T>(job: JobDefinition<N, T>): void {
-    const triggerConfig: { cron: string } | { event: N } = job.trigger.cron
+    const trigger: { cron: string } | { event: string } = job.trigger.cron
       ? { cron: job.trigger.cron }
       : { event: job.trigger.name };
 
@@ -45,8 +56,8 @@ export class InngestJobProvider extends BaseJobProvider {
         id: job.id,
         name: job.name,
         optimizeParallelism: job.optimizeParallelism ?? false,
+        triggers: trigger,
       },
-      triggerConfig,
       async (ctx) => {
         const io = this.convertInngestIoToJobRunIo(ctx);
 
@@ -66,12 +77,7 @@ export class InngestJobProvider extends BaseJobProvider {
   }
 
   public async triggerJob(options: SimpleTriggerJobOptions): Promise<void> {
-    await this._client.send({
-      id: options.id,
-      name: options.name,
-      data: options.payload,
-      ts: options.timestamp,
-    });
+    await this._client.send(toInngestEvent(options));
   }
 
   public getApiHandler() {
@@ -104,11 +110,7 @@ export class InngestJobProvider extends BaseJobProvider {
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
         return result as any;
       },
-      triggerJob: async (cacheKey, payload) =>
-        step.sendEvent(cacheKey, {
-          ...payload,
-          timestamp: payload.timestamp,
-        }),
+      triggerJob: async (cacheKey, options) => step.sendEvent(cacheKey, toInngestEvent(options)),
     } satisfies JobRunIO;
   }
 }
