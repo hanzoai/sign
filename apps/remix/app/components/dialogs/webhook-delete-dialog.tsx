@@ -8,6 +8,7 @@ import type { Webhook } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import type { TDeleteWebhookRequestSchema } from '@hanzo/esign-trpc/server/webhook-router/schema';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Button } from '@hanzo/esign-ui/primitives/button';
@@ -50,9 +51,10 @@ export const WebhookDeleteDialog = ({ webhook, children }: WebhookDeleteDialogPr
   const deleteMessage = _(msg`delete ${webhook.webhookUrl}`);
 
   const ZDeleteWebhookFormSchema = z.object({
-    webhookUrl: z.literal(deleteMessage, {
-      errorMap: () => ({ message: _(msg`You must enter '${deleteMessage}' to proceed`) }),
-    }),
+    webhookUrl: createConfirmationSchema(
+      deleteMessage,
+      _(msg`You must enter '${deleteMessage}' to proceed`),
+    ),
   });
 
   type TDeleteWebhookFormSchema = z.infer<typeof ZDeleteWebhookFormSchema>;

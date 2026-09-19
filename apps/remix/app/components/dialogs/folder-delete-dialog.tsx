@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { AppError, AppErrorCode } from '@hanzo/esign-lib/errors/app-error';
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import type { TFolderWithSubfolders } from '@hanzo/esign-trpc/server/folder-router/schema';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Alert, AlertDescription } from '@hanzo/esign-ui/primitives/alert';
@@ -46,9 +47,10 @@ export const FolderDeleteDialog = ({ folder, isOpen, onOpenChange }: FolderDelet
   const deleteMessage = t`delete ${folder.name}`;
 
   const ZDeleteFolderFormSchema = z.object({
-    confirmText: z.literal(deleteMessage, {
-      errorMap: () => ({ message: t`You must type '${deleteMessage}' to confirm` }),
-    }),
+    confirmText: createConfirmationSchema(
+      deleteMessage,
+      t`You must type '${deleteMessage}' to confirm`,
+    ),
   });
 
   type TDeleteFolderFormSchema = z.infer<typeof ZDeleteFolderFormSchema>;
@@ -134,7 +136,7 @@ export const FolderDeleteDialog = ({ folder, isOpen, onOpenChange }: FolderDelet
                     <FormLabel>
                       <Trans>
                         Confirm by typing:{' '}
-                        <span className="font-sm font-semibold text-destructive">
+                        <span className="font-sm text-destructive font-semibold">
                           {deleteMessage}
                         </span>
                       </Trans>

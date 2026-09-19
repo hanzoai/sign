@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
 import { useSession } from '@hanzo/esign-lib/client-only/providers/session';
 import { AppError } from '@hanzo/esign-lib/errors/app-error';
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import type { ZDeleteTeamRequestSchema } from '@hanzo/esign-trpc/server/team-router/delete-team.types';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Button } from '@hanzo/esign-ui/primitives/button';
@@ -69,9 +70,10 @@ export const TeamDeleteDialog = ({
   const filteredTeams = currentOrganisation.teams.filter((team) => team.id !== teamId);
 
   const ZDeleteTeamFormSchema = z.object({
-    teamName: z.literal(deleteMessage, {
-      errorMap: () => ({ message: _(msg`You must enter '${deleteMessage}' to proceed`) }),
-    }),
+    teamName: createConfirmationSchema(
+      deleteMessage,
+      _(msg`You must enter '${deleteMessage}' to proceed`),
+    ),
     transferTeamId: z.string().optional(),
   });
 

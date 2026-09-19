@@ -8,6 +8,7 @@ import type { ApiToken } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Button } from '@hanzo/esign-ui/primitives/button';
 import {
@@ -49,21 +50,22 @@ export default function TokenDeleteDialog({ token, onDelete, children }: TokenDe
   const deleteMessage = _(msg`delete ${token.name}`);
 
   const ZTokenDeleteDialogSchema = z.object({
-    tokenName: z.literal(deleteMessage, {
-      errorMap: () => ({ message: _(msg`You must enter '${deleteMessage}' to proceed`) }),
-    }),
+    tokenName: createConfirmationSchema(
+      deleteMessage,
+      _(msg`You must enter '${deleteMessage}' to proceed`),
+    ),
   });
 
   type TDeleteTokenByIdMutationSchema = z.infer<typeof ZTokenDeleteDialogSchema>;
 
-  const { mutateAsync: deleteTokenMutation } = useZapMutation<
-    void,
-    { id: number; teamId: number }
-  >('apiToken.delete', {
-    onSuccess() {
-      onDelete?.();
+  const { mutateAsync: deleteTokenMutation } = useZapMutation<void, { id: number; teamId: number }>(
+    'apiToken.delete',
+    {
+      onSuccess() {
+        onDelete?.();
+      },
     },
-  });
+  );
 
   const form = useForm<TDeleteTokenByIdMutationSchema>({
     resolver: zodResolver(ZTokenDeleteDialogSchema),

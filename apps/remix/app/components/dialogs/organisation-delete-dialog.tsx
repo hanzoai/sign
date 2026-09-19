@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
 import { useSession } from '@hanzo/esign-lib/client-only/providers/session';
 import { AppError } from '@hanzo/esign-lib/errors/app-error';
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Button } from '@hanzo/esign-ui/primitives/button';
 import {
@@ -50,9 +51,10 @@ export const OrganisationDeleteDialog = ({ trigger }: OrganisationDeleteDialogPr
   const deleteMessage = _(msg`delete ${organisation.name}`);
 
   const ZDeleteOrganisationFormSchema = z.object({
-    organisationName: z.literal(deleteMessage, {
-      errorMap: () => ({ message: _(msg`You must enter '${deleteMessage}' to proceed`) }),
-    }),
+    organisationName: createConfirmationSchema(
+      deleteMessage,
+      _(msg`You must enter '${deleteMessage}' to proceed`),
+    ),
   });
 
   const form = useForm({

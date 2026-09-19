@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useCurrentOrganisation } from '@hanzo/esign-lib/client-only/providers/organisation';
+import { createConfirmationSchema } from '@hanzo/esign-lib/types/confirmation';
 import { useZapMutation } from '@hanzo/esign-trpc/zap/react';
 import { Button } from '@hanzo/esign-ui/primitives/button';
 import {
@@ -50,9 +51,10 @@ export const OrganisationEmailDomainDeleteDialog = ({
   const deleteMessage = t`delete ${emailDomain}`;
 
   const ZDeleteEmailDomainFormSchema = z.object({
-    confirmText: z.literal(deleteMessage, {
-      errorMap: () => ({ message: t`You must type '${deleteMessage}' to confirm` }),
-    }),
+    confirmText: createConfirmationSchema(
+      deleteMessage,
+      t`You must type '${deleteMessage}' to confirm`,
+    ),
   });
 
   const form = useForm<z.infer<typeof ZDeleteEmailDomainFormSchema>>({
