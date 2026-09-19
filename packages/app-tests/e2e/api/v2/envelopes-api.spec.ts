@@ -25,7 +25,10 @@ import type {
   TCreateEnvelopeResponse,
 } from '@hanzo/esign-trpc/server/envelope-router/create-envelope.types';
 import type { TDistributeEnvelopeRequest } from '@hanzo/esign-trpc/server/envelope-router/distribute-envelope.types';
-import type { TCreateEnvelopeRecipientsRequest } from '@hanzo/esign-trpc/server/envelope-router/envelope-recipients/create-envelope-recipients.types';
+import type {
+  TCreateEnvelopeRecipientsRequest,
+  TCreateEnvelopeRecipientsResponse,
+} from '@hanzo/esign-trpc/server/envelope-router/envelope-recipients/create-envelope-recipients.types';
 import type { TUpdateEnvelopeRecipientsRequest } from '@hanzo/esign-trpc/server/envelope-router/envelope-recipients/update-envelope-recipients.types';
 import type { TFindEnvelopesResponse } from '@hanzo/esign-trpc/server/envelope-router/find-envelopes.types';
 import type { TGetEnvelopeResponse } from '@hanzo/esign-trpc/server/envelope-router/get-envelope.types';
@@ -813,7 +816,8 @@ test.describe('API V2 Envelopes', () => {
       expect(createRecipientsRes.ok()).toBeTruthy();
       expect(createRecipientsRes.status()).toBe(200);
 
-      const recipientsResponse = await createRecipientsRes.json();
+      const recipientsResponse: TCreateEnvelopeRecipientsResponse =
+        await createRecipientsRes.json();
       const recipient = recipientsResponse.data[0];
 
       expect(recipient.email).toBe('');
@@ -903,7 +907,8 @@ test.describe('API V2 Envelopes', () => {
       });
 
       expect(createRecipientsRes.ok()).toBeTruthy();
-      const recipientsResponse = await createRecipientsRes.json();
+      const recipientsResponse: TCreateEnvelopeRecipientsResponse =
+        await createRecipientsRes.json();
       const recipient = recipientsResponse.data[0];
 
       expect(recipient.email).toBe('');
@@ -1047,7 +1052,8 @@ test.describe('API V2 Envelopes', () => {
       });
 
       expect(createRecipientsRes.ok()).toBeTruthy();
-      const recipientsResponse = await createRecipientsRes.json();
+      const recipientsResponse: TCreateEnvelopeRecipientsResponse =
+        await createRecipientsRes.json();
       const recipients = recipientsResponse.data;
 
       expect(recipients.length).toBe(4);
@@ -1142,7 +1148,8 @@ test.describe('API V2 Envelopes', () => {
       });
 
       expect(createRecipientsRes.ok()).toBeTruthy();
-      const recipientsResponse = await createRecipientsRes.json();
+      const recipientsResponse: TCreateEnvelopeRecipientsResponse =
+        await createRecipientsRes.json();
       const recipients = recipientsResponse.data;
 
       // Get envelope to assign fields
@@ -1247,7 +1254,8 @@ test.describe('API V2 Envelopes', () => {
       });
 
       expect(createRecipientsRes.ok()).toBeTruthy();
-      const recipientsResponse = await createRecipientsRes.json();
+      const recipientsResponse: TCreateEnvelopeRecipientsResponse =
+        await createRecipientsRes.json();
       const recipient = recipientsResponse.data[0];
 
       // Get envelope to assign fields

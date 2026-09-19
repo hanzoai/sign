@@ -480,7 +480,7 @@ export const seedPendingDocumentNoFields = async ({
   owner: User;
   recipients: (User | string)[];
   teamId: number;
-  updateDocumentOptions?: Partial<Prisma.EnvelopeUncheckedUpdateInput>;
+  updateDocumentOptions?: Partial<Prisma.EnvelopeUpdateInput>;
 }) => {
   const document = await seedBlankDocument(owner, teamId);
 
@@ -537,7 +537,7 @@ export const seedPendingDocumentWithFullFields = async ({
   owner: User;
   recipients: (User | string)[];
   recipientsCreateOptions?: Partial<Prisma.RecipientUncheckedCreateInput>[];
-  updateDocumentOptions?: Partial<Prisma.EnvelopeUncheckedUpdateInput>;
+  updateDocumentOptions?: Partial<Prisma.EnvelopeUpdateInput>;
   fields?: FieldType[];
   teamId: number;
 }) => {

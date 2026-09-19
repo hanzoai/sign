@@ -7,6 +7,7 @@ import path from 'node:path';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import pixelMatch from 'pixelmatch';
 import { PNG } from 'pngjs';
+import type { z } from 'zod';
 
 import { getEnvelopeItemPdfUrl } from '@hanzo/esign-lib/utils/envelope-download';
 import { prisma } from '@hanzo/esign-prisma';
@@ -18,8 +19,8 @@ import { isBase64Image } from '../../../lib/constants/signatures';
 import { createApiToken } from '../../../lib/server-only/public-api/create-api-token';
 import { RecipientRole } from '../../../prisma/generated/types';
 import type {
-  TCreateEnvelopePayload,
   TCreateEnvelopeResponse,
+  ZCreateEnvelopePayloadSchema,
 } from '../../../trpc/server/envelope-router/create-envelope.types';
 import type { TDistributeEnvelopeRequest } from '../../../trpc/server/envelope-router/distribute-envelope.types';
 import { ALIGNMENT_TEST_FIELDS } from '../../constants/field-alignment-pdf';
@@ -77,29 +78,22 @@ test('field placement visual regression', async ({ page, request }, testInfo) =>
 
   const formData = new FormData();
 
-  const fieldMetaFields = FIELD_META_TEST_FIELDS.map((field) => ({
-    identifier: 'field-meta',
-    type: field.type,
-    page: field.page,
-    positionX: field.positionX,
-    positionY: field.positionY,
-    width: field.width,
-    height: field.height,
-    fieldMeta: field.fieldMeta,
-  }));
+  const fieldMetaFields = FIELD_META_TEST_FIELDS.map(
+    ({ customText: _customText, signature: _signature, ...field }) => ({
+      identifier: 'field-meta',
+      ...field,
+    }),
+  );
 
-  const alignmentFields = ALIGNMENT_TEST_FIELDS.map((field) => ({
-    identifier: 'alignment-pdf',
-    type: field.type,
-    page: field.page,
-    positionX: field.positionX,
-    positionY: field.positionY,
-    width: field.width,
-    height: field.height,
-    fieldMeta: field.fieldMeta,
-  }));
+  const alignmentFields = ALIGNMENT_TEST_FIELDS.map(
+    ({ customText: _customText, signature: _signature, ...field }) => ({
+      identifier: 'alignment-pdf',
+      ...field,
+    }),
+  );
 
-  const createEnvelopePayload: TCreateEnvelopePayload = {
+  // What the client sends: the schema's input, before the server fills in defaults.
+  const createEnvelopePayload: z.input<typeof ZCreateEnvelopePayloadSchema> = {
     type: EnvelopeType.DOCUMENT,
     title: 'Envelope Full Field Test',
     recipients: [

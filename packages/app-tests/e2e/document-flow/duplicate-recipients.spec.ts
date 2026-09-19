@@ -1,5 +1,5 @@
 import { type Page, expect, test } from '@playwright/test';
-import type { Document, Team } from '@prisma/client';
+import type { Envelope, Team } from '@prisma/client';
 
 import { PDF_VIEWER_PAGE_SELECTOR } from '@hanzo/esign-lib/constants/pdf-viewer';
 import { prisma } from '@hanzo/esign-prisma';
@@ -15,7 +15,7 @@ import { signSignaturePad } from '../fixtures/signature';
 const completeDocumentFlowWithDuplicateRecipients = async (options: {
   page: Page;
   team: Team;
-  document: Document;
+  document: Envelope;
 }) => {
   const { page, team, document } = options;
 

@@ -145,7 +145,7 @@ test.describe('Placeholder-based field creation', () => {
   /**
    * Create a PDF with the same placeholder appearing multiple times at different locations.
    */
-  const createPdfWithDuplicatePlaceholders = async (): Promise<Buffer> => {
+  const createPdfWithDuplicatePlaceholders = async (): Promise<Buffer<ArrayBuffer>> => {
     const pdf = PDF.create();
     const page = pdf.addPage({ size: 'letter' });
 
@@ -161,7 +161,7 @@ test.describe('Placeholder-based field creation', () => {
 
   const createEnvelopeWithPdfBuffer = async (
     request: APIRequestContext,
-    pdfBuffer: Buffer,
+    pdfBuffer: Buffer<ArrayBuffer>,
     filename: string,
   ): Promise<TCreateEnvelopeResponse> => {
     const formData = new FormData();
