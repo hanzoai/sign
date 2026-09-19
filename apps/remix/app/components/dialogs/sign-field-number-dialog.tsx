@@ -72,7 +72,7 @@ export const SignFieldNumberDialog = createCallable<SignFieldNumberDialogProps, 
             code: z.ZodIssueCode.too_small,
             minimum: minValue,
             inclusive: true,
-            type: 'number',
+            origin: 'number',
           });
 
           return;
@@ -83,7 +83,7 @@ export const SignFieldNumberDialog = createCallable<SignFieldNumberDialogProps, 
             code: z.ZodIssueCode.too_big,
             maximum: maxValue,
             inclusive: true,
-            type: 'number',
+            origin: 'number',
           });
 
           return;
