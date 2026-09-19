@@ -3,24 +3,51 @@ import React, { useMemo } from 'react';
 import { Trans } from '@lingui/react/macro';
 import type {
   ColumnDef,
+  ColumnVisibilityState,
   PaginationState,
+  ReactTable,
+  RowData,
   RowSelectionState,
-  Table as TTable,
   Updater,
-  VisibilityState,
 } from '@tanstack/react-table';
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  columnSizingFeature,
+  columnVisibilityFeature,
+  flexRender,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  tableFeatures,
+  useTable,
+} from '@tanstack/react-table';
 
 import { Skeleton } from './skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
-export type DataTableChildren<TData> = (_table: TTable<TData>) => React.ReactNode;
+// What a DataTable does beyond listing rows. react-table 9 compiles in only the
+// features named here, and a column option or table method exists in the types
+// only when its feature does.
+const features = tableFeatures({
+  columnSizingFeature,
+  columnVisibilityFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+});
 
-export type { ColumnDef as DataTableColumnDef, RowSelectionState } from '@tanstack/react-table';
+type DataTableFeatures = typeof features;
 
-export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  columnVisibility?: VisibilityState;
+export type { RowSelectionState } from '@tanstack/react-table';
+
+export type DataTableInstance<TData extends RowData> = ReactTable<DataTableFeatures, TData>;
+
+export type DataTableColumnDef<TData extends RowData> = ColumnDef<DataTableFeatures, TData>;
+
+export type DataTableChildren<TData extends RowData> = (
+  _table: DataTableInstance<TData>,
+) => React.ReactNode;
+
+export interface DataTableProps<TData extends RowData> {
+  columns: DataTableColumnDef<TData>[];
+  columnVisibility?: ColumnVisibilityState;
   data: TData[];
   onRowClick?: (row: TData) => void;
   rowClassName?: string;
@@ -47,7 +74,7 @@ export interface DataTableProps<TData, TValue> {
   getRowId?: (row: TData) => string;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   columnVisibility,
   data,
@@ -67,7 +94,7 @@ export function DataTable<TData, TValue>({
   rowSelection,
   onRowSelectionChange,
   getRowId,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const pagination = useMemo<PaginationState>(() => {
     if (currentPage !== undefined && perPage !== undefined) {
       return {
@@ -101,10 +128,10 @@ export function DataTable<TData, TValue>({
     }
   };
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
     state: {
       pagination: manualPagination ? pagination : undefined,
       columnVisibility,
@@ -182,7 +209,7 @@ export function DataTable<TData, TValue>({
                       {hasFilters && onClearFilters !== undefined && (
                         <button
                           onClick={() => onClearFilters()}
-                          className="mt-1 text-sm text-foreground"
+                          className="text-foreground mt-1 text-sm"
                         >
                           <Trans>Clear filters</Trans>
                         </button>

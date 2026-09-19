@@ -5,6 +5,7 @@ import { useLingui } from '@lingui/react';
 import { Building2, Loader, TrendingUp, Users } from 'lucide-react';
 import { Link } from 'react-router';
 import { useNavigation } from 'react-router';
+import { match } from 'ts-pattern';
 
 import { useUpdateSearchParams } from '@hanzo/esign-lib/client-only/hooks/use-update-search-params';
 import type { OrganisationDetailedInsights } from '@hanzo/esign-lib/server-only/admin/get-organisation-detailed-insights';
@@ -176,30 +177,11 @@ export const OrganisationInsightsTable = ({
     },
   ] satisfies DataTableColumnDef<(typeof insights.documents)[number]>[];
 
-  const getCurrentData = (): unknown[] => {
-    switch (view) {
-      case 'teams':
-        return insights.teams;
-      case 'users':
-        return insights.users;
-      case 'documents':
-        return insights.documents;
-      default:
-        return [];
-    }
-  };
-
-  const getCurrentColumns = (): DataTableColumnDef<unknown>[] => {
-    switch (view) {
-      case 'teams':
-        return teamsColumns as unknown as DataTableColumnDef<unknown>[];
-      case 'users':
-        return usersColumns as unknown as DataTableColumnDef<unknown>[];
-      case 'documents':
-        return documentsColumns as unknown as DataTableColumnDef<unknown>[];
-      default:
-        return [];
-    }
+  const tableProps = {
+    perPage,
+    currentPage: page,
+    totalPages: insights.totalPages,
+    onPaginationChange,
   };
 
   return (
@@ -244,16 +226,29 @@ export const OrganisationInsightsTable = ({
       </div>
 
       <div className={view === 'documents' ? 'overflow-hidden' : undefined}>
-        <DataTable<unknown, unknown>
-          columns={getCurrentColumns()}
-          data={getCurrentData()}
-          perPage={perPage}
-          currentPage={page}
-          totalPages={insights.totalPages}
-          onPaginationChange={onPaginationChange}
-        >
-          {(table) => <DataTablePagination additionalInformation="VisibleCount" table={table} />}
-        </DataTable>
+        {match(view)
+          .with('teams', () => (
+            <DataTable columns={teamsColumns} data={insights.teams} {...tableProps}>
+              {(table) => (
+                <DataTablePagination additionalInformation="VisibleCount" table={table} />
+              )}
+            </DataTable>
+          ))
+          .with('users', () => (
+            <DataTable columns={usersColumns} data={insights.users} {...tableProps}>
+              {(table) => (
+                <DataTablePagination additionalInformation="VisibleCount" table={table} />
+              )}
+            </DataTable>
+          ))
+          .with('documents', () => (
+            <DataTable columns={documentsColumns} data={insights.documents} {...tableProps}>
+              {(table) => (
+                <DataTablePagination additionalInformation="VisibleCount" table={table} />
+              )}
+            </DataTable>
+          ))
+          .exhaustive()}
       </div>
 
       {isLoading && (

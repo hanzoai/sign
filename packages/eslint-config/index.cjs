@@ -101,7 +101,7 @@ module.exports = [
     // `node:test` awaits the promise a describe/test call returns; a test
     // file states its cases rather than chaining them.
     name: 'esign/tests',
-    files: ['**/__tests__/**/*.ts'],
+    files: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx'],
     rules: {
       '@typescript-eslint/no-floating-promises': 'off',
     },

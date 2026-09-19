@@ -88,7 +88,6 @@ export const TemplatesTable = ({
             onClick={(e) => e.stopPropagation()}
           />
         ),
-        enableSorting: false,
         enableHiding: false,
         size: 40,
       });
@@ -120,11 +119,11 @@ export const TemplatesTable = ({
                 <InfoIcon className="mx-2 h-4 w-4" />
               </TooltipTrigger>
 
-              <TooltipContent className="max-w-md space-y-2 !p-0 text-foreground">
-                <ul className="space-y-0.5 divide-y text-muted-foreground [&>li]:p-4">
+              <TooltipContent className="text-foreground max-w-md space-y-2 !p-0">
+                <ul className="text-muted-foreground space-y-0.5 divide-y [&>li]:p-4">
                   <li>
                     <h2 className="mb-2 flex flex-row items-center font-semibold">
-                      <Globe2Icon className="mr-2 h-5 w-5 text-foreground" />
+                      <Globe2Icon className="text-foreground mr-2 h-5 w-5" />
                       <Trans>Public</Trans>
                     </h2>
 
@@ -151,7 +150,7 @@ export const TemplatesTable = ({
                   </li>
                   <li>
                     <h2 className="mb-2 flex flex-row items-center font-semibold">
-                      <LockIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                      <LockIcon className="text-muted-foreground mr-2 h-5 w-5" />
                       {team?.id ? <Trans>Team Only</Trans> : <Trans>Private</Trans>}
                     </h2>
 

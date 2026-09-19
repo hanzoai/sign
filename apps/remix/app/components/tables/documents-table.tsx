@@ -76,7 +76,6 @@ export const DocumentsTable = ({
             onClick={(e) => e.stopPropagation()}
           />
         ),
-        enableSorting: false,
         enableHiding: false,
         size: 40,
       });
@@ -202,8 +201,8 @@ export const DocumentsTable = ({
       </DataTable>
 
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/50">
-          <Loader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <div className="bg-background/50 absolute inset-0 flex items-center justify-center">
+          <Loader className="text-muted-foreground h-8 w-8 animate-spin" />
         </div>
       )}
     </div>
