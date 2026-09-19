@@ -18,28 +18,27 @@
 //
 // The logical route ("<router>.<procedure>") is the same string the ZAP server
 // dispatcher routes by name, so the wire contract is identical to tRPC.
-
 import { useState } from 'react';
 
 import {
+  type InfiniteData,
   QueryClient,
   QueryClientProvider,
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-  type InfiniteData,
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryResult,
   type UseMutationOptions,
   type UseMutationResult,
   type UseQueryOptions,
   type UseQueryResult,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 
 import type { AppError } from '@hanzo/esign-lib/errors/app-error';
 
-import { zapCall, type ZapCallOptions } from '../client/index';
+import { type ZapCallOptions, zapCall } from '../client/index';
 
 /** Default query key for a route + input pair. */
 export function zapQueryKey(route: string, input?: unknown): unknown[] {
@@ -79,7 +78,7 @@ export function useZapQuery<TOutput = unknown>(
   const { teamId, ...queryOpts } = opts ?? {};
   return useQuery<TOutput, AppError>({
     queryKey: zapQueryKey(route, input),
-    queryFn: () => zapCall<TOutput>(route, input, { teamId }),
+    queryFn: async () => zapCall<TOutput>(route, input, { teamId }),
     ...queryOpts,
   });
 }
@@ -99,7 +98,7 @@ export function useZapInfiniteQuery<TOutput = unknown, TPageParam = unknown>(
   const { teamId, initialPageParam, ...queryOpts } = opts;
   return useInfiniteQuery<TOutput, AppError, InfiniteData<TOutput>, unknown[], TPageParam>({
     queryKey: zapQueryKey(route, input),
-    queryFn: ({ pageParam }) =>
+    queryFn: async ({ pageParam }) =>
       zapCall<TOutput>(route, { ...(input ?? {}), cursor: pageParam }, { teamId }),
     // First page carries no cursor (the convention every cursor-paginated
     // procedure in this app used); callers may override.
@@ -120,7 +119,7 @@ export function useZapMutation<TOutput = unknown, TInput = void>(
   return useMutation<TOutput, AppError, TInput>({
     ...mutationOpts,
     meta,
-    mutationFn: (input: TInput) => zapCall<TOutput>(route, input, { teamId }),
+    mutationFn: async (input: TInput) => zapCall<TOutput>(route, input, { teamId }),
     onSuccess: async (...args) => {
       await onSuccess?.(...args);
 
@@ -177,22 +176,22 @@ export function useZapUtils(): ZapUtils {
     getData(route, input) {
       return client.getQueryData(zapQueryKey(route, input));
     },
-    invalidate(route, input) {
+    async invalidate(route, input) {
       if (route === undefined) {
         return client.invalidateQueries();
       }
       return client.invalidateQueries({ queryKey: zapQueryKey(route, input) });
     },
-    refetch(route, input) {
+    async refetch(route, input) {
       return client.refetchQueries({ queryKey: zapQueryKey(route, input) });
     },
-    cancel(route, input) {
+    async cancel(route, input) {
       return client.cancelQueries({ queryKey: zapQueryKey(route, input) });
     },
     fetch(route, input, opts) {
       return client.fetchQuery({
         queryKey: zapQueryKey(route, input),
-        queryFn: () => zapCall(route, input, opts),
+        queryFn: async () => zapCall(route, input, opts),
       }) as never;
     },
   };

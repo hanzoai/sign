@@ -543,7 +543,7 @@ export const documentRoutes: ZapRouteMap = {
     return await createOrGetShareLink({ documentId, userId: ctx.user.id });
   },
 
-  'document.download': async (ctx: ZapContext, raw) => {
+  'document.download': (ctx: ZapContext, raw) => {
     const { documentId, version } = ZDownloadDocumentRequestSchema.parse(raw);
 
     ctx.logger.info({

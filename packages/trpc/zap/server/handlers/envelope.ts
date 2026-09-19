@@ -588,7 +588,7 @@ export const envelopeRoutes: ZapRouteMap = {
     return ZGenericSuccessResponse;
   },
 
-  'envelope.item.download': async (ctx: ZapContext, raw) => {
+  'envelope.item.download': (ctx: ZapContext, raw) => {
     const { envelopeItemId, version } = ZDownloadEnvelopeItemRequestSchema.parse(raw);
 
     ctx.logger.info({
