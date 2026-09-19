@@ -74,7 +74,7 @@ export const EditorFieldRadioForm = ({
 }: EditorFieldRadioFormProps) => {
   const { t } = useLingui();
 
-  const form = useForm<TRadioFieldFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZRadioFieldFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -128,7 +128,7 @@ export const EditorFieldRadioForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField formControl={form.control} />
+          <EditorGenericFontSizeField />
 
           <FormField
             control={form.control}
@@ -142,7 +142,7 @@ export const EditorFieldRadioForm = ({
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger
                       data-testid="field-form-direction"
-                      className="w-full bg-background text-muted-foreground"
+                      className="bg-background text-muted-foreground w-full"
                     >
                       <SelectValue placeholder={t`Select direction`} />
                     </SelectTrigger>
@@ -161,12 +161,12 @@ export const EditorFieldRadioForm = ({
             )}
           />
 
-          <EditorGenericRequiredField formControl={form.control} />
+          <EditorGenericRequiredField />
 
-          <EditorGenericReadOnlyField formControl={form.control} />
+          <EditorGenericReadOnlyField />
 
           <section className="space-y-2">
-            <div className="-mx-4 mb-4 mt-2">
+            <div className="-mx-4 mt-2 mb-4">
               <Separator />
             </div>
 
@@ -191,7 +191,7 @@ export const EditorFieldRadioForm = ({
                         <FormControl>
                           <Checkbox
                             data-testid={`field-form-values-${index}-checked`}
-                            className="h-5 w-5 border-foreground/30 data-[state=checked]:bg-primary"
+                            className="border-foreground/30 data-[state=checked]:bg-primary h-5 w-5"
                             checked={field.value}
                             onCheckedChange={(value) => {
                               // Uncheck all other values.

@@ -73,7 +73,7 @@ export const EditorFieldTextForm = ({
 }: EditorFieldTextFormProps) => {
   const { t } = useLingui();
 
-  const form = useForm<TTextFieldFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZTextFieldFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -117,12 +117,12 @@ export const EditorFieldTextForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField className="w-full" formControl={form.control} />
+          <EditorGenericFontSizeField className="w-full" />
 
           <div className="flex w-full flex-row gap-x-4">
-            <EditorGenericTextAlignField className="w-full" formControl={form.control} />
+            <EditorGenericTextAlignField className="w-full" />
 
-            <EditorGenericVerticalAlignField className="w-full" formControl={form.control} />
+            <EditorGenericVerticalAlignField className="w-full" />
           </div>
 
           <FormField
@@ -230,16 +230,16 @@ export const EditorFieldTextForm = ({
           />
 
           <div className="flex w-full flex-row gap-x-4">
-            <EditorGenericLineHeightField className="w-full" formControl={form.control} />
+            <EditorGenericLineHeightField className="w-full" />
 
-            <EditorGenericLetterSpacingField className="w-full" formControl={form.control} />
+            <EditorGenericLetterSpacingField className="w-full" />
           </div>
 
           <div className="mt-1">
-            <EditorGenericRequiredField formControl={form.control} />
+            <EditorGenericRequiredField />
           </div>
 
-          <EditorGenericReadOnlyField formControl={form.control} />
+          <EditorGenericReadOnlyField />
         </fieldset>
       </form>
     </Form>

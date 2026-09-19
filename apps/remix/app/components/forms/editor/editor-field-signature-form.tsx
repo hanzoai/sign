@@ -59,7 +59,7 @@ export const EditorFieldSignatureForm = ({
       <form>
         <fieldset className="flex flex-col gap-2">
           <div>
-            <EditorGenericFontSizeField formControl={form.control} />
+            <EditorGenericFontSizeField />
             <p className="text-muted-foreground mt-0.5 text-xs">
               <Trans>The typed signature font size</Trans>
             </p>

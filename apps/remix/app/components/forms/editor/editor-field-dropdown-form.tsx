@@ -159,7 +159,7 @@ export const EditorFieldDropdownForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField formControl={form.control} />
+          <EditorGenericFontSizeField />
 
           {/* Todo: Envelopes This is buggy. */}
           <FormField
@@ -178,7 +178,7 @@ export const EditorFieldDropdownForm = ({
                   >
                     <SelectTrigger
                       data-testid="field-form-defaultValue"
-                      className="w-full bg-background text-muted-foreground"
+                      className="bg-background text-muted-foreground w-full"
                     >
                       <SelectValue placeholder={t`Default Value`} />
                     </SelectTrigger>
@@ -203,13 +203,13 @@ export const EditorFieldDropdownForm = ({
           />
 
           <div className="mt-1">
-            <EditorGenericRequiredField formControl={form.control} />
+            <EditorGenericRequiredField />
           </div>
 
-          <EditorGenericReadOnlyField formControl={form.control} />
+          <EditorGenericReadOnlyField />
 
           <section className="space-y-2">
-            <div className="-mx-4 mb-4 mt-2">
+            <div className="-mx-4 mt-2 mb-4">
               <Separator />
             </div>
 

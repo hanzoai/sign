@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import { type Control, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { FIELD_MIN_LINE_HEIGHT } from '@hanzo/esign-lib/types/field-meta';
 import { FIELD_MAX_LINE_HEIGHT } from '@hanzo/esign-lib/types/field-meta';
@@ -25,23 +25,14 @@ import {
   SelectValue,
 } from '@hanzo/esign-ui/primitives/select';
 
-// Can't seem to get the non-any type to work with correct types.
-// Eg Control<{ fontSize?: number } doesn't seem to work when there are required items.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type FormControlType = Control<any>;
+// Each field binds by name to the form of the <Form> it renders inside, so one component
+// serves every field form that has that name.
 
-export const EditorGenericFontSizeField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericFontSizeField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="fontSize"
       render={({ field }) => (
         <FormItem className={className}>
@@ -69,18 +60,11 @@ export const EditorGenericFontSizeField = ({
   );
 };
 
-export const EditorGenericTextAlignField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericTextAlignField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="textAlign"
       render={({ field }) => (
         <FormItem className={className}>
@@ -112,18 +96,11 @@ export const EditorGenericTextAlignField = ({
   );
 };
 
-export const EditorGenericVerticalAlignField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericVerticalAlignField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="verticalAlign"
       render={({ field }) => (
         <FormItem className={className}>
@@ -155,18 +132,11 @@ export const EditorGenericVerticalAlignField = ({
   );
 };
 
-export const EditorGenericLineHeightField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericLineHeightField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="lineHeight"
       render={({ field }) => (
         <FormItem className={className}>
@@ -191,18 +161,11 @@ export const EditorGenericLineHeightField = ({
   );
 };
 
-export const EditorGenericLetterSpacingField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericLetterSpacingField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="letterSpacing"
       render={({ field }) => (
         <FormItem className={className}>
@@ -227,13 +190,7 @@ export const EditorGenericLetterSpacingField = ({
   );
 };
 
-export const EditorGenericRequiredField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericRequiredField = ({ className }: { className?: string }) => {
   const { watch, setValue } = useFormContext();
 
   const readOnly = watch('readOnly');
@@ -246,7 +203,6 @@ export const EditorGenericRequiredField = ({
 
   return (
     <FormField
-      control={formControl}
       name="required"
       render={({ field }) => (
         <FormItem className={cn('flex items-center space-x-2', className)}>
@@ -259,7 +215,7 @@ export const EditorGenericRequiredField = ({
                 onCheckedChange={field.onChange}
               />
 
-              <label className="ml-2 text-sm text-muted-foreground" htmlFor="field-required">
+              <label className="text-muted-foreground ml-2 text-sm" htmlFor="field-required">
                 <Trans>Required Field</Trans>
               </label>
             </div>
@@ -271,13 +227,7 @@ export const EditorGenericRequiredField = ({
   );
 };
 
-export const EditorGenericReadOnlyField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericReadOnlyField = ({ className }: { className?: string }) => {
   const { watch, setValue } = useFormContext();
 
   const required = watch('required');
@@ -290,7 +240,6 @@ export const EditorGenericReadOnlyField = ({
 
   return (
     <FormField
-      control={formControl}
       name="readOnly"
       render={({ field }) => (
         <FormItem className={cn('flex items-center space-x-2', className)}>
@@ -303,7 +252,7 @@ export const EditorGenericReadOnlyField = ({
                 onCheckedChange={field.onChange}
               />
 
-              <label className="ml-2 text-sm text-muted-foreground" htmlFor="field-read-only">
+              <label className="text-muted-foreground ml-2 text-sm" htmlFor="field-read-only">
                 <Trans>Read Only</Trans>
               </label>
             </div>
@@ -315,18 +264,11 @@ export const EditorGenericReadOnlyField = ({
   );
 };
 
-export const EditorGenericLabelField = ({
-  formControl,
-  className,
-}: {
-  formControl: FormControlType;
-  className?: string;
-}) => {
+export const EditorGenericLabelField = ({ className }: { className?: string }) => {
   const { t } = useLingui();
 
   return (
     <FormField
-      control={formControl}
       name="label"
       render={({ field }) => (
         <FormItem className={className}>

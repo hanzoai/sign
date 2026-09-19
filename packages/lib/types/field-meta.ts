@@ -28,12 +28,12 @@ export type GenericTextFieldTypeMetas =
   | TNumberFieldMeta;
 
 const ZFieldMetaLineHeight = z.coerce
-  .number()
+  .number<number>()
   .min(FIELD_MIN_LINE_HEIGHT)
   .max(FIELD_MAX_LINE_HEIGHT)
   .describe('The line height of the text');
 const ZFieldMetaLetterSpacing = z.coerce
-  .number()
+  .number<number>()
   .min(FIELD_MIN_LETTER_SPACING)
   .max(FIELD_MAX_LETTER_SPACING)
   .describe('The spacing between each character');
@@ -86,7 +86,7 @@ export type TDateFieldMeta = z.infer<typeof ZDateFieldMeta>;
 export const ZTextFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('text'),
   text: z.string().optional(),
-  characterLimit: z.coerce.number({ error: 'Value must be a number' }).min(0).optional(),
+  characterLimit: z.coerce.number<number>({ error: 'Value must be a number' }).min(0).optional(),
   textAlign: ZFieldTextAlignSchema.optional(),
   lineHeight: ZFieldMetaLineHeight.nullish(),
   letterSpacing: ZFieldMetaLetterSpacing.nullish(),
@@ -99,8 +99,8 @@ export const ZNumberFieldMeta = ZBaseFieldMeta.extend({
   type: z.literal('number'),
   numberFormat: z.string().nullish(),
   value: z.string().optional(),
-  minValue: z.coerce.number().nullish(),
-  maxValue: z.coerce.number().nullish(),
+  minValue: z.coerce.number<number>().nullish(),
+  maxValue: z.coerce.number<number>().nullish(),
   textAlign: ZFieldTextAlignSchema.optional(),
   lineHeight: ZFieldMetaLineHeight.nullish(),
   letterSpacing: ZFieldMetaLetterSpacing.nullish(),

@@ -55,7 +55,7 @@ const ZCheckboxFieldFormSchema = ZCheckboxFieldMeta.pick({
   fontSize: true,
 })
   .extend({
-    validationLength: z.coerce.number().optional(),
+    validationLength: z.coerce.number<number>().optional(),
   })
   .refine(
     (data) => {
@@ -88,7 +88,7 @@ export const EditorFieldCheckboxForm = ({
   },
   onValueChange,
 }: EditorFieldCheckboxFormProps) => {
-  const form = useForm<TCheckboxFieldFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZCheckboxFieldFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -172,7 +172,7 @@ export const EditorFieldCheckboxForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField formControl={form.control} />
+          <EditorGenericFontSizeField />
 
           <FormField
             control={form.control}
@@ -186,7 +186,7 @@ export const EditorFieldCheckboxForm = ({
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger
                       data-testid="field-form-direction"
-                      className="w-full bg-background text-muted-foreground"
+                      className="bg-background text-muted-foreground w-full"
                     >
                       <SelectValue placeholder={t`Select direction`} />
                     </SelectTrigger>
@@ -219,7 +219,7 @@ export const EditorFieldCheckboxForm = ({
                       <Select {...field} onValueChange={field.onChange}>
                         <SelectTrigger
                           data-testid="field-form-validationRule"
-                          className="w-full bg-background text-muted-foreground"
+                          className="bg-background text-muted-foreground w-full"
                         >
                           <SelectValue placeholder={t`Select at least`} />
                         </SelectTrigger>
@@ -268,7 +268,7 @@ export const EditorFieldCheckboxForm = ({
                       >
                         <SelectTrigger
                           data-testid="field-form-validationLength"
-                          className="mt-5 w-full bg-background text-muted-foreground"
+                          className="bg-background text-muted-foreground mt-5 w-full"
                         >
                           <SelectValue placeholder={t`Pick a number`} />
                         </SelectTrigger>
@@ -289,13 +289,13 @@ export const EditorFieldCheckboxForm = ({
           </div>
 
           <div className="mt-1">
-            <EditorGenericRequiredField formControl={form.control} />
+            <EditorGenericRequiredField />
           </div>
 
-          <EditorGenericReadOnlyField formControl={form.control} />
+          <EditorGenericReadOnlyField />
 
           <section className="space-y-2">
-            <div className="-mx-4 mb-4 mt-2">
+            <div className="-mx-4 mt-2 mb-4">
               <Separator />
             </div>
 
@@ -320,7 +320,7 @@ export const EditorFieldCheckboxForm = ({
                         <FormControl>
                           <Checkbox
                             data-testid={`field-form-values-${index}-checked`}
-                            className="h-5 w-5 border-foreground/30 data-[state=checked]:bg-primary"
+                            className="border-foreground/30 data-[state=checked]:bg-primary h-5 w-5"
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />

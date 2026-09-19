@@ -102,7 +102,7 @@ export const EditorFieldNumberForm = ({
 }: EditorFieldNumberFormProps) => {
   const { t } = useLingui();
 
-  const form = useForm<TNumberFieldFormSchema>({
+  const form = useForm({
     resolver: zodResolver(ZNumberFieldFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -148,15 +148,15 @@ export const EditorFieldNumberForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField className="w-full" formControl={form.control} />
+          <EditorGenericFontSizeField className="w-full" />
 
           <div className="flex w-full flex-row gap-x-4">
-            <EditorGenericTextAlignField className="w-full" formControl={form.control} />
+            <EditorGenericTextAlignField className="w-full" />
 
-            <EditorGenericVerticalAlignField className="w-full" formControl={form.control} />
+            <EditorGenericVerticalAlignField className="w-full" />
           </div>
 
-          <EditorGenericLabelField formControl={form.control} />
+          <EditorGenericLabelField />
 
           <FormField
             control={form.control}
@@ -215,7 +215,7 @@ export const EditorFieldNumberForm = ({
                   >
                     <SelectTrigger
                       data-testid="field-form-numberFormat"
-                      className="w-full bg-background text-muted-foreground"
+                      className="bg-background text-muted-foreground w-full"
                     >
                       <SelectValue placeholder={t`Field format`} />
                     </SelectTrigger>
@@ -238,20 +238,20 @@ export const EditorFieldNumberForm = ({
           />
 
           <div className="flex w-full flex-row gap-x-4">
-            <EditorGenericLineHeightField className="w-full" formControl={form.control} />
+            <EditorGenericLineHeightField className="w-full" />
 
-            <EditorGenericLetterSpacingField className="w-full" formControl={form.control} />
+            <EditorGenericLetterSpacingField className="w-full" />
           </div>
 
           <div className="mt-1">
-            <EditorGenericRequiredField formControl={form.control} />
+            <EditorGenericRequiredField />
           </div>
 
-          <EditorGenericReadOnlyField formControl={form.control} />
+          <EditorGenericReadOnlyField />
 
           {/* Validation section */}
           <section className="space-y-2">
-            <div className="-mx-4 mb-4 mt-2">
+            <div className="-mx-4 mt-2 mb-4">
               <Separator />
             </div>
 

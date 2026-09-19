@@ -66,9 +66,9 @@ export const EditorFieldDateForm = ({
     <Form {...form}>
       <form>
         <fieldset className="flex flex-col gap-2">
-          <EditorGenericFontSizeField formControl={form.control} />
+          <EditorGenericFontSizeField />
 
-          <EditorGenericTextAlignField formControl={form.control} />
+          <EditorGenericTextAlignField />
         </fieldset>
       </form>
     </Form>
