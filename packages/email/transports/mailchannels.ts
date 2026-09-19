@@ -54,13 +54,8 @@ export class MailChannelsTransport implements Transport<SentMessageInfo> {
     const mailCc = this.toMailChannelsAddresses(mail.data.cc);
     const mailBcc = this.toMailChannelsAddresses(mail.data.bcc);
 
-    const from: MailChannelsAddress =
-      typeof mail.data.from === 'string'
-        ? { email: mail.data.from }
-        : {
-            email: mail.data.from?.address,
-            name: mail.data.from?.name,
-          };
+    // nodemailer takes a list here as well as one address; a message has one sender.
+    const [from] = this.toMailChannelsAddresses(mail.data.from);
 
     const requestHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
