@@ -7,7 +7,6 @@
   ],
   "version": "2.7.1",
   "scripts": {
-    "postinstall": "patch-package",
     "build": "turbo run build",
     "dev": "npm run translate:compile && turbo run dev --filter=@hanzo/esign-remix",
     "dev:remix": "npm run translate:compile && turbo run dev --filter=@hanzo/esign-remix",
@@ -92,7 +91,6 @@
     "ai": "^7.0.84",
     "cron-parser": "^5.10.0",
     "luxon": "^3.7.2",
-    "patch-package": "^8.0.1",
     "@hanzo/insights-node": "5.26.2",
     "react": "19.2.8",
     "typescript": "6.0.3",
