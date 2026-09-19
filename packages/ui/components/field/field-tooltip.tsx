@@ -29,7 +29,7 @@ const tooltipVariants = cva('font-semibold', {
 interface FieldToolTipProps extends VariantProps<typeof tooltipVariants> {
   children: React.ReactNode;
   className?: string;
-  // Only whether the field has any meta decides the tooltip, so the meta may be unparsed.
+  // Only whether the field carries meta decides the tooltip, so the meta may be unparsed.
   field: Pick<
     Field,
     'id' | 'inserted' | 'positionX' | 'positionY' | 'width' | 'height' | 'page'

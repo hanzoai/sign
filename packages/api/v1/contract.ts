@@ -47,9 +47,10 @@ const deprecatedDescription =
 // c.router would add the authorization header to every route and narrow each
 // route's literals. Its types for adding a header are written against zod 3 —
 // AnyZodObject, objectUtil — which zod 4 does not have, so under zod 4 every
-// route it returns types as `{ [x: string]: any }`, and so does every handler
-// and client call. Each route names the header itself, which is what c.router
-// produced at run time, and `as const` does the narrowing.
+// route it returns loses its path, body and responses to an index signature,
+// and every handler and client call loses them with it. Each route names the
+// header itself, which is what c.router produced at run time, and `as const`
+// does the narrowing.
 export const ApiContractV1 = {
   getDocuments: {
     method: 'GET',
