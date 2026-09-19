@@ -2,22 +2,16 @@ const assert = require('node:assert/strict');
 const { test } = require('node:test');
 
 const { Linter } = require('eslint');
-const parser = require('@typescript-eslint/parser');
 
 const config = require('../transaction.cjs');
 
-const linter = new Linter();
-linter.defineParser('ts', parser);
+// The config AS SHIPPED, handed to the linter whole: the same array `lint:tx`
+// gives eslint. Reading the rules out of it and re-stating the parser here would
+// test a copy, and a copy keeps passing after the original stops selecting files.
+const linter = new Linter({ configType: 'flat' });
 
 /** @param {string} code */
-const check = (code) =>
-  linter
-    .verify(code, {
-      parser: 'ts',
-      parserOptions: config.parserOptions,
-      rules: config.rules,
-    })
-    .map((m) => m.message);
+const check = (code) => linter.verify(code, config, { filename: 'probe.ts' }).map((m) => m.message);
 
 test('a transaction that only touches tx is clean', () => {
   assert.deepEqual(

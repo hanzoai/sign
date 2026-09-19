@@ -68,18 +68,27 @@ const restricted = [
   },
 ];
 
-module.exports = {
-  parser: '@typescript-eslint/parser',
+const parser = require('@typescript-eslint/parser');
 
-  parserOptions: {
-    ecmaVersion: 2022,
-    sourceType: 'module',
-    ecmaFeatures: { jsx: true },
+// A flat config, and a whole one: `lint:tx` hands this file to eslint alone, so
+// it says for itself which files it reads and which it never does.
+module.exports = [
+  { ignores: ['**/build/**', '**/dist/**', '**/.react-router/**', '**/node_modules/**'] },
+  {
+    name: 'esign/transaction',
+    files: ['**/*.ts', '**/*.tsx'],
+
+    languageOptions: {
+      parser,
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+    },
+
+    rules: {
+      'no-restricted-syntax': ['error', ...restricted],
+    },
   },
-
-  ignorePatterns: ['build', 'dist', '.react-router'],
-
-  rules: {
-    'no-restricted-syntax': ['error', ...restricted],
-  },
-};
+];
