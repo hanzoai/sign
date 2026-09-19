@@ -1,4 +1,3 @@
-import { extendZodWithOpenApi } from '@anatine/zod-openapi';
 import {
   DocumentDataType,
   DocumentDistributionMethod,
@@ -12,7 +11,10 @@ import {
 import { TemplateType } from '@prisma/client';
 import { z } from 'zod';
 
-import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@hanzo/esign-lib/constants/date-formats';
+import {
+  DATE_FORMATS,
+  DEFAULT_DOCUMENT_DATE_FORMAT,
+} from '@hanzo/esign-lib/constants/date-formats';
 import { SUPPORTED_LANGUAGE_CODES } from '@hanzo/esign-lib/constants/i18n';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@hanzo/esign-lib/constants/time-zones';
 import { ZUrlSchema } from '@hanzo/esign-lib/schemas/common';
@@ -24,8 +26,6 @@ import {
 import { ZDocumentEmailSettingsSchema } from '@hanzo/esign-lib/types/document-email';
 import { ZEnvelopeAttachmentTypeSchema } from '@hanzo/esign-lib/types/envelope-attachment';
 import { ZFieldMetaPrefillFieldsSchema, ZFieldMetaSchema } from '@hanzo/esign-lib/types/field-meta';
-
-extendZodWithOpenApi(z);
 
 export const ZNoBodyMutationSchema = null;
 
@@ -91,11 +91,11 @@ export type TSuccessfulDocumentResponseSchema = z.infer<typeof ZSuccessfulDocume
 
 export const ZSendDocumentForSigningMutationSchema = z
   .object({
-    sendEmail: z.boolean().optional().default(true).openapi({
+    sendEmail: z.boolean().optional().default(true).meta({
       description:
         'Whether to send an email to the recipients asking them to action the document. If you disable this, you will need to manually distribute the document to the recipients using the generated signing links.',
     }),
-    sendCompletionEmails: z.boolean().optional().openapi({
+    sendCompletionEmails: z.boolean().optional().meta({
       description:
         'Whether to send completion emails when the document is fully signed. This will override the document email settings.',
     }),
@@ -159,7 +159,7 @@ export const ZCreateDocumentMutationSchema = z.object({
     .object({
       subject: z.string(),
       message: z.string(),
-      timezone: z.string().default(DEFAULT_DOCUMENT_TIME_ZONE).openapi({
+      timezone: z.string().default(DEFAULT_DOCUMENT_TIME_ZONE).meta({
         description:
           'The timezone of the date. Must be one of the options listed in the list below.',
         enum: TIME_ZONES,
@@ -167,7 +167,7 @@ export const ZCreateDocumentMutationSchema = z.object({
       dateFormat: z
         .string()
         .default(DEFAULT_DOCUMENT_DATE_FORMAT)
-        .openapi({
+        .meta({
           description:
             'The format of the date. Must be one of the options listed in the list below.',
           enum: DATE_FORMATS.map((format) => format.value),
@@ -199,7 +199,7 @@ export const ZCreateDocumentMutationSchema = z.object({
         .default([]),
     })
     .optional()
-    .openapi({
+    .meta({
       description: 'The globalActionAuth property is only available for Enterprise accounts.',
     }),
   formValues: z.record(z.string(), z.union([z.string(), z.boolean(), z.number()])).optional(),
@@ -414,7 +414,7 @@ export const ZCreateRecipientMutationSchema = z.object({
         .default([]),
     })
     .optional()
-    .openapi({
+    .meta({
       description: 'The authOptions property is only available for Enterprise accounts.',
     }),
 });
@@ -465,7 +465,7 @@ const ZCreateFieldSchema = z.object({
   pageY: z.number(),
   pageWidth: z.number(),
   pageHeight: z.number(),
-  fieldMeta: ZFieldMetaSchema.openapi({}),
+  fieldMeta: ZFieldMetaSchema,
 });
 
 export const ZCreateFieldMutationSchema = z.union([
@@ -605,7 +605,7 @@ export const ZFieldSchema = z.object({
   height: z.unknown(),
   customText: z.string(),
   inserted: z.boolean(),
-  fieldMeta: ZFieldMetaSchema.nullish().openapi({}),
+  fieldMeta: ZFieldMetaSchema.nullish(),
 });
 
 export const ZTemplateWithDataSchema = ZTemplateSchema.extend({
