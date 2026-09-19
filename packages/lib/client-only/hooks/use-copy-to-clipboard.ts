@@ -14,13 +14,17 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
       return false;
     }
 
-    const isClipboardApiSupported = Boolean(typeof ClipboardItem && navigator.clipboard.write);
+    // A browser without ClipboardItem throws inside handleClipboardApiCopy, which falls
+    // back to writeText.
+    const isClipboardApiSupported = Boolean(navigator.clipboard.write);
 
     // Try to save to clipboard then save it in the state if worked
     try {
-      isClipboardApiSupported
-        ? await handleClipboardApiCopy(text, blobType)
-        : await handleWriteTextCopy(text);
+      if (isClipboardApiSupported) {
+        await handleClipboardApiCopy(text, blobType);
+      } else {
+        await handleWriteTextCopy(text);
+      }
 
       setCopiedText(await text);
       return true;
