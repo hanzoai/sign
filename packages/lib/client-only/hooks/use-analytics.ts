@@ -1,4 +1,4 @@
-import { posthog as insights } from '@hanzo/insights';
+import { insights } from '@hanzo/insights';
 
 import { extractInsightsConfig } from '@hanzo/esign-lib/constants/feature-flags';
 
