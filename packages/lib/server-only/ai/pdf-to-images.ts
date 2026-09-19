@@ -90,7 +90,7 @@ export const pdfToImages = async (pdfBytes: Uint8Array, options: PdfToImagesOpti
     { concurrency: 10 },
   );
 
-  void pdf.destroy().catch((e) => console.error(e));
+  // Destroying the loading task destroys the document it loaded.
   void task.destroy().catch((e) => console.error(e));
 
   return images;
