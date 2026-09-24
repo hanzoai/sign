@@ -21,7 +21,7 @@ export const GoogleAuthOptions: OAuthClientOptions = {
   scope: ['openid', 'email', 'profile'],
   clientId: env('NEXT_PRIVATE_GOOGLE_CLIENT_ID') ?? '',
   clientSecret: env('NEXT_PRIVATE_GOOGLE_CLIENT_SECRET') ?? '',
-  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/callback/google`,
+  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/callback/google`,
   wellKnownUrl: 'https://accounts.google.com/.well-known/openid-configuration',
   bypassEmailVerification: false,
 };
@@ -31,7 +31,7 @@ export const MicrosoftAuthOptions: OAuthClientOptions = {
   scope: ['openid', 'email', 'profile'],
   clientId: env('NEXT_PRIVATE_MICROSOFT_CLIENT_ID') ?? '',
   clientSecret: env('NEXT_PRIVATE_MICROSOFT_CLIENT_SECRET') ?? '',
-  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/callback/microsoft`,
+  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/callback/microsoft`,
   wellKnownUrl: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration',
   bypassEmailVerification: false,
 };
@@ -41,7 +41,7 @@ export const OidcAuthOptions: OAuthClientOptions = {
   scope: ['openid', 'email', 'profile'],
   clientId: env('NEXT_PRIVATE_OIDC_CLIENT_ID') ?? '',
   clientSecret: env('NEXT_PRIVATE_OIDC_CLIENT_SECRET') ?? '',
-  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/callback/oidc`,
+  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/callback/oidc`,
   wellKnownUrl: env('NEXT_PRIVATE_OIDC_WELL_KNOWN') ?? '',
   bypassEmailVerification: env('NEXT_PRIVATE_OIDC_SKIP_VERIFY') === 'true',
 };
@@ -53,7 +53,7 @@ export const HanzoAuthOptions: OAuthClientOptions = {
   scope: ['openid', 'email', 'profile'],
   clientId: env('IAM_CLIENT_ID') ?? '',
   clientSecret: env('IAM_CLIENT_SECRET') ?? '',
-  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/callback/hanzo`,
+  redirectUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/auth/callback`,
   wellKnownUrl: `${iamUrl}/.well-known/openid-configuration`,
   bypassEmailVerification: true,
 };

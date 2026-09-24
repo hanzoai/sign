@@ -205,7 +205,7 @@ Wait for "Ready" or "Listening on port 3000" in the output.
 Test the health endpoint:
 
 ```bash
-curl http://localhost:3000/api/health
+curl http://localhost:3000/v1/health
 ```
 
 </Step>
@@ -332,7 +332,7 @@ Test the health endpoint:
 
 ```bash
 kubectl port-forward svc/hanzo-sign 3000:80 -n hanzo-sign &
-curl http://localhost:3000/api/health
+curl http://localhost:3000/v1/health
 ```
 
 </Step>

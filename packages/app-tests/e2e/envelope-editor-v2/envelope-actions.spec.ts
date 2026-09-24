@@ -27,7 +27,7 @@ import {
 import { expectToastTextToBeVisible } from '../fixtures/generic';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const V2_API_BASE_URL = `${WEBAPP_BASE_URL}/api/v2-beta`;
+const V2_API_BASE_URL = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 const examplePdfBuffer = fs.readFileSync(path.join(__dirname, '../../../../assets/example.pdf'));
 

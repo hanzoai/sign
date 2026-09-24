@@ -5,5 +5,5 @@ export const formatAvatarUrl = (imageId?: string | null) => {
     return undefined;
   }
 
-  return `${NEXT_PUBLIC_WEBAPP_URL()}/api/avatar/${imageId}`;
+  return `${NEXT_PUBLIC_WEBAPP_URL()}/v1/avatar/${imageId}`;
 };

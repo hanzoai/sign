@@ -54,7 +54,7 @@ NEXT_PRIVATE_SIGNING_PASSPHRASE=your-certificate-password
 After starting Hanzo Sign, check the certificate status endpoint:
 
 ```bash
-curl http://localhost:3000/api/certificate-status
+curl http://localhost:3000/v1/certificate-status
 ```
 
 The startup script also checks for the certificate and prints a warning if it's missing.
@@ -79,10 +79,10 @@ Hanzo Sign exposes two endpoints for monitoring:
 
 | Endpoint                  | Purpose                              |
 | ------------------------- | ------------------------------------ |
-| `/api/health`             | Returns 200 if the application is up |
-| `/api/certificate-status` | Detailed signing certificate status  |
+| `/v1/health`             | Returns 200 if the application is up |
+| `/v1/certificate-status` | Detailed signing certificate status  |
 
-Use `/api/health` for container orchestration health checks (Docker, Kubernetes). Use `/api/certificate-status` to debug signing issues. It reports whether a certificate is configured, its type, and any errors.
+Use `/v1/health` for container orchestration health checks (Docker, Kubernetes). Use `/v1/certificate-status` to debug signing issues. It reports whether a certificate is configured, its type, and any errors.
 
 ---
 

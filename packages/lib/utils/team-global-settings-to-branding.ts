@@ -11,7 +11,7 @@ export const teamGlobalSettingsToBranding = (
     ...settings,
     brandingLogo:
       settings.brandingEnabled && settings.brandingLogo
-        ? `${NEXT_PUBLIC_WEBAPP_URL()}/api/branding/logo/team/${teamId}`
+        ? `${NEXT_PUBLIC_WEBAPP_URL()}/v1/branding/logo/team/${teamId}`
         : '',
     brandingHidePoweredBy: hidePoweredBy,
   };
@@ -26,7 +26,7 @@ export const organisationGlobalSettingsToBranding = (
     ...settings,
     brandingLogo:
       settings.brandingEnabled && settings.brandingLogo
-        ? `${NEXT_PUBLIC_WEBAPP_URL()}/api/branding/logo/organisation/${organisationId}`
+        ? `${NEXT_PUBLIC_WEBAPP_URL()}/v1/branding/logo/organisation/${organisationId}`
         : '',
     brandingHidePoweredBy: hidePoweredBy,
   };

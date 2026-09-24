@@ -42,7 +42,7 @@ test.describe('Document Access API V1', () => {
 
       // User B cannot access User A's document
       const resB = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -65,7 +65,7 @@ test.describe('Document Access API V1', () => {
 
       // User A can access their own document
       const resA = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -93,7 +93,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resB = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/download`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/download`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -128,7 +128,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resA = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/download`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/download`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -161,7 +161,7 @@ test.describe('Document Access API V1', () => {
       const documentA = await seedBlankDocument(userA, teamA.id);
 
       const resB = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -183,7 +183,7 @@ test.describe('Document Access API V1', () => {
       const documentA = await seedBlankDocument(userA, teamA.id);
 
       const resA = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -213,7 +213,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resB = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/send`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/send`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {},
@@ -240,7 +240,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resA = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/send`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/send`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {},
@@ -273,7 +273,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resB = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/resend`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/resend`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -304,7 +304,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resA = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/resend`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/resend`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -335,7 +335,7 @@ test.describe('Document Access API V1', () => {
       const documentA = await seedBlankDocument(userA, teamA.id);
 
       const resB = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { name: 'Test', email: 'test@example.com' },
@@ -358,7 +358,7 @@ test.describe('Document Access API V1', () => {
       const documentA = await seedBlankDocument(userA, teamA.id);
 
       const resA = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { name: 'Test', email: 'test@example.com' },
@@ -396,7 +396,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const patchRes = await request.patch(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -437,7 +437,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const patchRes = await request.patch(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -484,7 +484,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const deleteRes = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {},
@@ -516,7 +516,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const deleteRes = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/recipients/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {},
@@ -552,7 +552,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resB = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -592,7 +592,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resA = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -627,7 +627,7 @@ test.describe('Document Access API V1', () => {
       const templateA = await seedBlankTemplate(userA, teamA.id);
 
       const resB = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -649,7 +649,7 @@ test.describe('Document Access API V1', () => {
       const templateA = await seedBlankTemplate(userA, teamA.id);
 
       const resA = await request.get(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -675,7 +675,7 @@ test.describe('Document Access API V1', () => {
       const templateA = await seedBlankTemplate(userA, teamA.id);
 
       const resB = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -697,7 +697,7 @@ test.describe('Document Access API V1', () => {
       const templateA = await seedBlankTemplate(userA, teamA.id);
 
       const resA = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -753,7 +753,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const patchRes = await request.patch(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -817,7 +817,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const patchRes = await request.patch(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -885,7 +885,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const deleteRes = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {},
@@ -938,7 +938,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const deleteRes = await request.delete(
-        `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
+        `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(documentA.secondaryId)}/fields/${field.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {},
@@ -964,7 +964,7 @@ test.describe('Document Access API V1', () => {
 
       await seedBlankDocument(userA, teamA.id);
 
-      const resB = await request.get(`${WEBAPP_BASE_URL}/api/v1/documents`, {
+      const resB = await request.get(`${WEBAPP_BASE_URL}/v1/rest/documents`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -990,7 +990,7 @@ test.describe('Document Access API V1', () => {
 
       await seedBlankDocument(userA, teamA.id);
 
-      const resA = await request.get(`${WEBAPP_BASE_URL}/api/v1/documents`, {
+      const resA = await request.get(`${WEBAPP_BASE_URL}/v1/rest/documents`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -1019,7 +1019,7 @@ test.describe('Document Access API V1', () => {
 
       await seedBlankTemplate(userA, teamA.id);
 
-      const resB = await request.get(`${WEBAPP_BASE_URL}/api/v1/templates`, {
+      const resB = await request.get(`${WEBAPP_BASE_URL}/v1/rest/templates`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -1045,7 +1045,7 @@ test.describe('Document Access API V1', () => {
 
       await seedBlankTemplate(userA, teamA.id);
 
-      const resA = await request.get(`${WEBAPP_BASE_URL}/api/v1/templates`, {
+      const resA = await request.get(`${WEBAPP_BASE_URL}/v1/rest/templates`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -1080,7 +1080,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resB = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}/create-document`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}/create-document`,
         {
           headers: {
             Authorization: `Bearer ${tokenB}`,
@@ -1121,7 +1121,7 @@ test.describe('Document Access API V1', () => {
       });
 
       const resA = await request.post(
-        `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}/create-document`,
+        `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(templateA.secondaryId)}/create-document`,
         {
           headers: {
             Authorization: `Bearer ${tokenA}`,

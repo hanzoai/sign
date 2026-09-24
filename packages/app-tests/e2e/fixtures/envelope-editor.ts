@@ -400,7 +400,7 @@ const resolveEmbeddingToken = async (
 
   const response = await page
     .context()
-    .request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/api/v2/embedding/create-presign-token`, {
+    .request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/v1/rpc/embedding/create-presign-token`, {
       headers: {
         Authorization: `Bearer ${inputToken}`,
         'Content-Type': 'application/json',

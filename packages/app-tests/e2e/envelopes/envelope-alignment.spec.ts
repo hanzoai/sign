@@ -28,7 +28,7 @@ import { FIELD_META_TEST_FIELDS } from '../../constants/field-meta-pdf';
 import { apiSignin } from '../fixtures/authentication';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 test.describe.configure({ mode: 'parallel', timeout: 60000 });
 

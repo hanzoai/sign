@@ -36,6 +36,28 @@ sign/
 - `README.md` -- Project documentation
 - `package.json` -- Dependencies and scripts
 
+## Routes: everything is /v1
+Every route is served and called under /v1; `npm run lint:paths`, the first
+step of the gate, fails on any other API prefix. The mount is
+`apps/remix/server/router.ts`:
+
+| path | what |
+|---|---|
+| `/v1/rest/*` | resource API, the ts-rest contract (`packages/api/v1`), spec at `/v1/rest/openapi.json` |
+| `/v1/rpc/*` | operation API, ZAP over JSON-over-HTTP (`server/zap/http-api.ts`), spec at `/v1/rpc/openapi.json` |
+| `/v1/auth/*` | session auth (`packages/auth/server`) |
+| `/v1/files/*`, `/v1/ai/*`, `/v1/jobs/*` | uploads and downloads, AI detection, the job runner |
+| `/v1/health`, `/v1/limits`, `/v1/locale`, `/v1/theme`, … | RR7 resource routes (`app/routes/v1+`) |
+| `/auth/callback` | Hanzo IAM sign-in return |
+| `/zap` | the browser's ZAP WebSocket |
+
+The two REST surfaces are named for what they are, not versioned, so neither
+shadows the other.
+`/auth/callback` is the one browser callback path IAM derives for every host in
+universe `charts/app/values/hanzo/iam-provision.yaml`, so the Hanzo
+sign-in needs no per-app redirect_uri; other OAuth providers return to
+`/v1/auth/callback/<provider>`.
+
 ## Inside a transaction, only `tx`
 Base SQLite serves one write connection. `prisma.$transaction(async (tx) => …)`
 holds it for as long as the callback runs, so a call in the callback that

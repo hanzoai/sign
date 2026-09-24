@@ -202,7 +202,7 @@ test.describe('Template Field Prefill API v1', () => {
 
     // 8. Create a document from the template with prefilled fields
     const response = await request.post(
-      `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
+      `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -340,7 +340,7 @@ test.describe('Template Field Prefill API v1', () => {
 
     // Send the document to the recipient
     const sendResponse = await request.post(
-      `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -493,7 +493,7 @@ test.describe('Template Field Prefill API v1', () => {
 
     // 8. Create a document from the template without prefilled fields
     const response = await request.post(
-      `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
+      `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -560,7 +560,7 @@ test.describe('Template Field Prefill API v1', () => {
     expect(documentRecipient).not.toBeNull();
 
     const sendResponse = await request.post(
-      `${WEBAPP_BASE_URL}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${WEBAPP_BASE_URL}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -646,7 +646,7 @@ test.describe('Template Field Prefill API v1', () => {
 
     // 6. Try to create a document with invalid prefill value
     const response = await request.post(
-      `${WEBAPP_BASE_URL}/api/v1/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
+      `${WEBAPP_BASE_URL}/v1/rest/templates/${mapSecondaryIdToTemplateId(template.secondaryId)}/generate-document`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -202,8 +202,8 @@ Hanzo Sign provides health check endpoints for monitoring:
 
 | Endpoint                  | Purpose                                                        |
 | ------------------------- | -------------------------------------------------------------- |
-| `/api/health`             | Checks database connectivity and certificate status            |
-| `/api/certificate-status` | Returns whether a signing certificate is configured and usable |
+| `/v1/health`             | Checks database connectivity and certificate status            |
+| `/v1/certificate-status` | Returns whether a signing certificate is configured and usable |
 
 ### Docker Health Check
 
@@ -213,7 +213,7 @@ Add a health check to your container:
 docker run -d \
   --name hanzo-sign \
   -p 3000:3000 \
-  --health-cmd="curl -f http://localhost:3000/api/health || exit 1" \
+  --health-cmd="curl -f http://localhost:3000/v1/health || exit 1" \
   --health-interval=30s \
   --health-timeout=10s \
   --health-retries=3 \
@@ -307,7 +307,7 @@ keep the `sign.db` file lean. See [Storage Configuration](/docs/self-hosting/con
     snapshot.
   </Accordion>
   <Accordion title="Certificate errors">
-    Check certificate status: `curl http://localhost:3000/api/certificate-status`. Common issues:
+    Check certificate status: `curl http://localhost:3000/v1/certificate-status`. Common issues:
     file not found (verify the volume mount path), permission denied (ensure the file is readable,
     UID 1001 inside the container), no password (the certificate must have a password set). Fix
     permissions: `chmod 644 /path/to/cert.p12` and `chown 1001:1001 /path/to/cert.p12`.

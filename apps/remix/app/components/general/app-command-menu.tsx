@@ -345,7 +345,7 @@ const LanguageCommands = () => {
 
       formData.append('lang', lang);
 
-      const response = await fetch('/api/locale', {
+      const response = await fetch('/v1/locale', {
         method: 'post',
         body: formData,
       });

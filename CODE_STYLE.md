@@ -485,7 +485,7 @@ const docMeta = {};
 // ✅ Common abbreviations that are widely understood are acceptable
 const userId = 123;
 const htmlElement = document.querySelector('div');
-const apiResponse = await fetch('/api');
+const apiResponse = await fetch('/v1');
 ```
 
 ---

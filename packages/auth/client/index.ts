@@ -384,5 +384,5 @@ export class AuthClient {
 }
 
 export const authClient = new AuthClient({
-  baseUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth`,
+  baseUrl: `${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth`,
 });

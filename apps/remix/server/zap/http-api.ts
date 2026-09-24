@@ -1,6 +1,6 @@
-// esign ZAP RPC — JSON-over-HTTP face for the /api/v2 REST surface.
+// esign ZAP RPC — JSON-over-HTTP face for the /v1/rpc operation API.
 //
-// The legacy `/api/v2/*` REST surface (external integrators) was backed by
+// The operation API (external integrators) was backed by
 // trpc-to-openapi routing HTTP -> the tRPC appRouter. This re-backs it with
 // `httpServe` from @zap-proto/web/server, dispatching every request through the
 // SAME zapRoutes map + makeDispatcher the WebSocket server uses — one service
@@ -78,26 +78,20 @@ function buildRoutes(): HttpRoute[] {
 }
 
 /**
- * Mount the JSON-over-HTTP ZAP face on `httpServer` at both `/api/v2` and
- * `/api/v2-beta`, sharing the WS server's port. httpServe only terminates its
- * declared POST routes and passes every other request through, so the Hono
- * GET `/api/v2/openapi.json` and the GET download routes still reach Hono.
+ * Mount the JSON-over-HTTP ZAP face on `httpServer` at `/v1/rpc`, sharing the
+ * WS server's port. httpServe only terminates its declared POST routes and
+ * passes every other request through, so the Hono GET `/v1/rpc/openapi.json`
+ * and the GET download routes still reach Hono.
  */
 export function serveZapHttpApi(
   httpServer: HttpServer,
   opts: { onError?: (err: unknown) => void } = {},
-): HttpServeHandle[] {
-  const routes = buildRoutes();
-  const rootCap = makeDispatcher(zapRoutes);
-  const mintCap = makeMintCap('apiV2');
-
-  return ['/api/v2', '/api/v2-beta'].map((prefix) =>
-    httpServe(httpServer, {
-      prefix,
-      routes,
-      mintCap,
-      rootCap,
-      onError: opts.onError,
-    }),
-  );
+): HttpServeHandle {
+  return httpServe(httpServer, {
+    prefix: '/v1/rpc',
+    routes: buildRoutes(),
+    mintCap: makeMintCap('apiV2'),
+    rootCap: makeDispatcher(zapRoutes),
+    onError: opts.onError,
+  });
 }

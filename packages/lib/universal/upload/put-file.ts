@@ -27,7 +27,7 @@ export const putPdfFile = async (file: File) => {
 
   formData.append('file', properFile);
 
-  const response = await fetch('/api/files/upload-pdf', {
+  const response = await fetch('/v1/files/upload-pdf', {
     method: 'POST',
     body: formData,
   });
@@ -67,7 +67,7 @@ const putFileInDatabase = async (file: File) => {
 
 const putFileInS3 = async (file: File) => {
   const getPresignedUrlResponse = await fetch(
-    `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/presigned-post-url`,
+    `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/presigned-post-url`,
     {
       method: 'POST',
       headers: {

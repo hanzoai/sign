@@ -7,15 +7,14 @@ import { Callout } from 'fumadocs-ui/components/callout';
 
 ## Overview
 
-Hanzo Sign uses API versioning to manage changes to the public API. This allows us to introduce new features, fix bugs, and make other changes without breaking existing integrations.
+Hanzo Sign serves two public APIs, each at its own base URL, and neither carries a version segment:
 
-<Callout type="info">The current version of the API is `v2`.</Callout>
+- **Operation API** — `https://esign.hanzo.ai/v1/rpc`. Every operation the app performs, one `POST` per operation. Its spec is at `/v1/rpc/openapi.json`.
+- **Resource API** — `https://esign.hanzo.ai/v1/rest`. Documents and templates as resources. Its spec is at `/v1/rest/openapi.json`.
 
-The API version is specified in the URL. For example, the base URL for the `v2` API is `https://app.esign.hanzo.ai/api/v2`.
+<Callout type="info">New integrations should use the operation API.</Callout>
 
-We may make changes to the API without incrementing the version number. We will always try to avoid breaking changes, but in some cases, it may be necessary to make changes that are not backward compatible. In these cases, we will increment the version number and provide information about the changes in the release notes.
-
-Also, we may deprecate certain features or endpoints in the API. When we deprecate a feature or endpoint, we will provide information about the deprecation in the release notes and give a timeline for when the feature or endpoint will be removed.
+Changes are additive. When a feature or endpoint is deprecated, the release notes say so and give a timeline for its removal.
 
 ---
 

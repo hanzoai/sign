@@ -38,7 +38,7 @@ import { ALIGNMENT_TEST_FIELDS } from '../../../constants/field-alignment-pdf';
 import { FIELD_META_TEST_FIELDS } from '../../../constants/field-meta-pdf';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2-beta`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 test.describe.configure({
   mode: 'parallel',

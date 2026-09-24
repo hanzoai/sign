@@ -28,13 +28,13 @@ export const getEnvelopeItemPdfUrl = (options: EnvelopeItemPdfUrlOptions) => {
     const version = options.version;
 
     return token
-      ? `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/token/${token}/envelopeItem/${id}/download/${version}${presignToken ? `?presignToken=${presignToken}` : ''}`
-      : `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/envelope/${envelopeId}/envelopeItem/${id}/download/${version}`;
+      ? `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/token/${token}/envelopeItem/${id}/download/${version}${presignToken ? `?presignToken=${presignToken}` : ''}`
+      : `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/envelope/${envelopeId}/envelopeItem/${id}/download/${version}`;
   }
 
   return token
-    ? `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/token/${token}/envelopeItem/${id}${presignToken ? `?presignToken=${presignToken}` : ''}`
-    : `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/envelope/${envelopeId}/envelopeItem/${id}${presignToken ? `?token=${presignToken}` : ''}`;
+    ? `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/token/${token}/envelopeItem/${id}${presignToken ? `?presignToken=${presignToken}` : ''}`
+    : `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/envelope/${envelopeId}/envelopeItem/${id}${presignToken ? `?token=${presignToken}` : ''}`;
 };
 
 export type DocumentDataUrlOptions = {
@@ -60,11 +60,11 @@ export const getDocumentDataUrl = (options: DocumentDataUrlOptions) => {
 
   // Recipient token endpoint.
   if (token) {
-    return `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/token/${token}/${partialUrl}`;
+    return `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/token/${token}/${partialUrl}`;
   }
 
   // Endpoint authenticated by session or presigned token.
-  const baseUrl = `${NEXT_PUBLIC_WEBAPP_URL()}/api/files/${partialUrl}`;
+  const baseUrl = `${NEXT_PUBLIC_WEBAPP_URL()}/v1/files/${partialUrl}`;
 
   if (presignToken) {
     return `${baseUrl}?presignToken=${presignToken}`;

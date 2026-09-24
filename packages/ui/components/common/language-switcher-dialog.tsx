@@ -30,7 +30,7 @@ export const LanguageSwitcherDialog = ({ open, setOpen }: LanguageSwitcherDialog
 
     formData.append('lang', lang);
 
-    await fetch('/api/locale', {
+    await fetch('/v1/locale', {
       method: 'post',
       body: formData,
     });

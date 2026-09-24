@@ -47,11 +47,11 @@ serveZap(httpServer, {
   onError: (err) => console.error('[zap-rpc]', err),
 });
 
-// Re-back the /api/v2 + /api/v2-beta REST surface (external integrators) with
-// the same ZAP service over JSON-over-HTTP. httpServe terminates only its
+// Serve the /v1/rpc operation API (external integrators) with the same ZAP
+// service over JSON-over-HTTP. httpServe terminates only its
 // declared POST routes at the http.Server level (before Hono), dispatching
 // through the SAME zapRoutes + makeDispatcher + makeMintCap('apiV2'); all other
-// requests (GET /api/v2/openapi.json, the download routes, the RR7 app) pass
+// requests (GET /v1/rpc/openapi.json, the download routes, the RR7 app) pass
 // through to Hono untouched.
 serveZapHttpApi(httpServer, {
   onError: (err) => console.error('[zap-http-api]', err),

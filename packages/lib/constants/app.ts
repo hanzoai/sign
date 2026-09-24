@@ -22,9 +22,6 @@ export const NEXT_PRIVATE_INTERNAL_WEBAPP_URL = () =>
  */
 export const IS_BILLING_ENABLED = () => false;
 
-export const API_V2_BETA_URL = '/api/v2-beta';
-export const API_V2_URL = '/api/v2';
-
 export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'support@esign.hanzo.ai';
 
 /** Where every "read the docs" link in the app points. */

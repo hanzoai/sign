@@ -19,7 +19,7 @@ import type { TFindDocumentsResponse } from '@hanzo/esign-trpc/server/document-r
 import { apiSignin } from '../../fixtures/authentication';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 test.describe.configure({
   mode: 'parallel',
@@ -1266,7 +1266,7 @@ const trpcQuery = async (
   input: Record<string, unknown> = {},
 ) => {
   const inputParam = encodeURIComponent(JSON.stringify({ json: input }));
-  const url = `${WEBAPP_BASE_URL}/api/trpc/${route}?input=${inputParam}`;
+  const url = `${WEBAPP_BASE_URL}/v1/trpc/${route}?input=${inputParam}`;
 
   return page.context().request.get(url, {
     headers: {

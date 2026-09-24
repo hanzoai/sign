@@ -143,7 +143,7 @@ export default function EmbedPlaygroundPage() {
       return inputToken;
     }
 
-    const response = await fetch('/api/v2/embedding/create-presign-token', {
+    const response = await fetch('/v1/rpc/embedding-presign/create-embedding-presign-token', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${inputToken}`,

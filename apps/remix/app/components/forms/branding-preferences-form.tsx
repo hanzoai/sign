@@ -95,8 +95,8 @@ export function BrandingPreferencesForm({
       if ('type' in file && 'data' in file) {
         const logoUrl =
           context === 'Team'
-            ? `${NEXT_PUBLIC_WEBAPP_URL()}/api/branding/logo/team/${team?.id}`
-            : `${NEXT_PUBLIC_WEBAPP_URL()}/api/branding/logo/organisation/${organisation?.id}`;
+            ? `${NEXT_PUBLIC_WEBAPP_URL()}/v1/branding/logo/team/${team?.id}`
+            : `${NEXT_PUBLIC_WEBAPP_URL()}/v1/branding/logo/organisation/${organisation?.id}`;
 
         setPreviewUrl(logoUrl);
         setHasLoadedPreview(true);

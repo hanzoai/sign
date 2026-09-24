@@ -9,5 +9,5 @@ export const formatOrganisationLoginPath = (organisationUrl: string) => {
 };
 
 export const formatOrganisationCallbackUrl = (organisationUrl: string) => {
-  return `${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/callback/oidc/org/${organisationUrl}`;
+  return `${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/callback/oidc/org/${organisationUrl}`;
 };

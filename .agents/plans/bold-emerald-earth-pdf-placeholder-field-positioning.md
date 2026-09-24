@@ -43,7 +43,7 @@ This feature enables automatic field placement in PDFs using placeholder text, e
 
 ## API Placeholder Positioning
 
-The `/api/v2/envelope/field/create-many` endpoint accepts `placeholder` as an alternative to coordinates:
+The `/v1/rpc/envelope/field/create-many` endpoint accepts `placeholder` as an alternative to coordinates:
 
 ```json
 {
@@ -115,7 +115,7 @@ Note: Signature fields do not support fieldMeta options.
 - Skipping placeholders without recipient identifiers
 - Skipping invalid field types
 
-**API Tests** (`e2e/api/v2/placeholder-fields-api.spec.ts`):
+**API Tests** (`e2e/v1/rpc/placeholder-fields-api.spec.ts`):
 
 - Placeholder-based field positioning
 - Width/height overrides

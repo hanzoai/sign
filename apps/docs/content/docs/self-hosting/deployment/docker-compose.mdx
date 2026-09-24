@@ -445,7 +445,7 @@ See [Storage Configuration](/docs/self-hosting/configuration/storage).
     `docker compose exec hanzo-sign sqlite3 /opt/hanzo-sign/base/data/_dev/sign.db 'SELECT 1'`.
   </Accordion>
   <Accordion title="Certificate errors">
-    Check certificate status: `curl http://localhost:3000/api/certificate-status`. Common issues:
+    Check certificate status: `curl http://localhost:3000/v1/certificate-status`. Common issues:
     file not found (verify volume mount in `compose.yml`), permission denied (run `chown 1001:1001`
     on the certificate file), no password (the certificate must have a password).
   </Accordion>
@@ -455,7 +455,7 @@ See [Storage Configuration](/docs/self-hosting/configuration/storage).
   </Accordion>
   <Accordion title="Application unreachable">
     Verify containers are running: `docker compose ps`; check the port mapping matches your `.env`;
-    test locally: `curl http://localhost:3000/api/health`; check firewall rules allow traffic on the
+    test locally: `curl http://localhost:3000/v1/health`; check firewall rules allow traffic on the
     configured port.
   </Accordion>
   <Accordion title="Out of disk space">

@@ -74,7 +74,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to document list endpoint', async ({ request }) => {
       await seedCompletedDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/document`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/document`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -88,7 +88,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to document list endpoint', async ({ request }) => {
       await seedCompletedDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/document`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/document`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -106,7 +106,7 @@ test.describe('Document API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/${mapSecondaryIdToDocumentId(doc.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/${mapSecondaryIdToDocumentId(doc.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -120,7 +120,7 @@ test.describe('Document API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/${mapSecondaryIdToDocumentId(doc.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/${mapSecondaryIdToDocumentId(doc.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -135,7 +135,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to document update endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -150,7 +150,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to document update endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -167,7 +167,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to document delete endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -179,7 +179,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to document delete endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -220,7 +220,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/distribute`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/distribute`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -257,7 +257,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/distribute`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/distribute`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -307,7 +307,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/redistribute`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/redistribute`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -358,7 +358,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/redistribute`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/redistribute`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -375,7 +375,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to document duplicate endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/duplicate`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/duplicate`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -387,7 +387,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to document duplicate endpoint', async ({ request }) => {
       const doc = await seedDraftDocument(userA, teamA.id, ['test@example.com']);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/duplicate`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/duplicate`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { documentId: mapSecondaryIdToDocumentId(doc.secondaryId) },
       });
@@ -427,7 +427,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/${field.id}`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/document/field/${field.id}`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -464,7 +464,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/${field.id}`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/document/field/${field.id}`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -485,7 +485,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -517,7 +517,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -551,7 +551,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/create-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/create-many`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -595,7 +595,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/create-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/create-many`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -658,7 +658,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -702,7 +702,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -764,7 +764,7 @@ test.describe('Document API V2', () => {
         ],
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/update-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/update-many`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -831,7 +831,7 @@ test.describe('Document API V2', () => {
         ],
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/update-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/update-many`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -884,7 +884,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { fieldId: field.id },
       });
@@ -921,7 +921,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/field/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/field/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { fieldId: field.id },
       });
@@ -950,7 +950,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -989,7 +989,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1047,7 +1047,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/${field.id}`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/template/field/${field.id}`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -1090,7 +1090,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/${field.id}`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/template/field/${field.id}`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -1131,7 +1131,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/create-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/create-many`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1195,7 +1195,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/create-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/create-many`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1265,7 +1265,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1316,7 +1316,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1385,7 +1385,7 @@ test.describe('Document API V2', () => {
         ],
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/update-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/update-many`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1459,7 +1459,7 @@ test.describe('Document API V2', () => {
         ],
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/update-many`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/update-many`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -1519,7 +1519,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { fieldId: field.id },
       });
@@ -1563,7 +1563,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/field/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/field/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { fieldId: field.id },
       });
@@ -1586,7 +1586,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -1608,7 +1608,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/${recipient!.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/${recipient!.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -1625,7 +1625,7 @@ test.describe('Document API V2', () => {
     }) => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -1646,7 +1646,7 @@ test.describe('Document API V2', () => {
     }) => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -1670,7 +1670,7 @@ test.describe('Document API V2', () => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/create-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/create-many`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -1701,7 +1701,7 @@ test.describe('Document API V2', () => {
       const doc = await seedDraftDocument(userA, teamA.id, []);
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/create-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/create-many`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -1739,7 +1739,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -1765,7 +1765,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           documentId: mapSecondaryIdToDocumentId(doc.secondaryId),
@@ -1805,7 +1805,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/update-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/update-many`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -1851,7 +1851,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/update-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/document/recipient/update-many`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -1887,7 +1887,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { recipientId: recipient!.id },
       });
@@ -1907,7 +1907,7 @@ test.describe('Document API V2', () => {
         where: { envelopeId: doc.id },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/recipient/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/recipient/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { recipientId: recipient!.id },
       });
@@ -1937,7 +1937,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/${templateRecipient.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/${templateRecipient.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -1966,7 +1966,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/${templateRecipient.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/${templateRecipient.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -1983,7 +1983,7 @@ test.describe('Document API V2', () => {
     }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2004,7 +2004,7 @@ test.describe('Document API V2', () => {
     }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2028,7 +2028,7 @@ test.describe('Document API V2', () => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/create-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/create-many`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -2059,7 +2059,7 @@ test.describe('Document API V2', () => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/create-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/create-many`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -2104,7 +2104,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2137,7 +2137,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2183,7 +2183,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/update-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/update-many`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
@@ -2235,7 +2235,7 @@ test.describe('Document API V2', () => {
       });
 
       const res = await request.post(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/update-many`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/recipient/update-many`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
@@ -2278,7 +2278,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { recipientId: recipient.id },
       });
@@ -2305,7 +2305,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/recipient/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/recipient/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { recipientId: recipient.id },
       });
@@ -2319,7 +2319,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to template list endpoint', async ({ request }) => {
       await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/template`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/template`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -2333,7 +2333,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to template list endpoint', async ({ request }) => {
       await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/template`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/template`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -2351,7 +2351,7 @@ test.describe('Document API V2', () => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/${mapSecondaryIdToTemplateId(template.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/${mapSecondaryIdToTemplateId(template.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -2365,7 +2365,7 @@ test.describe('Document API V2', () => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/template/${mapSecondaryIdToTemplateId(template.secondaryId)}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/template/${mapSecondaryIdToTemplateId(template.secondaryId)}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -2380,7 +2380,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to template update endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2398,7 +2398,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to template update endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2418,7 +2418,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to template duplicate endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/duplicate`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/duplicate`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2430,7 +2430,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to template duplicate endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/duplicate`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/duplicate`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2444,7 +2444,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to template delete endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2456,7 +2456,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to template delete endpoint', async ({ request }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2513,7 +2513,7 @@ test.describe('Document API V2', () => {
         throw new Error('Recipient IDs not found');
       }
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2584,7 +2584,7 @@ test.describe('Document API V2', () => {
         throw new Error('Recipient IDs not found');
       }
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           templateId: mapSecondaryIdToTemplateId(template.secondaryId),
@@ -2616,7 +2616,7 @@ test.describe('Document API V2', () => {
     }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2630,7 +2630,7 @@ test.describe('Document API V2', () => {
     }) => {
       const template = await seedBlankTemplate(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2664,7 +2664,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2696,7 +2696,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId) },
       });
@@ -2730,7 +2730,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/toggle`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/toggle`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId), enabled: false },
       });
@@ -2762,7 +2762,7 @@ test.describe('Document API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/direct/toggle`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/direct/toggle`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { templateId: mapSecondaryIdToTemplateId(template.secondaryId), enabled: false },
       });
@@ -2777,7 +2777,7 @@ test.describe('Document API V2', () => {
       await seedBlankFolder(userA, teamA.id);
       await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/folder`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/folder`, {
         headers: { Authorization: `Bearer ${tokenB}` },
       });
 
@@ -2801,7 +2801,7 @@ test.describe('Document API V2', () => {
       await seedBlankFolder(userB, teamB.id);
       await seedBlankFolder(userB, teamB.id);
 
-      const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/folder`, {
+      const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/folder`, {
         headers: { Authorization: `Bearer ${tokenA}` },
       });
 
@@ -2819,7 +2819,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to folder create endpoint', async ({ request }) => {
       const unauthorizedFolder = await seedBlankFolder(userB, teamB.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           parentId: unauthorizedFolder.id,
@@ -2835,7 +2835,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to folder create endpoint', async ({ request }) => {
       const authorizedFolder = await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           parentId: authorizedFolder.id,
@@ -2847,7 +2847,7 @@ test.describe('Document API V2', () => {
       expect(res.ok()).toBeTruthy();
       expect(res.status()).toBe(200);
 
-      const noParentRes = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/create`, {
+      const noParentRes = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           name: 'Test Folder',
@@ -2864,7 +2864,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to folder update endpoint', async ({ request }) => {
       const folder = await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           folderId: folder.id,
@@ -2881,7 +2881,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to folder update endpoint', async ({ request }) => {
       const folder = await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           folderId: folder.id,
@@ -2900,7 +2900,7 @@ test.describe('Document API V2', () => {
     test('should block unauthorized access to folder delete endpoint', async ({ request }) => {
       const folder = await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { folderId: folder.id },
       });
@@ -2912,7 +2912,7 @@ test.describe('Document API V2', () => {
     test('should allow authorized access to folder delete endpoint', async ({ request }) => {
       const folder = await seedBlankFolder(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/folder/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/folder/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { folderId: folder.id },
       });
@@ -2936,7 +2936,7 @@ test.describe('Document API V2', () => {
 
       formData.append('file', new File([pdfData], 'test.pdf', { type: 'application/pdf' }));
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         multipart: formData,
       });
@@ -2976,7 +2976,7 @@ test.describe('Document API V2', () => {
 
       formData.append('file', new File([pdfData], 'test.pdf', { type: 'application/pdf' }));
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         multipart: formData,
       });
@@ -3027,7 +3027,7 @@ test.describe('Document API V2', () => {
       test('should block unauthorized access to envelope get endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/${doc.id}`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope/${doc.id}`, {
           headers: { Authorization: `Bearer ${tokenB}` },
         });
 
@@ -3038,7 +3038,7 @@ test.describe('Document API V2', () => {
       test('should allow authorized access to envelope get endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/${doc.id}`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope/${doc.id}`, {
           headers: { Authorization: `Bearer ${tokenA}` },
         });
 
@@ -3054,7 +3054,7 @@ test.describe('Document API V2', () => {
         const doc1 = await seedBlankDocument(userA, teamA.id);
         const doc2 = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             ids: {
@@ -3075,7 +3075,7 @@ test.describe('Document API V2', () => {
         const doc1 = await seedBlankDocument(userA, teamA.id);
         const doc2 = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             ids: {
@@ -3099,7 +3099,7 @@ test.describe('Document API V2', () => {
         const docA = await seedBlankDocument(userA, teamA.id);
         const docB = await seedBlankDocument(userB, teamB.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             ids: {
@@ -3121,7 +3121,7 @@ test.describe('Document API V2', () => {
         const doc1 = await seedBlankDocument(userA, teamA.id);
         const doc2 = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             ids: {
@@ -3145,7 +3145,7 @@ test.describe('Document API V2', () => {
         const doc1 = await seedBlankDocument(userA, teamA.id);
         const doc2 = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             ids: {
@@ -3169,7 +3169,7 @@ test.describe('Document API V2', () => {
         const template1 = await seedBlankTemplate(userA, teamA.id);
         const template2 = await seedBlankTemplate(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             ids: {
@@ -3193,7 +3193,7 @@ test.describe('Document API V2', () => {
         const template1 = await seedBlankTemplate(userA, teamA.id);
         const template2 = await seedBlankTemplate(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             ids: {
@@ -3216,7 +3216,7 @@ test.describe('Document API V2', () => {
       test('should reject requests exceeding max ID limit', async ({ request }) => {
         const ids = Array.from({ length: 21 }, () => 'envelope_fake123');
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/get-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/get-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             ids: {
@@ -3244,7 +3244,7 @@ test.describe('Document API V2', () => {
 
         const res = await page
           .context()
-          .request.post(`${WEBAPP_BASE_URL}/api/trpc/envelope.getMany`, {
+          .request.post(`${WEBAPP_BASE_URL}/v1/trpc/envelope.getMany`, {
             headers: {
               'x-team-id': String(teamA.id),
             },
@@ -3274,7 +3274,7 @@ test.describe('Document API V2', () => {
 
         const res = await page
           .context()
-          .request.post(`${WEBAPP_BASE_URL}/api/trpc/envelope.getMany`, {
+          .request.post(`${WEBAPP_BASE_URL}/v1/trpc/envelope.getMany`, {
             headers: {
               'Content-Type': 'application/json',
               'x-team-id': String(teamA.id),
@@ -3313,7 +3313,7 @@ test.describe('Document API V2', () => {
 
         const res = await page
           .context()
-          .request.post(`${WEBAPP_BASE_URL}/api/trpc/envelope.getMany`, {
+          .request.post(`${WEBAPP_BASE_URL}/v1/trpc/envelope.getMany`, {
             headers: {
               'x-team-id': String(teamA.id),
             },
@@ -3339,7 +3339,7 @@ test.describe('Document API V2', () => {
       test('should block unauthorized access to envelope find endpoint', async ({ request }) => {
         await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope`, {
           headers: { Authorization: `Bearer ${tokenB}` },
         });
 
@@ -3353,7 +3353,7 @@ test.describe('Document API V2', () => {
       test('should allow authorized access to envelope find endpoint', async ({ request }) => {
         await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope`, {
           headers: { Authorization: `Bearer ${tokenA}` },
         });
 
@@ -3399,7 +3399,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope`, {
           headers: { Authorization: `Bearer ${adminToken}` },
         });
 
@@ -3446,7 +3446,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope`, {
           headers: { Authorization: `Bearer ${managerToken}` },
         });
 
@@ -3483,7 +3483,7 @@ test.describe('Document API V2', () => {
         });
 
         const resWithFolder = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope?folderId=${folder.id}`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope?folderId=${folder.id}`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
           },
@@ -3495,7 +3495,7 @@ test.describe('Document API V2', () => {
         expect(dataWithFolder.data.some((doc) => doc.title === 'Document in Folder')).toBe(true);
 
         const resUnauthorized = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope?folderId=${folder.id}`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope?folderId=${folder.id}`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
           },
@@ -3532,7 +3532,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope?type=DOCUMENT`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope?type=DOCUMENT`, {
           headers: { Authorization: `Bearer ${tokenA}` },
         });
 
@@ -3566,7 +3566,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope?status=DRAFT`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope?status=DRAFT`, {
           headers: { Authorization: `Bearer ${tokenA}` },
         });
 
@@ -3593,7 +3593,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope?query=Unique%20Searchable`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope?query=Unique%20Searchable`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
           },
@@ -3611,7 +3611,7 @@ test.describe('Document API V2', () => {
       test('should block unauthorized access to envelope update endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/update`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/update`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             envelopeId: doc.id,
@@ -3627,7 +3627,7 @@ test.describe('Document API V2', () => {
       test('should allow authorized access to envelope update endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/update`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/update`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             envelopeId: doc.id,
@@ -3645,7 +3645,7 @@ test.describe('Document API V2', () => {
       test('should block unauthorized access to envelope delete endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/delete`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { envelopeId: doc.id },
         });
@@ -3657,7 +3657,7 @@ test.describe('Document API V2', () => {
       test('should allow authorized access to envelope delete endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/delete`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { envelopeId: doc.id },
         });
@@ -3673,7 +3673,7 @@ test.describe('Document API V2', () => {
       }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/duplicate`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/duplicate`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { envelopeId: doc.id },
         });
@@ -3685,7 +3685,7 @@ test.describe('Document API V2', () => {
       test('should allow authorized access to envelope duplicate endpoint', async ({ request }) => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/duplicate`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/duplicate`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { envelopeId: doc.id },
         });
@@ -3711,7 +3711,7 @@ test.describe('Document API V2', () => {
         const formData = new FormData();
         formData.append('payload', JSON.stringify(payload));
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/use`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/use`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           multipart: formData,
         });
@@ -3763,7 +3763,7 @@ test.describe('Document API V2', () => {
         const formData = new FormData();
         formData.append('payload', JSON.stringify(payload));
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/use`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/use`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           multipart: formData,
         });
@@ -3797,7 +3797,7 @@ test.describe('Document API V2', () => {
       }) => {
         const doc = await seedDraftDocument(userA, teamA.id, ['test@example.com']);
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/distribute`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/distribute`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { envelopeId: doc.id },
         });
@@ -3836,7 +3836,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/distribute`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/distribute`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { envelopeId: doc.id },
         });
@@ -3886,7 +3886,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/redistribute`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/redistribute`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             envelopeId: doc.id,
@@ -3937,7 +3937,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/redistribute`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/redistribute`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             envelopeId: doc.id,
@@ -3982,7 +3982,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/${field.id}`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope/field/${field.id}`, {
           headers: { Authorization: `Bearer ${tokenB}` },
         });
 
@@ -4019,7 +4019,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.get(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/${field.id}`, {
+        const res = await request.get(`${WEBAPP_BASE_URL}/v1/rpc/envelope/field/${field.id}`, {
           headers: { Authorization: `Bearer ${tokenA}` },
         });
 
@@ -4041,7 +4041,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/create-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/field/create-many`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
             data: {
@@ -4090,7 +4090,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/create-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/field/create-many`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
             data: {
@@ -4174,7 +4174,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/update-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/field/update-many`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
             data: {
@@ -4244,7 +4244,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/update-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/field/update-many`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
             data: {
@@ -4299,7 +4299,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/field/delete`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { fieldId: field.id },
         });
@@ -4336,7 +4336,7 @@ test.describe('Document API V2', () => {
           },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/field/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/field/delete`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { fieldId: field.id },
         });
@@ -4359,7 +4359,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/${recipient!.id}`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/${recipient!.id}`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
           },
@@ -4381,7 +4381,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/${recipient!.id}`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/${recipient!.id}`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
           },
@@ -4399,7 +4399,7 @@ test.describe('Document API V2', () => {
         const doc = await seedDraftDocument(userA, teamA.id, []);
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/create-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/create-many`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
             data: {
@@ -4430,7 +4430,7 @@ test.describe('Document API V2', () => {
         const doc = await seedDraftDocument(userA, teamA.id, []);
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/create-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/create-many`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
             data: {
@@ -4480,7 +4480,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/update-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/update-many`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
             data: {
@@ -4526,7 +4526,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.post(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/update-many`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/update-many`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
             data: {
@@ -4562,7 +4562,7 @@ test.describe('Document API V2', () => {
           where: { envelopeId: doc.id },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/delete`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: { recipientId: recipient!.id },
         });
@@ -4582,7 +4582,7 @@ test.describe('Document API V2', () => {
           where: { envelopeId: doc.id },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/delete`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/delete`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: { recipientId: recipient!.id },
         });
@@ -4613,7 +4613,7 @@ test.describe('Document API V2', () => {
           new File([fieldMetaPdf], 'field-meta.pdf', { type: 'application/pdf' }),
         );
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/item/create-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/item/create-many`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           multipart: formData,
         });
@@ -4646,7 +4646,7 @@ test.describe('Document API V2', () => {
           new File([fieldMetaPdf], 'field-meta-2.pdf', { type: 'application/pdf' }),
         );
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/item/create-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/item/create-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           multipart: formData,
         });
@@ -4686,7 +4686,7 @@ test.describe('Document API V2', () => {
           where: { envelopeId: doc.id },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/item/update-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/item/update-many`, {
           headers: { Authorization: `Bearer ${tokenB}` },
           data: {
             envelopeId: doc.id,
@@ -4712,7 +4712,7 @@ test.describe('Document API V2', () => {
           where: { envelopeId: doc.id },
         });
 
-        const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/item/update-many`, {
+        const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/item/update-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             envelopeId: doc.id,
@@ -4737,7 +4737,7 @@ test.describe('Document API V2', () => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
         const res = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/${doc.id}/audit-log`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/${doc.id}/audit-log`,
           {
             headers: { Authorization: `Bearer ${tokenB}` },
           },
@@ -4753,7 +4753,7 @@ test.describe('Document API V2', () => {
         const doc = await seedBlankDocument(userA, teamA.id);
 
         // Add a recipient which will trigger an audit log.
-        await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/recipient/create-many`, {
+        await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/recipient/create-many`, {
           headers: { Authorization: `Bearer ${tokenA}` },
           data: {
             envelopeId: doc.id,
@@ -4768,7 +4768,7 @@ test.describe('Document API V2', () => {
         });
 
         const res = await request.get(
-          `${WEBAPP_BASE_URL}/api/v2-beta/envelope/${doc.id}/audit-log`,
+          `${WEBAPP_BASE_URL}/v1/rpc/envelope/${doc.id}/audit-log`,
           {
             headers: { Authorization: `Bearer ${tokenA}` },
           },

@@ -11,7 +11,7 @@ Hanzo eSign is an open-source document signing platform built as a **monorepo** 
 │                              Remix App (Hono Server)                        │
 │                                 apps/remix                                  │
 ├─────────────┬─────────────┬─────────────┬─────────────┬─────────────────────┤
-│  /api/v1/*  │  /api/v2/*  │    /zap     │ /api/jobs/* │   React Router UI   │
+│  /v1/rest/*  │  /v1/rpc/*  │    /zap     │ /v1/jobs/* │   React Router UI   │
 │  (ts-rest)  │ (ZAP/JSON)  │  (ZAP/WS)   │  (Jobs API) │                     │
 ├─────────────┴─────────────┴─────────────┴─────────────┴─────────────────────┤
 │                                                                             │
@@ -91,32 +91,32 @@ Hanzo eSign is an open-source document signing platform built as a **monorepo** 
 
 ### API V1 (Deprecated)
 
-- **Location**: `packages/api/v1/`
+- **Location**: `packages/v1/rest/`
 - **Framework**: ts-rest (contract-based REST)
-- **Mount**: `/api/v1/*`
+- **Mount**: `/v1/rest/*`
 - **Auth**: API Token (Bearer header)
 - **Status**: Deprecated but maintained
 
 **Routes** (RESTful pattern):
 
-- `GET/POST/DELETE /api/v1/documents/*`
-- `GET/POST/DELETE /api/v1/templates/*`
+- `GET/POST/DELETE /v1/rest/documents/*`
+- `GET/POST/DELETE /v1/rest/templates/*`
 - Recipients and fields nested under documents
 
 ### API V2 (Current)
 
 - **Location**: `packages/trpc/server/`
 - **Framework**: tRPC with trpc-to-openapi
-- **Mount**: `/api/v2/*`, `/api/v2-beta/*`
+- **Mount**: `/v1/rpc/*`, `/v1/rpc/*`
 - **Auth**: API Token or Session Cookie
 - **Status**: Active
 
 **Routes** (action-based pattern):
 
-- `GET/POST /api/v2/document/*` - Document operations
-- `GET/POST /api/v2/template/*` - Template operations
-- `GET/POST /api/v2/envelope/*` - Envelope operations (multi-document)
-- `GET/POST /api/v2/folder/*` - Folder management
+- `GET/POST /v1/rpc/document/*` - Document operations
+- `GET/POST /v1/rpc/template/*` - Template operations
+- `GET/POST /v1/rpc/envelope/*` - Envelope operations (multi-document)
+- `GET/POST /v1/rpc/folder/*` - Folder management
 
 **Route Organization**:
 
@@ -140,7 +140,7 @@ packages/trpc/server/
 - **Auth**: Session cookie, read on the upgrade request
 - **Route name**: `<router>.<procedure>`, carried in the request body — not the path
 
-The same routes are reachable as POST JSON under `/api/v2` for external
+The same routes are reachable as POST JSON under `/v1/rpc` for external
 integrators, where auth is a bearer API token instead of the session.
 
 ## Background Jobs
@@ -254,13 +254,13 @@ Browser
    ▼
 Hono Server (apps/remix/server/)
    │
-   ├──▶ /api/v1/* ──▶ ts-rest handlers (packages/api/)
+   ├──▶ /v1/rest/* ──▶ ts-rest handlers (packages/api/)
    │
-   ├──▶ /api/v2/* ──▶ ZAP over JSON/HTTP (packages/trpc/zap/)
+   ├──▶ /v1/rpc/* ──▶ ZAP over JSON/HTTP (packages/trpc/zap/)
    │
    ├──▶ /zap ──▶ ZAP over WebSocket (packages/trpc/zap/)
    │
-   ├──▶ /api/jobs/* ──▶ Job handlers (packages/lib/jobs/)
+   ├──▶ /v1/jobs/* ──▶ Job handlers (packages/lib/jobs/)
    │
    └──▶ /* ──▶ React Router (apps/remix/app/routes/)
                     │

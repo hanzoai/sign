@@ -41,7 +41,7 @@ test.describe('Envelope Attachments API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment?envelopeId=${doc.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment?envelopeId=${doc.id}`,
         {
           headers: { Authorization: `Bearer ${tokenB}` },
         },
@@ -57,7 +57,7 @@ test.describe('Envelope Attachments API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       const res = await request.get(
-        `${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment?envelopeId=${doc.id}`,
+        `${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment?envelopeId=${doc.id}`,
         {
           headers: { Authorization: `Bearer ${tokenA}` },
         },
@@ -74,7 +74,7 @@ test.describe('Envelope Attachments API V2', () => {
     }) => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/create`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           envelopeId: doc.id,
@@ -94,7 +94,7 @@ test.describe('Envelope Attachments API V2', () => {
     }) => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/create`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/create`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeId: doc.id,
@@ -125,7 +125,7 @@ test.describe('Envelope Attachments API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/update`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           id: attachment.id,
@@ -154,7 +154,7 @@ test.describe('Envelope Attachments API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/update`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/update`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           id: attachment.id,
@@ -185,7 +185,7 @@ test.describe('Envelope Attachments API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: { id: attachment.id },
       });
@@ -208,7 +208,7 @@ test.describe('Envelope Attachments API V2', () => {
         },
       });
 
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/attachment/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/attachment/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: { id: attachment.id },
       });

@@ -395,7 +395,7 @@ Ensure `expiresAt` and `expirationNotifiedAt` are returned when fetching recipie
 ### 6.4 Webhook / API schema updates
 
 - Recipient schema includes `expiresAt` and `expirationNotifiedAt` fields (replacing the old `expired` field)
-- Update `packages/api/v1/schema.ts`, webhook payload types, zapier integration, and sample data generators
+- Update `packages/v1/rest/schema.ts`, webhook payload types, zapier integration, and sample data generators
 
 ---
 
@@ -504,7 +504,7 @@ The signing guard checks `recipient.expiresAt` in application code before the si
 - `packages/lib/types/webhook-payload.ts` — add `expiresAt`/`expirationNotifiedAt` to webhook recipient
 - `packages/lib/server-only/webhooks/trigger/generate-sample-data.ts` — update sample data
 - `packages/lib/server-only/webhooks/zapier/list-documents.ts` — update zapier recipient shape
-- `packages/api/v1/schema.ts` — add `expiresAt` to API recipient schema
+- `packages/v1/rest/schema.ts` — add `expiresAt` to API recipient schema
 
 **TRPC / settings:**
 

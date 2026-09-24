@@ -36,7 +36,7 @@ const getFileFromBytes64 = (data: string) => {
 };
 
 const getFileFromS3 = async (key: string) => {
-  const getPresignedUrlResponse = await fetch(`/api/files/presigned-get-url`, {
+  const getPresignedUrlResponse = await fetch(`/v1/files/presigned-get-url`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

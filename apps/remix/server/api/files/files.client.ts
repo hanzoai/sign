@@ -24,7 +24,7 @@ const filename = (response: Response): string => {
  * create an envelope from.
  */
 export const importPdf = async (source: TImportSource): Promise<File> => {
-  const response = await fetch('/api/files/import', {
+  const response = await fetch('/v1/files/import', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(source),

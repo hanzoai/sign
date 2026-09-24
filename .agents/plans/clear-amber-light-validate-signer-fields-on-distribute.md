@@ -36,7 +36,7 @@ The API allowed distributing documents/envelopes even when signers had no signat
 
 ### 3. Fix v1 API error handling
 
-**File**: `packages/api/v1/implementation.ts`
+**File**: `packages/v1/rest/implementation.ts`
 
 - Changed `sendDocument` endpoint to use `AppError.toRestAPIError(err)` instead of always returning 500
 - Now returns 400 for validation errors
@@ -62,8 +62,8 @@ Updated to use `isSignatureFieldType` guard (checks both `SIGNATURE` and `FREE_S
 
 **Files**:
 
-- `packages/app-tests/e2e/api/v1/document-sending.spec.ts` - 5 new tests
-- `packages/app-tests/e2e/api/v2/distribute-validation.spec.ts` - 8 new tests
+- `packages/app-tests/e2e/v1/rest/document-sending.spec.ts` - 5 new tests
+- `packages/app-tests/e2e/v1/rpc/distribute-validation.spec.ts` - 8 new tests
 
 ## Test Coverage
 

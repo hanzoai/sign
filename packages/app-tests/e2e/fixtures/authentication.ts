@@ -23,7 +23,7 @@ export const apiSignin = async ({
 
   const csrfToken = await getCsrfToken(page);
 
-  await request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/email-password/authorize`, {
+  await request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/email-password/authorize`, {
     data: {
       email,
       password,
@@ -38,7 +38,7 @@ export const apiSignin = async ({
 export const apiSignout = async ({ page }: { page: Page }) => {
   const { request } = page.context();
 
-  await request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/signout`);
+  await request.post(`${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/signout`);
 
   await page.goto(`${NEXT_PUBLIC_WEBAPP_URL()}/signin`);
 };
@@ -46,7 +46,7 @@ export const apiSignout = async ({ page }: { page: Page }) => {
 const getCsrfToken = async (page: Page) => {
   const { request } = page.context();
 
-  const response = await request.fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/csrf`, {
+  const response = await request.fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/csrf`, {
     method: 'get',
   });
 
@@ -62,7 +62,7 @@ const getCsrfToken = async (page: Page) => {
 export const checkSessionValid = async (page: Page): Promise<boolean> => {
   const { request } = page.context();
 
-  const response = await request.fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/api/auth/session`, {
+  const response = await request.fetch(`${NEXT_PUBLIC_WEBAPP_URL()}/v1/auth/session`, {
     method: 'get',
   });
 

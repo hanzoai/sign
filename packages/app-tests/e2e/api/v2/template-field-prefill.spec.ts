@@ -201,7 +201,7 @@ test.describe('Template Field Prefill API v2', () => {
     );
 
     // 8. Create a document from the template with prefilled fields using v2 API
-    const response = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+    const response = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -327,7 +327,7 @@ test.describe('Template Field Prefill API v2', () => {
       defaultValue: 'Select B',
     });
 
-    const sendResponse = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/distribute`, {
+    const sendResponse = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/distribute`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -489,7 +489,7 @@ test.describe('Template Field Prefill API v2', () => {
     );
 
     // 8. Create a document from the template without prefilled fields using v2 API
-    const response = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+    const response = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -542,7 +542,7 @@ test.describe('Template Field Prefill API v2', () => {
       label: 'Default Number Field',
     });
 
-    const sendResponse = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/document/distribute`, {
+    const sendResponse = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/document/distribute`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -637,7 +637,7 @@ test.describe('Template Field Prefill API v2', () => {
     });
 
     // 7. Try to create a document with invalid prefill value
-    const response = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+    const response = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

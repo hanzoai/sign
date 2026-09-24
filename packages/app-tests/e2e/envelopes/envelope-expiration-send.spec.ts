@@ -18,7 +18,7 @@ import { apiSignin } from '../fixtures/authentication';
 import { openDropdownMenu } from '../fixtures/generic';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2-beta`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 const examplePdf = fs.readFileSync(path.join(__dirname, '../../../../assets/example.pdf'));
 

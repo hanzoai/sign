@@ -54,7 +54,7 @@ const deprecatedDescription =
 export const ApiContractV1 = {
   getDocuments: {
     method: 'GET',
-    path: '/api/v1/documents',
+    path: '/v1/rest/documents',
     headers: ZAuthorizationHeadersSchema,
     query: ZGetDocumentsQuerySchema,
     responses: {
@@ -69,7 +69,7 @@ export const ApiContractV1 = {
 
   getDocument: {
     method: 'GET',
-    path: '/api/v1/documents/:id',
+    path: '/v1/rest/documents/:id',
     headers: ZAuthorizationHeadersSchema,
     responses: {
       200: ZSuccessfulGetDocumentResponseSchema,
@@ -83,7 +83,7 @@ export const ApiContractV1 = {
 
   downloadSignedDocument: {
     method: 'GET',
-    path: '/api/v1/documents/:id/download',
+    path: '/v1/rest/documents/:id/download',
     headers: ZAuthorizationHeadersSchema,
     query: ZDownloadDocumentQuerySchema,
     responses: {
@@ -98,7 +98,7 @@ export const ApiContractV1 = {
 
   createDocument: {
     method: 'POST',
-    path: '/api/v1/documents',
+    path: '/v1/rest/documents',
     headers: ZAuthorizationHeadersSchema,
     body: ZCreateDocumentMutationSchema,
     responses: {
@@ -113,7 +113,7 @@ export const ApiContractV1 = {
 
   createTemplate: {
     method: 'POST',
-    path: '/api/v1/templates',
+    path: '/v1/rest/templates',
     headers: ZAuthorizationHeadersSchema,
     body: ZCreateTemplateV2RequestSchema,
     responses: {
@@ -128,7 +128,7 @@ export const ApiContractV1 = {
 
   deleteTemplate: {
     method: 'DELETE',
-    path: '/api/v1/templates/:id',
+    path: '/v1/rest/templates/:id',
     headers: ZAuthorizationHeadersSchema,
     body: ZNoBodyMutationSchema,
     responses: {
@@ -143,7 +143,7 @@ export const ApiContractV1 = {
 
   getTemplate: {
     method: 'GET',
-    path: '/api/v1/templates/:id',
+    path: '/v1/rest/templates/:id',
     headers: ZAuthorizationHeadersSchema,
     responses: {
       200: ZSuccessfulGetTemplateResponseSchema,
@@ -157,7 +157,7 @@ export const ApiContractV1 = {
 
   getTemplates: {
     method: 'GET',
-    path: '/api/v1/templates',
+    path: '/v1/rest/templates',
     headers: ZAuthorizationHeadersSchema,
     query: ZGetTemplatesQuerySchema,
     responses: {
@@ -172,7 +172,7 @@ export const ApiContractV1 = {
 
   createDocumentFromTemplate: {
     method: 'POST',
-    path: '/api/v1/templates/:templateId/create-document',
+    path: '/v1/rest/templates/:templateId/create-document',
     headers: ZAuthorizationHeadersSchema,
     body: ZCreateDocumentFromTemplateMutationSchema,
     responses: {
@@ -182,12 +182,12 @@ export const ApiContractV1 = {
     },
     summary: 'Create a new document from an existing template',
     deprecated: true,
-    description: `${deprecatedDescription} \n\nIf you must use the V1 API, use "/api/v1/templates/:templateId/generate-document" instead.`,
+    description: `${deprecatedDescription} \n\nIf you must use the V1 API, use "/v1/rest/templates/:templateId/generate-document" instead.`,
   },
 
   generateDocumentFromTemplate: {
     method: 'POST',
-    path: '/api/v1/templates/:templateId/generate-document',
+    path: '/v1/rest/templates/:templateId/generate-document',
     headers: ZAuthorizationHeadersSchema,
     body: ZGenerateDocumentFromTemplateMutationSchema,
     responses: {
@@ -204,7 +204,7 @@ export const ApiContractV1 = {
 
   sendDocument: {
     method: 'POST',
-    path: '/api/v1/documents/:id/send',
+    path: '/v1/rest/documents/:id/send',
     headers: ZAuthorizationHeadersSchema,
     body: ZSendDocumentForSigningMutationSchema,
     responses: {
@@ -221,7 +221,7 @@ export const ApiContractV1 = {
 
   resendDocument: {
     method: 'POST',
-    path: '/api/v1/documents/:id/resend',
+    path: '/v1/rest/documents/:id/resend',
     headers: ZAuthorizationHeadersSchema,
     body: ZResendDocumentForSigningMutationSchema,
     responses: {
@@ -238,7 +238,7 @@ export const ApiContractV1 = {
 
   deleteDocument: {
     method: 'DELETE',
-    path: '/api/v1/documents/:id',
+    path: '/v1/rest/documents/:id',
     headers: ZAuthorizationHeadersSchema,
     body: ZDeleteDocumentMutationSchema,
     responses: {
@@ -253,7 +253,7 @@ export const ApiContractV1 = {
 
   createRecipient: {
     method: 'POST',
-    path: '/api/v1/documents/:id/recipients',
+    path: '/v1/rest/documents/:id/recipients',
     headers: ZAuthorizationHeadersSchema,
     body: ZCreateRecipientMutationSchema,
     responses: {
@@ -270,7 +270,7 @@ export const ApiContractV1 = {
 
   updateRecipient: {
     method: 'PATCH',
-    path: '/api/v1/documents/:id/recipients/:recipientId',
+    path: '/v1/rest/documents/:id/recipients/:recipientId',
     headers: ZAuthorizationHeadersSchema,
     body: ZUpdateRecipientMutationSchema,
     responses: {
@@ -287,7 +287,7 @@ export const ApiContractV1 = {
 
   deleteRecipient: {
     method: 'DELETE',
-    path: '/api/v1/documents/:id/recipients/:recipientId',
+    path: '/v1/rest/documents/:id/recipients/:recipientId',
     headers: ZAuthorizationHeadersSchema,
     body: ZDeleteRecipientMutationSchema,
     responses: {
@@ -304,7 +304,7 @@ export const ApiContractV1 = {
 
   createField: {
     method: 'POST',
-    path: '/api/v1/documents/:id/fields',
+    path: '/v1/rest/documents/:id/fields',
     headers: ZAuthorizationHeadersSchema,
     body: ZCreateFieldMutationSchema,
     responses: {
@@ -321,7 +321,7 @@ export const ApiContractV1 = {
 
   updateField: {
     method: 'PATCH',
-    path: '/api/v1/documents/:id/fields/:fieldId',
+    path: '/v1/rest/documents/:id/fields/:fieldId',
     headers: ZAuthorizationHeadersSchema,
     body: ZUpdateFieldMutationSchema,
     responses: {
@@ -338,7 +338,7 @@ export const ApiContractV1 = {
 
   deleteField: {
     method: 'DELETE',
-    path: '/api/v1/documents/:id/fields/:fieldId',
+    path: '/v1/rest/documents/:id/fields/:fieldId',
     headers: ZAuthorizationHeadersSchema,
     body: ZDeleteFieldMutationSchema,
     responses: {

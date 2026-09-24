@@ -6,7 +6,7 @@ import { requestId } from 'hono/request-id';
 import type { Logger } from 'pino';
 
 import { tsRestHonoApp } from '@hanzo/esign-api/hono';
-import { auth } from '@hanzo/esign-auth/server';
+import { auth, hanzoCallbackRoute } from '@hanzo/esign-auth/server';
 import { jobsClient } from '@hanzo/esign-lib/jobs/client';
 import { LicenseClient } from '@hanzo/esign-lib/server-only/license/license-client';
 import { createRateLimitMiddleware } from '@hanzo/esign-lib/server-only/rate-limit/rate-limit-middleware';
@@ -72,40 +72,40 @@ app.use(async (c, next) => {
   await next();
 });
 
-// Apply cors and rate limits to API routes.
-app.use(`/api/v1/*`, cors());
-app.use('/api/v1/*', apiV1RateLimitMiddleware);
-app.use(`/api/v2/*`, cors());
-app.use('/api/v2/*', apiV2RateLimitMiddleware);
-app.use(`/api/v2-beta/*`, cors());
-app.use('/api/v2-beta/*', apiV2RateLimitMiddleware);
+// Every route this server answers lives under /v1. The two public REST surfaces
+// each get their own home so neither shadows the other:
+//   /v1/rest  the resource API (ts-rest contract, packages/api/v1)
+//   /v1/rpc   the operation API (ZAP over JSON-over-HTTP, zap/http-api.ts)
+// The Hanzo IAM sign-in returns to /auth/callback, the one browser callback path
+// IAM registers for every host (charts/app/values/hanzo/iam-provision.yaml).
+app.use('/v1/rest/*', cors());
+app.use('/v1/rest/*', apiV1RateLimitMiddleware);
+app.use('/v1/rpc/*', cors());
+app.use('/v1/rpc/*', apiV2RateLimitMiddleware);
 
 // Auth server.
-app.route('/api/auth', auth);
+app.route('/v1/auth', auth);
+app.route('/auth/callback', hanzoCallbackRoute);
 
 // Files route.
-app.use('/api/files/upload-pdf', fileRateLimitMiddleware);
-app.use('/api/files/import', fileRateLimitMiddleware);
-app.use('/api/files/presigned-post-url', fileRateLimitMiddleware);
-app.route('/api/files', filesRoute);
+app.use('/v1/files/upload-pdf', fileRateLimitMiddleware);
+app.use('/v1/files/import', fileRateLimitMiddleware);
+app.use('/v1/files/presigned-post-url', fileRateLimitMiddleware);
+app.route('/v1/files', filesRoute);
 
 // AI route.
-app.use('/api/ai/*', aiRateLimitMiddleware);
-app.route('/api/ai', aiRoute);
+app.use('/v1/ai/*', aiRateLimitMiddleware);
+app.route('/v1/ai', aiRoute);
 
 // API servers.
-app.route('/api/v1', tsRestHonoApp);
-app.use('/api/jobs/*', jobsClient.getApiHandler());
+app.route('/v1/rest', tsRestHonoApp);
+app.use('/v1/jobs/*', jobsClient.getApiHandler());
 
-// Unstable API server routes. The /api/v2 + /api/v2-beta REST surface is served
-// over JSON-over-HTTP ZAP, mounted on the http.Server in main.js (serveZapHttpApi).
-// httpServe terminates only its POST routes there, so these GET specs and the GET
-// download routes still reach Hono.
-app.get(`/api/v2/openapi.json`, (c) => c.json(openApiDocument));
-app.route(`/api/v2`, downloadRoute);
-
-app.get(`/api/v2-beta/openapi.json`, (c) => c.json(openApiDocument));
-app.route(`/api/v2-beta`, downloadRoute);
+// The operation API is served over JSON-over-HTTP ZAP, mounted on the
+// http.Server in main.js (serveZapHttpApi). httpServe terminates only its POST
+// routes there, so the GET spec and the GET download routes still reach Hono.
+app.get('/v1/rpc/openapi.json', (c) => c.json(openApiDocument));
+app.route('/v1/rpc', downloadRoute);
 
 // Start telemetry client for anonymous usage tracking.
 // Can be disabled by setting SIGN_DISABLE_TELEMETRY=true

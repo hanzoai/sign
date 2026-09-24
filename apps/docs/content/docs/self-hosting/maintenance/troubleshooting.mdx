@@ -58,7 +58,7 @@ docker logs --tail 100 hanzo-sign
 Hanzo Sign exposes a health endpoint to verify the application is running:
 
 ```bash
-curl http://localhost:3000/api/health
+curl http://localhost:3000/v1/health
 ```
 
 A healthy response returns HTTP 200. If the health check fails:
@@ -202,7 +202,7 @@ kubectl top pod -n hanzo-sign
 ```yaml
 startupProbe:
   httpGet:
-    path: /api/health
+    path: /v1/health
     port: 3000
   failureThreshold: 60
   periodSeconds: 5
@@ -1025,7 +1025,7 @@ netstat -tlnp | grep 3000
     Test local connectivity:
 
 ```bash
-curl http://localhost:3000/api/health
+curl http://localhost:3000/v1/health
 ```
 
   </Step>
@@ -1189,13 +1189,13 @@ Use this checklist when diagnosing issues:
     reachable.
   </Accordion>
   <Accordion title="Test health endpoint responds">
-    Run `curl http://localhost:3000/api/health` and verify it returns a successful response.
+    Run `curl http://localhost:3000/v1/health` and verify it returns a successful response.
   </Accordion>
   <Accordion title="Check container resource usage (CPU, memory)">
     Use `docker stats` or your container runtime's monitoring to ensure adequate resources.
   </Accordion>
   <Accordion title="Verify certificate is valid and accessible">
-    Check `curl http://localhost:3000/api/certificate-status` and ensure file permissions are
+    Check `curl http://localhost:3000/v1/certificate-status` and ensure file permissions are
     correct.
   </Accordion>
   <Accordion title="Confirm email configuration">

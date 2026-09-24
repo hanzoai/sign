@@ -177,10 +177,10 @@ Check the status of your Hanzo eSign instance:
 
 ```bash
 # Basic health check (database + certificate)
-curl http://localhost:3000/api/health
+curl http://localhost:3000/v1/health
 
 # Detailed certificate status
-curl http://localhost:3000/api/certificate-status
+curl http://localhost:3000/v1/certificate-status
 ```
 
 The health endpoint will show:

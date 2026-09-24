@@ -16,7 +16,7 @@ import type {
 } from '@hanzo/esign-trpc/server/envelope-router/create-envelope.types';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2-beta`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 // Form field names in the test PDF
 const FORM_FIELDS = {
@@ -389,7 +389,7 @@ test.describe('Form Flattening', () => {
       expect(await pdfHasFormFields(templatePdfBuffer)).toBe(true);
 
       // Now create a document from the template with formValues
-      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -479,7 +479,7 @@ test.describe('Form Flattening', () => {
       });
 
       // Create document from template WITHOUT formValues
-      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -575,7 +575,7 @@ test.describe('Form Flattening', () => {
 
       // Create document from template without providing new formValues
       // The template's formValues should be used
-      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -669,7 +669,7 @@ test.describe('Form Flattening', () => {
         [FORM_FIELDS.COMPANY_NAME]: 'Test Company Name',
       };
 
-      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/template/use`, {
+      const useTemplateRes = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/template/use`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

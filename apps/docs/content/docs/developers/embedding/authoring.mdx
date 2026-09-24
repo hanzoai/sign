@@ -33,7 +33,7 @@ All authoring components require a **presign token** for authentication instead 
 Before using any authoring component, obtain a presign token from your backend:
 
 ```
-POST /api/v2/embedding/create-presign-token
+POST /v1/rpc/embedding/create-presign-token
 ```
 
 This endpoint requires your Hanzo Sign API key. The token has a default expiration of 1 hour.

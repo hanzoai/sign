@@ -41,7 +41,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <PlausibleProvider src="https://plausible.io/js/script.js" scriptProps={plausibleScript}>
-          <RootProvider>{children}</RootProvider>
+          <RootProvider search={{ options: { api: '/v1/search' } }}>{children}</RootProvider>
         </PlausibleProvider>
       </body>
     </html>

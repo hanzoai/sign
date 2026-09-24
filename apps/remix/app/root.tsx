@@ -87,7 +87,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { theme } = useLoaderData<typeof loader>() || {};
 
   return (
-    <ThemeProvider specifiedTheme={theme} themeAction="/api/theme">
+    <ThemeProvider specifiedTheme={theme} themeAction="/v1/theme">
       <LayoutContent>{children}</LayoutContent>
     </ThemeProvider>
   );

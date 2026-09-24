@@ -61,7 +61,7 @@ const isPageRequest = (request: Request) => {
 
 /**
  * List of paths to reject
- * - Urls that start with /api
+ * - Urls that start with /v1
  * - Urls that start with _
  */
-const blacklistedPathsRegex = new RegExp('^/api/|^/__');
+const blacklistedPathsRegex = new RegExp('^/v1/|^/__');

@@ -30,7 +30,7 @@ test.describe('Document API', () => {
 
     // Test with sendCompletionEmails: false
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ test.describe('Document API', () => {
 
     // Test with sendCompletionEmails: true
     const response2 = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -123,7 +123,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -179,7 +179,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -241,7 +241,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -272,7 +272,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -332,7 +332,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -425,7 +425,7 @@ test.describe('Document API', () => {
     });
 
     const response = await request.post(
-      `${NEXT_PUBLIC_WEBAPP_URL()}/api/v1/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
+      `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rest/documents/${mapSecondaryIdToDocumentId(document.secondaryId)}/send`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

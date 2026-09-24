@@ -425,8 +425,8 @@ Access `requestMetadata` from the tRPC context (`ctx.requestMetadata.ipAddress`)
 
 Add rate limit middleware for currently unprotected routes:
 
-- `/api/trpc/*` — apply `apiTrpcRateLimit` middleware
-- `/api/files/*` — apply `fileUploadRateLimit` middleware
+- `/v1/trpc/*` — apply `apiTrpcRateLimit` middleware
+- `/v1/files/*` — apply `fileUploadRateLimit` middleware
 
 ---
 
@@ -513,7 +513,7 @@ After the migration is complete:
 | File                                                                    | Change                                                                                                      |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `packages/prisma/schema.prisma`                                         | Add `RateLimit` model                                                                                       |
-| `apps/remix/server/router.ts`                                           | Replace `hono-rate-limiter` with DB-backed middleware, add rate limits for `/api/trpc/*` and `/api/files/*` |
+| `apps/remix/server/router.ts`                                           | Replace `hono-rate-limiter` with DB-backed middleware, add rate limits for `/v1/trpc/*` and `/v1/files/*` |
 | `apps/remix/package.json`                                               | Remove `hono-rate-limiter` dependency                                                                       |
 | `packages/auth/server/routes/email-password.ts`                         | Add rate limit checks to signup, login, forgot-password, resend-verify-email, verify-email, reset-password  |
 | `packages/auth/server/routes/passkey.ts`                                | Add rate limit check to passkey authorize                                                                   |

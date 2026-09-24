@@ -71,7 +71,7 @@ export const detectRecipients = async ({
   onError,
   signal,
 }: DetectRecipientsOptions): Promise<void> => {
-  const response = await fetch('/api/ai/detect-recipients', {
+  const response = await fetch('/v1/ai/detect-recipients', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: npm i && npm run build
     startCommand: npx prisma migrate deploy --schema packages/prisma/schema.prisma && npx turbo run start --filter=@hanzo/esign-remix
-    healthCheckPath: /api/health
+    healthCheckPath: /v1/health
 
     # The embedded Base SQLite database lives on a persistent disk; `sign.db`
     # is created on demand under BASE_PATH on first start.

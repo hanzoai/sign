@@ -15,7 +15,7 @@ import type { TCreateEnvelopeRecipientsRequest } from '@hanzo/esign-trpc/server/
 import type { TGetEnvelopeResponse } from '@hanzo/esign-trpc/server/envelope-router/get-envelope.types';
 
 const WEBAPP_BASE_URL = NEXT_PUBLIC_WEBAPP_URL();
-const baseUrl = `${WEBAPP_BASE_URL}/api/v2-beta`;
+const baseUrl = `${WEBAPP_BASE_URL}/v1/rpc`;
 
 test.describe.configure({
   mode: 'parallel',

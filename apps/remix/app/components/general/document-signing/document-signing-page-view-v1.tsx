@@ -175,7 +175,7 @@ export const DocumentSigningPageViewV1 = ({
         {document.team.teamGlobalSettings.brandingEnabled &&
           document.team.teamGlobalSettings.brandingLogo && (
             <img
-              src={`/api/branding/logo/team/${document.teamId}`}
+              src={`/v1/branding/logo/team/${document.teamId}`}
               alt={`${document.team.name}'s Logo`}
               className="mb-4 h-12 w-12 md:mb-2"
             />

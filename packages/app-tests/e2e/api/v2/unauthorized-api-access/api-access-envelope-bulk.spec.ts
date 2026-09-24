@@ -43,7 +43,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       // UserB tries to move userA's document
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/move`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/move`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           envelopeIds: [doc.id],
@@ -80,7 +80,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       });
 
       // UserB tries to move their document to userA's folder
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/move`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/move`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           envelopeIds: [doc.id],
@@ -114,7 +114,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       });
 
       // UserA moves their own document to their own folder
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/move`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/move`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [doc.id],
@@ -157,7 +157,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       });
 
       // UserA tries to move a mix of their own documents and userB's document
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/move`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/move`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [docA1.id, docB.id, docA2.id],
@@ -210,7 +210,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       });
 
       // UserA tries to move userB's documents
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/move`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/move`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [docB1.id, docB2.id],
@@ -248,7 +248,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       // UserB tries to delete userA's document
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/delete`, {
         headers: { Authorization: `Bearer ${tokenB}` },
         data: {
           envelopeIds: [doc.id],
@@ -278,7 +278,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       const doc = await seedBlankDocument(userA, teamA.id);
 
       // UserA deletes their own document
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [doc.id],
@@ -311,7 +311,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       const docB = await seedBlankDocument(userB, teamB.id);
 
       // UserA tries to delete a mix of their own documents and userB's document
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [docA1.id, docB.id, docA2.id],
@@ -355,7 +355,7 @@ test.describe.skip('Envelope Bulk API V2', () => {
       const docB2 = await seedBlankDocument(userB, teamB.id);
 
       // UserA tries to delete userB's documents
-      const res = await request.post(`${WEBAPP_BASE_URL}/api/v2-beta/envelope/bulk/delete`, {
+      const res = await request.post(`${WEBAPP_BASE_URL}/v1/rpc/envelope/bulk/delete`, {
         headers: { Authorization: `Bearer ${tokenA}` },
         data: {
           envelopeIds: [docB1.id, docB2.id],

@@ -234,7 +234,7 @@ const createPresignToken = async (
   data?: Partial<CreateEmbeddingPresignTokenOptions>,
 ) => {
   return await request.post(
-    `${NEXT_PUBLIC_WEBAPP_URL()}/api/v2-beta/embedding/create-presign-token`,
+    `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rpc/embedding/create-presign-token`,
     {
       headers: {
         Authorization: `Bearer ${apiToken}`,
@@ -254,7 +254,7 @@ const verifyPresignToken = async (
   data: VerifyEmbeddingPresignTokenOptions,
 ) => {
   return await request.post(
-    `${NEXT_PUBLIC_WEBAPP_URL()}/api/v2-beta/embedding/verify-presign-token`,
+    `${NEXT_PUBLIC_WEBAPP_URL()}/v1/rpc/embedding/verify-presign-token`,
     {
       headers: {
         Authorization: `Bearer ${apiToken}`,

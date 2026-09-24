@@ -6,7 +6,7 @@ status: ready
 
 ## Problem
 
-The `GET /api/v1/documents` endpoint does not return documents inside folders. The underlying `findDocuments()` function defaults to `folderId: null` when no `folderId` is provided, meaning only root-level documents are returned. The V1 API never passes `folderId`, so folder documents are invisible to API consumers.
+The `GET /v1/rest/documents` endpoint does not return documents inside folders. The underlying `findDocuments()` function defaults to `folderId: null` when no `folderId` is provided, meaning only root-level documents are returned. The V1 API never passes `folderId`, so folder documents are invisible to API consumers.
 
 Additionally, neither the list endpoint nor the single-document endpoint exposes `folderId` in the response, so consumers cannot know which folder a document belongs to.
 
@@ -22,7 +22,7 @@ if (folderId !== undefined) {
 }
 ```
 
-The V1 `getDocuments` handler in `packages/api/v1/implementation.ts` (line 61-70) only passes `page` and `perPage` to `findDocuments` — it never extracts or forwards a `folderId` from the query string.
+The V1 `getDocuments` handler in `packages/v1/rest/implementation.ts` (line 61-70) only passes `page` and `perPage` to `findDocuments` — it never extracts or forwards a `folderId` from the query string.
 
 ## Decisions
 
@@ -32,7 +32,7 @@ These decisions were made during the spec interview:
 2. **Breaking change accepted** — Returning ALL documents by default (instead of root-only) is intentional. The current root-only behavior is a bug, not a feature.
 3. **No root-only query option needed** — Not all documents are in folders, so consumers can filter client-side using the `folderId` field in the response if needed.
 4. **No folder existence validation** — `?folderId=nonexistent` returns empty array, not 404. Consistent with V1 list endpoint patterns.
-5. **Add `folderId` to both endpoints** — Both `GET /api/v1/documents` (list) and `GET /api/v1/documents/:id` (single) will include `folderId` in the response.
+5. **Add `folderId` to both endpoints** — Both `GET /v1/rest/documents` (list) and `GET /v1/rest/documents/:id` (single) will include `folderId` in the response.
 6. **Top-level `skipFolderFilter` is sufficient** — The inner helper filters (`findDocumentsFilter`, `findTeamDocumentsFilter`) receive `folderId: undefined` when skip is active. Prisma ignores `undefined` values in WHERE clauses, so these inner filters will not constrain by folder. No propagation needed.
 7. **Scope is minimal** — Only `folderId` support. No other filters (status, period, query, senderIds) added in this change.
 
@@ -42,13 +42,13 @@ Three files need changes. No new files.
 
 | File                                                  | Change                                                                   |
 | ----------------------------------------------------- | ------------------------------------------------------------------------ |
-| `packages/api/v1/schema.ts`                           | Add `folderId` to query schema + both response schemas                   |
-| `packages/api/v1/implementation.ts`                   | Pass `folderId` through in `getDocuments`, add to `getDocument` response |
+| `packages/v1/rest/schema.ts`                           | Add `folderId` to query schema + both response schemas                   |
+| `packages/v1/rest/implementation.ts`                   | Pass `folderId` through in `getDocuments`, add to `getDocument` response |
 | `packages/lib/server-only/document/find-documents.ts` | Add `skipFolderFilter` option                                            |
 
 ## Changes
 
-### 1. `packages/api/v1/schema.ts` — Add `folderId` to query + response schemas
+### 1. `packages/v1/rest/schema.ts` — Add `folderId` to query + response schemas
 
 **Query schema** (`ZGetDocumentsQuerySchema`, line 35-38):
 
@@ -73,7 +73,7 @@ Add `folderId: z.string().nullish()` so consumers can see which folder each docu
 
 Add `folderId: z.string().nullish()` to the extended schema as well.
 
-### 2. `packages/api/v1/implementation.ts` — Pass `folderId` through + add to responses
+### 2. `packages/v1/rest/implementation.ts` — Pass `folderId` through + add to responses
 
 **`getDocuments` handler** (line 61-70):
 
@@ -169,10 +169,10 @@ Two approaches were considered:
 
 | Request                                      | Current Behavior    | New Behavior              |
 | -------------------------------------------- | ------------------- | ------------------------- |
-| `GET /api/v1/documents`                      | Root docs only      | ALL docs (root + folders) |
-| `GET /api/v1/documents?folderId=abc`         | Not supported       | Docs in folder `abc` only |
-| `GET /api/v1/documents?folderId=nonexistent` | Not supported       | Empty array, 200 OK       |
-| `GET /api/v1/documents/:id` response         | No `folderId` field | Includes `folderId`       |
+| `GET /v1/rest/documents`                      | Root docs only      | ALL docs (root + folders) |
+| `GET /v1/rest/documents?folderId=abc`         | Not supported       | Docs in folder `abc` only |
+| `GET /v1/rest/documents?folderId=nonexistent` | Not supported       | Empty array, 200 OK       |
+| `GET /v1/rest/documents/:id` response         | No `folderId` field | Includes `folderId`       |
 
 ## Implementation Notes
 
@@ -186,11 +186,11 @@ Two approaches were considered:
 
 Manual and automated test cases:
 
-1. `GET /api/v1/documents` returns docs from root AND subfolders.
-2. `GET /api/v1/documents?folderId=<valid-id>` returns only docs in that folder.
-3. `GET /api/v1/documents?folderId=<nonexistent-id>` returns empty array with 200 status.
+1. `GET /v1/rest/documents` returns docs from root AND subfolders.
+2. `GET /v1/rest/documents?folderId=<valid-id>` returns only docs in that folder.
+3. `GET /v1/rest/documents?folderId=<nonexistent-id>` returns empty array with 200 status.
 4. List response includes `folderId` field on each document (null for root docs, string for folder docs).
-5. `GET /api/v1/documents/:id` response includes `folderId` field.
+5. `GET /v1/rest/documents/:id` response includes `folderId` field.
 6. Existing UI/tRPC callers of `findDocuments` are unaffected (they don't pass `skipFolderFilter`).
 7. Pagination: verify `totalPages` correctly reflects the larger result set when all docs are returned.
 
@@ -198,8 +198,8 @@ Manual and automated test cases:
 
 This is a **breaking change** for existing V1 API consumers:
 
-- **Before**: `GET /api/v1/documents` returned only root-level documents (those not in any folder).
-- **After**: `GET /api/v1/documents` returns all documents regardless of folder placement.
+- **Before**: `GET /v1/rest/documents` returned only root-level documents (those not in any folder).
+- **After**: `GET /v1/rest/documents` returns all documents regardless of folder placement.
 
 Impact:
 

@@ -94,7 +94,7 @@ Documents created with a team token belong to that team:
 <Tabs items={['curl', 'TypeScript']}>
 <Tab value="curl">
 ```bash
-curl -X POST "https://app.esign.hanzo.ai/api/v2/envelope/create" \
+curl -X POST "https://app.esign.hanzo.ai/v1/rpc/envelope/create" \
   -H "Authorization: api_team_xxxxxxxxxxxxxxxx" \
   -H "Content-Type: multipart/form-data" \
   -F 'payload={
@@ -134,7 +134,7 @@ form.append('files', fs.createReadStream('./contract.pdf'), {
   contentType: 'application/pdf',
 });
 
-const response = await fetch('https://app.esign.hanzo.ai/api/v2/envelope/create', {
+const response = await fetch('https://app.esign.hanzo.ai/v1/rpc/envelope/create', {
   method: 'POST',
   headers: {
     Authorization: TEAM_API_TOKEN,
@@ -156,18 +156,18 @@ Retrieve all documents belonging to the team:
 <Tab value="curl">
 ```bash
 # List all team documents
-curl -X GET "https://app.esign.hanzo.ai/api/v2/envelope" \
+curl -X GET "https://app.esign.hanzo.ai/v1/rpc/envelope" \
   -H "Authorization: api_team_xxxxxxxxxxxxxxxx"
 
 # Filter by status
-curl -X GET "https://app.esign.hanzo.ai/api/v2/envelope?status=PENDING" \
+curl -X GET "https://app.esign.hanzo.ai/v1/rpc/envelope?status=PENDING" \
   -H "Authorization: api_team_xxxxxxxxxxxxxxxx"
 ````
 
 </Tab>
 <Tab value="TypeScript">
 ```typescript
-const response = await fetch('https://app.esign.hanzo.ai/api/v2/envelope', {
+const response = await fetch('https://app.esign.hanzo.ai/v1/rpc/envelope', {
   method: 'GET',
   headers: {
     Authorization: TEAM_API_TOKEN,
@@ -190,7 +190,7 @@ Templates created with a team token are shared across the team.
 <Tabs items={['curl', 'TypeScript']}>
 <Tab value="curl">
 ```bash
-curl -X POST "https://app.esign.hanzo.ai/api/v2/template/create" \
+curl -X POST "https://app.esign.hanzo.ai/v1/rpc/template/create" \
   -H "Authorization: api_team_xxxxxxxxxxxxxxxx" \
   -H "Content-Type: multipart/form-data" \
   -F 'payload={
@@ -249,7 +249,7 @@ form.append('files', fs.createReadStream('./nda-template.pdf'), {
   contentType: 'application/pdf',
 });
 
-const response = await fetch('https://app.esign.hanzo.ai/api/v2/template/create', {
+const response = await fetch('https://app.esign.hanzo.ai/v1/rpc/template/create', {
   method: 'POST',
   headers: {
     Authorization: TEAM_API_TOKEN,
@@ -268,14 +268,14 @@ console.log('Created team template:', template.id);
 <Tabs items={['curl', 'TypeScript']}>
 <Tab value="curl">
 ```bash
-curl -X GET "https://app.esign.hanzo.ai/api/v2/template" \
+curl -X GET "https://app.esign.hanzo.ai/v1/rpc/template" \
   -H "Authorization: api_team_xxxxxxxxxxxxxxxx"
 ````
 
 </Tab>
 <Tab value="TypeScript">
 ```typescript
-const response = await fetch('https://app.esign.hanzo.ai/api/v2/template', {
+const response = await fetch('https://app.esign.hanzo.ai/v1/rpc/template', {
   method: 'GET',
   headers: {
     Authorization: TEAM_API_TOKEN,
@@ -330,13 +330,13 @@ const SALES_TEAM_TOKEN = process.env.SALES_TEAM_API_TOKEN;
 const LEGAL_TEAM_TOKEN = process.env.LEGAL_TEAM_API_TOKEN;
 
 // Get pending documents from sales team
-const salesResponse = await fetch('https://app.esign.hanzo.ai/api/v2/envelope?status=PENDING', {
+const salesResponse = await fetch('https://app.esign.hanzo.ai/v1/rpc/envelope?status=PENDING', {
   headers: { Authorization: SALES_TEAM_TOKEN },
 });
 const salesDocs = await salesResponse.json();
 
 // Get completed documents from legal team
-const legalResponse = await fetch('https://app.esign.hanzo.ai/api/v2/envelope?status=COMPLETED', {
+const legalResponse = await fetch('https://app.esign.hanzo.ai/v1/rpc/envelope?status=COMPLETED', {
   headers: { Authorization: LEGAL_TEAM_TOKEN },
 });
 const legalDocs = await legalResponse.json();
