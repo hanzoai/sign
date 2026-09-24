@@ -29,7 +29,7 @@ printf "🗄️  Running database migrations...\n"
 # migrate can hit a transient "database is locked". Retry with backoff — SQLite
 # locks clear in milliseconds once the checkpoint completes.
 migrate_attempt=1
-until npx prisma migrate deploy --schema ../../packages/prisma/schema.prisma; do
+until npx prisma migrate deploy --config ../../packages/prisma/prisma.config.ts; do
     if [ "$migrate_attempt" -ge 6 ]; then
         printf "❌ Migrations failed after %d attempts\n" "$migrate_attempt"
         exit 1

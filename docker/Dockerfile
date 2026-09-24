@@ -19,11 +19,11 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install -g "turbo@^1.9.3"
+RUN npm install -g "turbo@2.10.13"
 
 # Outputs to the /out folder
 # source: https://turbo.build/repo/docs/reference/command-line-reference/prune#--docker
-RUN turbo prune --scope=@hanzo/esign-remix --docker
+RUN turbo prune @hanzo/esign-remix --docker
 
 ###########################
 #   INSTALLER CONTAINER   #
@@ -67,7 +67,7 @@ ENV NEXT_PRIVATE_TELEMETRY_HOST="$NEXT_PRIVATE_TELEMETRY_HOST"
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
-# Use the FULL committed lockfile (not turbo's pruned one). turbo@1.x
+# Use the FULL committed lockfile (not turbo's pruned one). turbo's
 # `prune --docker` emits a pruned package-lock.json that npm ci/install
 # reject; dropping it entirely makes npm resolve NEWER deps (e.g. @types/react
 # with Radix's CSSProperties augmentation, react-beautiful-dnd types) that
@@ -76,7 +76,6 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/package-lock.json ./package-lock.json
 
 COPY --from=builder /app/lingui.config.ts ./lingui.config.ts
-COPY --from=builder /app/patches ./patches
 
 RUN npm install --no-audit --no-fund
 
@@ -85,7 +84,7 @@ COPY --from=builder /app/out/full/ .
 # Finally copy the turbo.json file so that we can run turbo commands
 COPY turbo.json turbo.json
 
-RUN npm install -g "turbo@^1.9.3"
+RUN npm install -g "turbo@2.10.13"
 
 RUN turbo run build --filter=@hanzo/esign-remix...
 
@@ -115,8 +114,6 @@ WORKDIR /app
 COPY --from=builder --chown=nodejs:nodejs /app/out/json/ .
 # Copy the tailwind config files across
 COPY --from=builder --chown=nodejs:nodejs /app/out/full/packages/tailwind-config ./packages/tailwind-config
-# Copy the patches across
-COPY --from=builder --chown=nodejs:nodejs /app/patches ./patches
 
 COPY --from=builder --chown=nodejs:nodejs /app/package-lock.json ./package-lock.json
 RUN npm install --omit=dev --no-audit --no-fund
@@ -126,7 +123,9 @@ RUN npm install --omit=dev --no-audit --no-fund
 COPY --from=installer --chown=nodejs:nodejs /app/apps/remix/build ./apps/remix/build
 COPY --from=installer --chown=nodejs:nodejs /app/apps/remix/public ./apps/remix/public
 
-# Copy the prisma binary, schema and migrations
+# Copy the prisma config, schema and migrations. Prisma 7 reads the database URL
+# from prisma.config.ts, so `migrate deploy` in start.sh names it.
+COPY --from=installer --chown=nodejs:nodejs /app/packages/prisma/prisma.config.ts ./packages/prisma/prisma.config.ts
 COPY --from=installer --chown=nodejs:nodejs /app/packages/prisma/schema.prisma ./packages/prisma/schema.prisma
 COPY --from=installer --chown=nodejs:nodejs /app/packages/prisma/migrations ./packages/prisma/migrations
 
