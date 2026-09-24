@@ -15,6 +15,7 @@
     "start": "turbo run start --filter=@hanzo/esign-remix --filter=@hanzo/esign-documentation --filter=@hanzo/esign-openpage-api",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
+    "lint:paths": "node scripts/lint-paths.mjs",
     "lint:tx": "npm test -w @hanzo/esign-eslint-config && eslint --no-config-lookup --no-inline-config -c packages/eslint-config/transaction.cjs packages apps",
     "format": "prettier --write \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,mdx}\"",
     "prepare": "husky && husky install || true",
