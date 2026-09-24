@@ -1,4 +1,4 @@
-import { defineConfig, env } from 'prisma/config';
+import { defineConfig } from 'prisma/config';
 
 // Where the CLI finds the schema, the migrations and the database.
 //
@@ -16,7 +16,10 @@ export default defineConfig({
     path: 'migrations',
     seed: 'tsx ./seed-database.ts',
   },
+  // Read, not required: `prisma generate` loads this file and needs no database,
+  // so the image and the gate build without one. migrate and studio still refuse
+  // to run on an empty URL.
   datasource: {
-    url: env('DATABASE_URL'),
+    url: process.env.DATABASE_URL ?? '',
   },
 });
