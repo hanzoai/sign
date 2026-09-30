@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 
-import { msg } from '@lingui/macro';
+import { msg } from '@lingui/core/macro';
 import { parse } from 'csv-parse/sync';
 import { z } from 'zod';
 

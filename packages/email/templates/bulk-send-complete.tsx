@@ -1,4 +1,5 @@
-import { Trans, msg } from '@lingui/macro';
+import { msg } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { useLingui } from '@lingui/react';
 
 import { Body, Container, Head, Html, Preview, Section, Text } from '../components';
